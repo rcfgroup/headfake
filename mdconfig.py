@@ -1,0 +1,16 @@
+from datetime import datetime
+
+SEED = 213423
+CODE_FILE = "common_codes.txt"
+ID_START = 100000
+ID_END = 999999
+MIN_GENERATED_CODES_PER_PERSON=100
+MAX_GENERATED_CODES_PER_PERSON=200
+NO_PATIENTS = 243
+PROB_NO_DATA = 0.09
+START_DOB = datetime(1943,1,1)
+END_DOB = datetime(1990,1,1)
+START_DATE_EXTRACTED = datetime(2013,3,2)
+END_DATE_EXTRACTED = datetime(2018,1,2)
+OUTPUT_PATIENT_FILE = "output/test_patients.txt"
+OUTPUT_CLINICAL_FILE = "output/test_clinical_data.txt"
