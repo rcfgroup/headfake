@@ -1,0 +1,12 @@
+fields:
+  main_pat_id:
+    class: mockd.field.IncrementalField
+    suffix: S
+    length: 7
+    start_at: 1000000
+
+  gender:
+    class: mockd.field.GenderField
+    male_value: "M"
+    female_value: "F"
+    male_probability: 0.3
