@@ -1,2 +1,5 @@
 faker
 pandas
+PyYaml
+scipy
+matplotlib

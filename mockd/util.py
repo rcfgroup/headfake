@@ -24,6 +24,7 @@ def create_class_tree(name, params, data={}):
         if "name" in sig.parameters:
             sub_params["name"] = name
 
+
         try:
             return cls(**sub_params)
         except TypeError as ex:

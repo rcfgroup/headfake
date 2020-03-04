@@ -1,12 +1,55 @@
-fields:
-  main_pat_id:
-    class: mockd.field.IncrementalField
-    suffix: S
-    length: 7
-    start_at: 1000000
+fieldset:
+  class: mockd.Fieldset
+  fields:
+    main_pat_id:
+      class: mockd.field.IncrementalField
+      suffix: S
+      length: 7
+      start_at: 1000000
 
-  gender:
-    class: mockd.field.GenderField
-    male_value: "M"
-    female_value: "F"
-    male_probability: 0.3
+    gender:
+      class: mockd.field.GenderField
+      male_value: "M"
+      female_value: "F"
+      male_probability: 0.3
+
+    first_name:
+      class: mockd.field.FirstNameField
+      gender_field: gender
+      uppercase: true
+
+    last_name:
+      class: mockd.field.LastNameField
+      gender_field: gender
+      uppercase: true
+
+    middle_name:
+      class: mockd.field.MiddleNameField
+      gender_field: gender
+      uppercase: true
+      firstname_field: first_name
+      empty_probability: 0.6
+
+    dob:
+      class: mockd.field.DateOfBirthField
+      min: 0
+      max: 105
+      mean: 50
+      sd: 5
+      distribution: scipy.stats.norm
+      date_format: "%Y-%m-%d"
+
+    marital_status:
+      class: mockd.field.OptionValueField
+      probabilities:
+        S: 0.5
+        M: 0.3
+        C: 0.1
+
+    ethnicity:
+      class: mockd.field.OptionValueField
+      probabilities:
+        A: 0.1
+        B: 0.3
+        C1: 0.2
+        C2: 0.1
