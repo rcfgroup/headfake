@@ -2,5 +2,5 @@ from collections import OrderedDict
 
 
 class Fieldset:
-    def __init__(self, fields):
+    def __init__(self, name, fields):
         self.fields = fields

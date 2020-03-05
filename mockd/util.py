@@ -21,9 +21,8 @@ def create_class_tree(name, params, data={}):
         cls = create_package_class(class_name)
         sig = signature(cls)
 
-        if "name" in sig.parameters:
-            sub_params["name"] = name
-
+        #if "name" in sig.parameters:
+        sub_params["name"] = name
 
         try:
             return cls(**sub_params)
@@ -35,6 +34,11 @@ def create_class_tree(name, params, data={}):
     for k,v in params.items():
         if isinstance(v, dict):
             new_params[k]=create_class_tree(k,v, data)
+        elif isinstance(v, list):
+            block = []
+            for item in v:
+                block.append(create_class_tree(None, item, data))
+            new_params[k] = block
         else:
             match = re.match("\<(.+)\>",k)
 
@@ -63,3 +67,18 @@ def retrieve_from_data(placeholder, data):
 class Config:
     def __init__(self, **kwargs):
         [setattr(self,k,v) for k,v in kwargs.items()]
+
+def calculate_age(start_date:"datetime.date", end_date:"datetime.date"):
+    try:
+        birthday = start_date.replace(year=end_date.year)
+
+        # raised when birth date is February 29
+    # and the current year is not a leap year
+    except ValueError:
+        birthday = start_date.replace(year=start_date.year,
+                                      month=start_date.month + 1, day=1)
+
+    if birthday > end_date:
+        return end_date.year - start_date.year - 1
+    else:
+        return end_date.year - start_date.year
