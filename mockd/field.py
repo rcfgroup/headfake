@@ -5,6 +5,7 @@ from faker.providers import person
 from mockd.error import ChangeValue
 from .util import create_package_class, calculate_age
 import datetime as dt
+import csv
 
 LOCALE = "en_GB"
 
@@ -114,6 +115,7 @@ class NameField(Field):
             name = self._female_name()
 
         return name
+
 
 class FirstNameField(NameField):
     def _male_name(self):
@@ -285,3 +287,20 @@ class DeceasedField(Field):
     @property
     def names(self):
         return [self.name,self.deceased_date_field]
+
+class MapFileField(Field):
+    def init_params(self):
+        input_file = self.mapping_file
+        with open(input_file, "r") as out:
+            reader = csv.DictReader(out)
+            self.map = {l.get(self.key_field):l for l in reader}
+
+    def _next_value(self, row):
+        rnd_key = rnd.choice(list(self.map.keys()))
+        return rnd_key
+
+class LookupMapFileField(Field):
+    def _next_value(self, row):
+        map_field = self.fieldset.fields.get(self.map_field)
+        map_line = map_field.map.get()
+        return map_field.

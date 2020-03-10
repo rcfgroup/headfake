@@ -1,0 +1,62 @@
+fieldset:
+  class: mockd.Fieldset
+  fields:
+    spell_id:
+      class: mockd.field.IdField
+      prefix: SPL
+      length: 10
+      start_at: 1000000000
+      type: incremental
+
+    identifier:
+      class: mockd.field.MapFileField
+      key_field: main_pat_id
+      mapping_file: "/Users/rcf8/Projects/mock-data/test.txt"
+
+#    admission_date:
+#      class: mockd.field.FirstNameField
+#
+#    admission_time:
+#      class: mockd.field.LastNameField
+#
+#    first_names:
+#      class: mockd.field.LookupMapField
+#      map_field: identifier
+#      value_field: first_name
+#      transformers:
+#        - class: mockd.transformer.UpperCase
+#
+#    last_name:
+#      class: mockd.field.LookupMapField
+#      map_field: identifier
+#      value_field: last_name
+#      transformers:
+#        - class: mockd.transformer.UpperCase
+#
+#    date_of_birth:
+#      class: mockd.field.LookupMapField
+#      map_field: identifier
+#      value_field: date_of_birth
+#
+#    ward:
+#      class: mockd.field.OptionValueField
+#      probabilities:
+#        17: 0.5
+#        18: 0.3
+#        19: 0.1
+#
+#    x_ray:
+#      class: mockd.field.OptionValueField
+#      probabilities:
+#        0: 0.2
+#        1: 0.8
+#
+#    exam_date_time:
+#      class: mockd.field.ConcatField
+#      fields:
+#      - class: mockd.field.ConstantField
+#        value: 2020-03-10
+#      - class: mockd.field.ConstantField
+#        value: " "
+#      - class: mockd.field.TimeField
+

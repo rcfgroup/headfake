@@ -1,14 +1,14 @@
 from mockd.util import config_from_yaml_file, create_class_tree
 import csv
 import pprint
-conf = config_from_yaml_file("uhl_patients.yaml")
+conf = config_from_yaml_file("cap_episodes.yaml")
 pprint.pprint(conf)
 fset = conf.get("fieldset")
 for fname, field in fset.fields.items():
     field.init_from_fieldset(fset)
 
 no_rows = 1000
-output_file = "test.txt"
+output_file = "spells.txt"
 with open(output_file, "w") as out:
     fieldnames = []
     for field in fset.fields.values():
