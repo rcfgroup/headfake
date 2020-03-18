@@ -1,0 +1,192 @@
+fieldset:
+  class: mockd.Fieldset
+  fields:
+    main_pat_id:
+      class: mockd.field.IdField
+      prefix: S
+      length: 7
+      start_at: 1000000
+      type: incremental
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gender:
+      class: mockd.field.GenderField
+      male_value: "M"
+      female_value: "F"
+      male_probability: 0.3
+
+    first_name:
+      class: mockd.field.FirstNameField
+      gender_field: gender
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+
+    last_name:
+      class: mockd.field.LastNameField
+      gender_field: gender
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+
+    middle_name:
+      class: mockd.field.MiddleNameField
+      gender_field: gender
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+      firstname_field: first_name
+      empty_probability: 0.6
+
+    dob:
+      class: mockd.field.DateOfBirthField
+      min: 0
+      max: 105
+      mean: 45
+      sd: 13
+      distribution: scipy.stats.norm
+      date_format: "%Y-%m-%d"
+
+    marital_status:
+      class: mockd.field.OptionValueField
+      probabilities:
+        S: 0.5
+        M: 0.3
+        C: 0.1
+
+    ethnicity:
+      class: mockd.field.OptionValueField
+      probabilities:
+        A: 0.1
+        B: 0.3
+        C1: 0.2
+        C2: 0.1
+
+    nhs_no:
+      class: mockd.field.NhsNoField
+
+    gp_title:
+      class: mockd.field.ConstantField
+      value: DR.
+
+    gp_forename:
+      class: mockd.field.FirstNameField
+      gender_field: gender
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gp_surname:
+      class: mockd.field.LastNameField
+      gender_field: gender
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gp_addr1:
+      class: mockd.field.AddressField
+      line_no: 1
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gp_addr2:
+      class: mockd.field.AddressField
+      line_no: 2
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gp_addr3:
+      class: mockd.field.AddressField
+      line_no: 3
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gp_addr4:
+      class: mockd.field.AddressField
+      line_no: 4
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    gp_postcode:
+      class: mockd.field.PostcodeField
+
+    gp_workphone:
+      class: mockd.field.PhoneField
+
+    pat_addr1:
+      class: mockd.field.AddressField
+      line_no: 1
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+
+    pat_addr2:
+      class: mockd.field.AddressField
+      line_no: 2
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    pat_addr3:
+      class: mockd.field.AddressField
+      line_no: 3
+      uppercase: true
+      transformers:
+        - class: mockd.transformer.UpperCase
+
+    postcode:
+      class: mockd.field.PostcodeField
+
+    homephone:
+      class: mockd.field.PhoneField
+
+    hospital_no:
+      class: mockd.field.ConcatField
+      fields:
+        - class: mockd.field.OptionValueField
+          probabilities:
+            S: 0.5
+            M: 0.3
+            C: 0.1
+        - class: mockd.field.IdField
+          length: 7
+          start_at: 1000000
+          type: random
+
+    death_indicator:
+      class: mockd.field.DeceasedField
+      dob_field: dob
+      deceased_date_field: date_of_death
+      date_format: "%Y-%m-%d"
+      # 1 in X risks taken from here. Used Male values. http://www.bandolier.org.uk/booth/Risk/dyingage.html
+      risk_of_death:
+        0-1: 177
+        1-4: 4386
+        5-14: 8333
+        15-24: 1908
+        25-34: 1215
+        35-44: 663
+        45-54: 279
+        55-64: 112
+        65-74: 42
+        75-84: 15
+        85-120: 6
+
+    gp_local_code:
+      class: mockd.field.IdField
+      prefix: Q
+      length: 2
+      type: random_reuse
+      reuse_ids: true
+
+    gp_doh_code:
+      class: mockd.field.IdField
+      prefix: G
+      length: 7
+      type: random_reuse
+      reuse_ids: true
+
+    gp_practicecode:
+      class: mockd.field.IdField
+      prefix: C82
+      length: 3
+      type: random_reuse
+      reuse_ids: true
