@@ -3,26 +3,27 @@ import faker
 from faker.providers import person
 
 from mockd.error import ChangeValue
+from mockd.base import ParamList
 from .util import create_package_class, calculate_age
 import datetime as dt
 import csv
 
 LOCALE = "en_GB"
 
-class Field:
+class Field(ParamList):
+    """
+    Basic mock field. This will set class attributes based on the kwargs dictionary.
+    The key field is 'transformers' which is a list of transformer class instances which will act upon the values
+    at various points.
+    """
     default_params = {}
-    def __init__(self, **kwargs):
-        def_params = self.default_params
-        def_params["transformers"]=[]
-        for k,v in self.default_params.items():
-            if k not in kwargs:
-                kwargs[k]=v
 
-        for k,v in kwargs.items():
-            setattr(self, k, v)
-
-        self.init_params()
+    def after_init_params(self):
         [t.init_params(self) for t in self.transformers]
+
+    def supplement_params(self, params):
+        params["transformers"] = []
+        return params
 
     @property
     def names(self):
@@ -35,6 +36,13 @@ class Field:
         pass
 
     def next_value(self, row):
+        """
+        Get next mock value for field. If a transformers parameter has been provided in the constructor it will run the
+        'before_next' method of each before obtaining the value. Following that it will run the 'after_next' method of
+        each transformer.
+        :param row:
+        :return:
+        """
         try:
             [t.before_next(self, row) for t in self.transformers]
         except ChangeValue as ex:
@@ -48,6 +56,9 @@ class Field:
         return val
 
 class IdField(Field):
+    """
+    Create a mock ID field.
+    """
     default_params = {
         "prefix":"",
         "start_at":0,
@@ -94,12 +105,18 @@ class IdField(Field):
         return self.prefix + curr_no + self.suffix
 
 class GenderField(Field):
+    """
+    Create a mock gender field.
+    """
     default_params = {"male_probability":0.5}
 
     def _next_value(self,row):
         return self.male_value if rnd.random() < self.male_probability else self.female_value
 
 class NameField(Field):
+    """
+    Base for a mock name field.
+    """
     def init_params(self):
         self.fake = faker.Faker(LOCALE)
         self.fake.add_provider(person)
@@ -116,8 +133,10 @@ class NameField(Field):
 
         return name
 
-
 class FirstNameField(NameField):
+    """
+    Mock first name field.
+    """
     def _male_name(self):
         return self.fake.first_name_male()
 
@@ -125,6 +144,9 @@ class FirstNameField(NameField):
         return self.fake.first_name_female()
 
 class LastNameField(NameField):
+    """
+    Mock last name field.
+    """
     def _male_name(self):
         return self.fake.last_name_male()
 
@@ -132,6 +154,9 @@ class LastNameField(NameField):
         return self.fake.last_name_female()
 
 class MiddleNameField(NameField):
+    """
+    Mock middle name field.
+    """
     def _male_name(self):
         return self.fake.last_name_male()
 
@@ -148,6 +173,9 @@ class MiddleNameField(NameField):
         return val
 
 class DateOfBirthField(Field):
+    """
+    Mock date of birth field.
+    """
     def init_params(self):
         self.dist_cls = create_package_class(self.distribution)(loc=self.mean, scale=self.sd)
 
@@ -161,6 +189,9 @@ class DateOfBirthField(Field):
         return dob.strftime(self.date_format)
 
 class OptionValueField(Field):
+    """
+    Mock option value field, which uses a list of probabilities to determine which to pick.
+    """
     def init_params(self):
         self.option_picks = []
 
@@ -171,6 +202,10 @@ class OptionValueField(Field):
         return rnd.choice(self.option_picks)
 
 class NhsNoField(Field):
+    """
+    Mock NHS number field which creates valid NHS numbers with the correct checksum digit.
+    See https://www.closer.ac.uk/wp-content/uploads/CLOSER-NHS-ID-Resource-Report-Apr2018.pdf for details.
+    """
     def init_params(self):
         self.used_values = []
 
@@ -179,6 +214,7 @@ class NhsNoField(Field):
         if val in self.used_values:
             return self.next_value(row)
 
+        self.used_values.append(val)
         self.used_values.append(val)
 
         strval = str(val)
@@ -200,10 +236,16 @@ class NhsNoField(Field):
         return strval[0:3] + " " + strval[3:6] + " " + strval[6:9] + str(checkdigit)
 
 class ConstantField(Field):
+    """
+    Mock constant field.
+    """
     def next_value(self, row):
         return self.value
 
 class AddressField(Field):
+    """
+    Mock address line field.
+    """
     def init_params(self):
         self.fake = faker.Faker(LOCALE)
 
@@ -221,6 +263,9 @@ class AddressField(Field):
             return ""
 
 class PostcodeField(Field):
+    """
+    Mock postcode field.
+    """
     def init_params(self):
         self.fake = faker.Faker(LOCALE)
 
@@ -228,6 +273,9 @@ class PostcodeField(Field):
         return self.fake.postcode()
 
 class PhoneField(Field):
+    """
+    Mock phone number field.
+    """
     def init_params(self):
         self.fake = faker.Faker(LOCALE)
 
@@ -235,14 +283,25 @@ class PhoneField(Field):
         return self.fake.phone_number()
 
 class ConcatField(Field):
+    """
+    Concatenate multiple mock fields together
+    """
     def _next_value(self, row):
         val = ""
         for field in self.fields:
-            val+=field.next_value(row)
+            value = field.next_value(row)
+            val += value
 
         return val
 
+    def init_from_fieldset(self, fieldset):
+        for field in self.fields:
+            field.init_from_fieldset(fieldset)
+
 class DeceasedField(Field):
+    """
+    Deceased mock field which uses a list of age range/mortality risk to estimate if patient is deceased.
+    """
     def init_params(self):
         self.dob_field_name = self.dob_field
 
@@ -289,10 +348,15 @@ class DeceasedField(Field):
         return [self.name,self.deceased_date_field]
 
 class MapFileField(Field):
+    """
+    Mock map file field. Container for a mapping file (e.g. one field acts as the key maps to multiple fieldsUses a mapping file to obtain a key and also stores the mapping so it can be used by a
+    LookupMapFileField field.
+    """
     def init_params(self):
         input_file = self.mapping_file
         with open(input_file, "r") as out:
             reader = csv.DictReader(out)
+            self.fieldnames = reader.fieldnames
             self.map = {l.get(self.key_field):l for l in reader}
 
     def _next_value(self, row):
@@ -300,7 +364,39 @@ class MapFileField(Field):
         return rnd_key
 
 class LookupMapFileField(Field):
+    """
+    Looks up mock data based on a MapFileField. Uses the map_field to determine the key of the data
+    """
+
     def _next_value(self, row):
-        map_field = self.fieldset.fields.get(self.map_field)
-        map_line = map_field.map.get()
-        return map_field.
+        map_key = row.get(self._map_field.name)
+        map_line = self._map_field.map.get(map_key)
+        return map_line.get(self.value_field)
+
+    def init_from_fieldset(self, fieldset):
+        self._map_field = fieldset.fields.get(self.map_field)
+        if self.value_field not in self._map_field.fieldnames:
+            raise ValueError("Lookup map value field  '%s' not found in file" % self.value_field)
+
+class TimeField(Field):
+    """
+    Mock time field.
+    """
+    default_params = {
+        "format":"%H:%M"
+    }
+    def init_params(self):
+        self.fake = faker.Faker(LOCALE)
+
+    def _next_value(self, row):
+        return self.fake.time(pattern=self.format)
+
+# class DependentField(Field):
+#     """
+#     Mock field dependent on values of others.
+#     """
+#     def init_params(self):
+#         self.fake = faker.Faker(LOCALE)
+#
+#     def _next_value(self, row):
+#         return self.fake.time().strftime(pattern='%H:%M')

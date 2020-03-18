@@ -1,10 +1,8 @@
 import random as rnd
 from .error import ChangeValue
-class Transformer:
-    def __init__(self, **kwargs):
-        for k,v in kwargs.items():
-            setattr(self, k, v)
+from .base import ParamList
 
+class Transformer(ParamList):
     def init_params(self, field):
         pass
 

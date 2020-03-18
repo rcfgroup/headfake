@@ -53,7 +53,13 @@ def config_from_yaml_file(yaml_filename):
     with open(yaml_filename,"r") as yaml_file:
         data = yaml.load(yaml_file,  yaml.SafeLoader)
 
-    return config_from_data(data)
+    conf = config_from_data(data)
+
+    fset = conf.get("fieldset")
+    for fname, field in fset.fields.items():
+        field.init_from_fieldset(fset)
+
+    return conf
 
 def config_from_data(data):
     return create_class_tree(None, data)
