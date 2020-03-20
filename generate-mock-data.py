@@ -18,7 +18,6 @@ parser.add_argument("-n", "--no-rows", type=int,
 
 
 options = parser.parse_args()
-print(options)
 
 conf = config_from_yaml_file(options.config)
 

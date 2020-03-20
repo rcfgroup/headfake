@@ -1,11 +1,9 @@
 import random as rnd
 from .error import ChangeValue
 from .base import ParamList
+import datetime as dt
 
 class Transformer(ParamList):
-    def init_params(self, field):
-        pass
-
     def before_next(self, field, row):
         pass
 
@@ -20,3 +18,19 @@ class IntermittentBlanks(Transformer):
     def before_next(self, field, row, value):
         if rnd.random() < self.blank_probability:
             raise ChangeValue("")
+
+class ReformatDateTime(Transformer):
+    def after_next(self, field, row, value):
+        source_dt = dt.datetime.strptime(value, self.source_format)
+        return source_dt.strftime(self.target_format)
+
+class ConvertStrToDate(Transformer):
+    def after_next(self, field, row, value):
+        source_dt = dt.datetime.strptime(value, self.format)
+        return source_dt.date()
+
+class ConvertStrToDateTime(Transformer):
+    def after_next(self, field, row, value):
+        source_dt = dt.datetime.strptime(value, self.format)
+        source_dt = source_dt.replace(tzinfo=dt.timezone.utc)
+        return source_dt

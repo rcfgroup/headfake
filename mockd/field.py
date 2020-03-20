@@ -18,12 +18,12 @@ class Field(ParamList):
     """
     default_params = {}
 
-    def after_init_params(self):
-        [t.init_params(self) for t in self.transformers]
-
     def supplement_params(self, params):
         params["transformers"] = []
         return params
+
+    def init(self):
+        self.init_params()
 
     @property
     def names(self):
@@ -172,19 +172,32 @@ class MiddleNameField(NameField):
 
         return val
 
-class DateOfBirthField(Field):
+class NumericField(Field):
     """
-    Mock date of birth field.
+    Mock numerid field.
     """
+    default_params = {
+        "format":"%d"
+    }
     def init_params(self):
         self.dist_cls = create_package_class(self.distribution)(loc=self.mean, scale=self.sd)
 
-    def _next_value(self, row):
-        age_in_years = self.dist_cls.rvs()
-        if age_in_years<self.min or age_in_years>self.max:
-            return self.next_value(row)
+    def _next_number(self):
+        number = self.dist_cls.rvs()
+        if number < self.min or number > self.max:
+            return self._next_number()
 
-        age_in_days = age_in_years * 365.25
+        return number
+
+    def _next_value(self, row):
+        return self._next_number()
+
+class DateOfBirthField(NumericField):
+    """
+    Mock date of birth field based on numeric distribution of age in years.
+    """
+    def _next_value(self, row):
+        age_in_days = self._next_number() * 365.25
         dob = dt.datetime.now() - dt.timedelta(days=age_in_days)
         return dob.strftime(self.date_format)
 
@@ -239,7 +252,7 @@ class ConstantField(Field):
     """
     Mock constant field.
     """
-    def next_value(self, row):
+    def _next_value(self, row):
         return self.value
 
 class AddressField(Field):

@@ -11,19 +11,15 @@ class ParamList:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-        self.init_params()
-        self.after_init_params()
+        self.init()
+
 
     @property
     def names(self):
         return [self.name]
 
-    def init_params(self):
+    def init(self):
         pass
 
-    def after_init_params(self):
-        [t.init_params(self) for t in self.transformers]
-
     def supplement_params(self, params):
-        params["transformers"] = []
         return params
