@@ -3,3 +3,5 @@ pandas
 PyYaml
 scipy
 matplotlib
+attr
+pytest

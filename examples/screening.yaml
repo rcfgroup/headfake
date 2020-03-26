@@ -1,0 +1,71 @@
+fieldset:
+  class: headfake.Fieldset
+  fields:
+    spell_id:
+      class: headfake.field.IdField
+      prefix: SPL
+      generator:
+        class: headfake.field.IncrementIdGenerator
+        length: 10
+        min_value: 1000000000
+
+    identifier:
+      class: headfake.field.MapFileField
+      key_field: main_pat_id
+      mapping_file: "examples/test_data/patients.txt"
+
+    admission_date:
+      class: headfake.field.ConstantField
+      value: "2020-03-10"
+
+    admission_time:
+      class: headfake.field.TimeField
+
+    first_names:
+      class: headfake.field.ConcatField
+      fields:
+      - class: headfake.field.LookupMapFileField
+        map_file_field: identifier
+        lookup_value_field: first_name
+      - class: headfake.field.ConstantField
+        value: " "
+      - class: headfake.field.LookupMapFileField
+        map_file_field: identifier
+        lookup_value_field: middle_name
+
+    last_name:
+      class: headfake.field.LookupMapFileField
+      map_file_field: identifier
+      lookup_value_field: last_name
+
+    date_of_birth:
+      class: headfake.field.LookupMapFileField
+      map_file_field: identifier
+      lookup_value_field: dob
+
+    ward:
+      class: headfake.field.OptionValueField
+      probabilities:
+        "17": 0.5
+        "18": 0.2
+        "19": 0.1
+        "20": 0.2
+        "21": 0.1
+        "22": 0.1
+#
+    x_ray:
+      class: headfake.field.OptionValueField
+      probabilities:
+        "0": 0.2
+        "1": 0.8
+
+    exam_date_time:
+      class: headfake.field.ConcatField
+      fields:
+      - class: headfake.field.ConstantField
+        value: "2020-03-10"
+      - class: headfake.field.ConstantField
+        value: " "
+      - class: headfake.field.TimeField
+        format: "%H:%M"
+

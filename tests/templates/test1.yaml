@@ -1,0 +1,193 @@
+fieldset:
+  class: headfake.Fieldset
+  fields:
+    main_pat_id:
+      class: headfake.field.IdField
+      prefix: S
+      generator:
+        class: headfake.field.IncrementIdGenerator
+        length: 7
+        min_value: 1000000
+
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gender:
+      class: headfake.field.GenderField
+      male_value: "M"
+      female_value: "F"
+      male_probability: 0.3
+
+    first_name:
+      class: headfake.field.FirstNameField
+      gender_field: gender
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+
+    last_name:
+      class: headfake.field.LastNameField
+      gender_field: gender
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+
+    middle_name:
+      class: headfake.field.MiddleNameField
+      gender_field: gender
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+      first_name_field: first_name
+
+    dob:
+      class: headfake.field.DateOfBirthField
+      min: 0
+      max: 105
+      mean: 45
+      sd: 13
+      distribution: scipy.stats.norm
+      date_format: "%Y-%m-%d"
+
+    marital_status:
+      class: headfake.field.OptionValueField
+      probabilities:
+        S: 0.5
+        M: 0.3
+        C: 0.1
+
+    ethnicity:
+      class: headfake.field.OptionValueField
+      probabilities:
+        A: 0.1
+        B: 0.3
+        C1: 0.2
+        C2: 0.1
+
+    nhs_no:
+      class: headfake.field.NhsNoField
+
+    gp_title:
+      class: headfake.field.ConstantField
+      value: DR.
+
+    gp_forename:
+      class: headfake.field.FirstNameField
+      gender_field: gender
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gp_surname:
+      class: headfake.field.LastNameField
+      gender_field: gender
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gp_addr1:
+      class: headfake.field.AddressField
+      line_no: 1
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gp_addr2:
+      class: headfake.field.AddressField
+      line_no: 2
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gp_addr3:
+      class: headfake.field.AddressField
+      line_no: 3
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gp_addr4:
+      class: headfake.field.AddressField
+      line_no: 4
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    gp_postcode:
+      class: headfake.field.PostcodeField
+
+    gp_workphone:
+      class: headfake.field.PhoneField
+
+    pat_addr1:
+      class: headfake.field.AddressField
+      line_no: 1
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+
+    pat_addr2:
+      class: headfake.field.AddressField
+      line_no: 2
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    pat_addr3:
+      class: headfake.field.AddressField
+      line_no: 3
+      transformers:
+        - class: headfake.transformer.UpperCase
+
+    postcode:
+      class: headfake.field.PostcodeField
+
+    homephone:
+      class: headfake.field.PhoneField
+
+    hospital_no:
+      class: headfake.field.ConcatField
+      fields:
+        - class: headfake.field.OptionValueField
+          probabilities:
+            S: 0.5
+            M: 0.3
+            C: 0.1
+        - class: headfake.field.IdField
+          generator:
+            class: headfake.field.RandomNoReuseIdFieldType
+            length: 7
+            min_value: 1000000
+
+    death_indicator:
+      class: headfake.field.DeceasedField
+      dob_field: dob
+      deceased_date_field: date_of_death
+      date_format: "%Y-%m-%d"
+      # 1 in X risks taken from here. Used Male values. http://www.bandolier.org.uk/booth/Risk/dyingage.html
+      risk_of_death:
+        0-1: 177
+        1-4: 4386
+        5-14: 8333
+        15-24: 1908
+        25-34: 1215
+        35-44: 663
+        45-54: 279
+        55-64: 112
+        65-74: 42
+        75-84: 15
+        85-120: 6
+
+    gp_local_code:
+      class: headfake.field.IdField
+      prefix: Q
+      generator:
+        class: headfake.field.RandomReuseIdFieldType
+        length: 2
+
+    gp_doh_code:
+      class: headfake.field.IdField
+      prefix: G
+      generator:
+        class: headfake.field.RandomReuseIdFieldType
+        length: 7
+
+    gp_practicecode:
+      class: headfake.field.IdField
+      prefix: C82
+      generator:
+        class: headfake.field.RandomReuseIdFieldType
+        length: 3
