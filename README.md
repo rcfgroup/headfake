@@ -28,10 +28,20 @@ More comprehensive documentation is in progress. As it stands there are probably
 # Installation
 Python 3.6+ only supported. The best thing to do at the moment is to create and activate a virtual environment in the package path.
 
+Clone from git initially:
+
+
+```bash
+git clone https://github.com/rcfgroup/headfake
+cd headfake
+```
+
+Then it is easiest to setup a python 3 virtual environment:
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
+
 Install requirements using pip:
 ```bash
 pip install -r requirements.txt
