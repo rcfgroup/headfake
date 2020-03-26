@@ -26,23 +26,23 @@ in order to then perform the data generation.
 More comprehensive documentation is in progress. As it stands there are probably more efficient ways to generate some of the data (e.g. the age simulation could be done using bayesian approaches with prior odds).
 
 # Installation
-Python 3.5+ only supported. The best thing to do at the moment is to create and activate a virtual environment in the package path.
+Python 3.6+ only supported. The best thing to do at the moment is to create and activate a virtual environment in the package path.
 
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 ```
 Install requirements using pip:
 ```bash
-pip install -e .
+pip install -r requirements.txt
 ```
 
 Then try running the script on one of the examples:
 ```bash
-python generate-mock-data.py examples/uhl_patients/uhl_patients.yaml --no-rows=50
+python generate-fake-data.py examples/patients.yaml --no-rows=100
 ```
 
-This should generate 50 rows of example data. Using an --output-file flag will send it to a file rather than to the screen.
+This should generate 100 rows of example data. Using an --output-file flag will send it to a file rather than to the screen.
 
 # Future development
 - [ ] Support for clinical coding systems (e.g. ICD10, READ, SNOMED-CT)

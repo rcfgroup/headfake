@@ -4,4 +4,3 @@ PyYaml
 scipy
 matplotlib
 attr
-pytest
