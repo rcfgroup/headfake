@@ -1,7 +1,0 @@
-faker
-pandas
-PyYaml
-scipy
-matplotlib
-attrs
-pytest

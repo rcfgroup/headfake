@@ -10,10 +10,10 @@ from typing import List, Dict, Any, Optional, Union
 import attr
 import faker
 
-from headfake import Fieldset
 from headfake.error import ChangeValue
+from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
-from .util import create_package_class, calculate_age
+from headfake.util import create_package_class, calculate_age, locate_file
 
 LOCALE = "en_GB"
 
@@ -517,7 +517,7 @@ class MapFileField(Field):
 
     @key_field_store.default
     def _default_key_field_store(self):
-        input_file = self.mapping_file
+        input_file = locate_file(self.mapping_file)
         with open(input_file, "r") as out:
             reader = csv.DictReader(out)
             map = {l.get(self.key_field): l for l in reader}

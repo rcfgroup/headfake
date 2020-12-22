@@ -1,9 +1,11 @@
-import re
+import errno
+import os
+import yaml
+
 from collections import OrderedDict
 from importlib import import_module
 from inspect import signature
-
-import yaml
+from pathlib import Path
 
 
 def create_package_class(package_name):
@@ -89,7 +91,7 @@ def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
         birthday = start_date.replace(year=end_date.year)
 
         # raised when birth date is February 29
-    # and the current year is not a leap year
+        # and the current year is not a leap year
     except ValueError:
         birthday = start_date.replace(year=start_date.year,
                                       month=start_date.month + 1, day=1)
@@ -98,3 +100,32 @@ def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
         return end_date.year - start_date.year - 1
     else:
         return end_date.year - start_date.year
+
+
+def locate_file(file):
+    """
+    locate a file either from the given path or in the package resources
+
+    :param file: The file to locate. It can either be an absolute or relative path in the
+    filesystem or in the package resources
+    :return: a PosixPath of the file if found. If the file is not found then an exception is raised
+    """
+
+    try:
+        from importlib import resources
+    except ImportError:
+        import importlib_resources as resources
+
+    path = Path(file)
+
+    if path.is_file():
+        return path
+
+    # if file does not exist then check to see if it's in the package resources
+    with resources.path("headfake", ".") as resource_root:
+        path = resource_root / path
+
+    if path.is_file():
+        return path
+
+    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))

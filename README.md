@@ -6,7 +6,7 @@
 
 Key features include:
 
-* Extensible field types to handle generation of different types of data.
+* Extensible field types to handle generation of differentw types of data.
 
 * Template-based config which automatically constructs the Python class tree
 in order to then perform the data generation.
@@ -28,28 +28,16 @@ More comprehensive documentation is in progress. As it stands there are probably
 # Installation
 Python 3.6+ only supported. The best thing to do at the moment is to create and activate a virtual environment in the package path.
 
-Clone from git initially:
-
+In your virtual environment, install the package from github:
 
 ```bash
-git clone https://github.com/rcfgroup/headfake
-cd headfake
+pip install git+ssh://git@github.com/rcfgroup/headfake.git
 ```
 
-Then it is easiest to setup a python 3 virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+Then run `headfake` with one of the templates from the examples directory:
 
-Install requirements using pip:
 ```bash
-pip install -r requirements.txt
-```
-
-Then try running the script on one of the examples:
-```bash
-python generate-fake-data.py examples/patients.yaml --no-rows=100
+headfake examples/patients.yaml --no-rows=100
 ```
 
 This should generate 100 rows of example data. Using an --output-file flag will send it to a file rather than to the screen.
