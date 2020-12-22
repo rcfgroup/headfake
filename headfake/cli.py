@@ -1,7 +1,10 @@
+"""
+This file implements the command line interface for headfake
+"""
+
 import argparse
 
 from headfake import output, HeadFake
-from headfake.util import class_tree_from_yaml_file, locate_file
 
 class Command:
     """
@@ -11,7 +14,8 @@ class Command:
     @staticmethod
     def run(args=None):
         """
-        entrypoint for command line script
+        entrypoint for command line script. this entry point is registered by setup.py when the
+        package is installed.
 
         Returns:
             None
@@ -27,9 +31,11 @@ class Command:
         """
 
         parser = argparse.ArgumentParser(
-            description="HEAlth Data Faker provides a command-line script to create mock data "\
-                "files based on a YAML-based template file (see examples for example templates). "\
-                "It use the Python faker package to generate names and contact details.")
+
+            description="HEAlth Data Faker provides a command-line script to create mock data " \
+                "files based on a YAML-based template file (see examples/* for example " \
+                "templates). HeadFake uses the python package 'faker' to generate names and " \
+                "contact details.")
 
         parser.add_argument(
             "template",
@@ -69,7 +75,7 @@ class Command:
             None
         """
 
-        headfake = HeadFake(self.args.template, self.args.seed)
+        headfake = HeadFake.from_yaml(self.args.template, seed=self.args.seed)
 
         if self.args.output_file:
             outfile = output.FileOutput(self.args)

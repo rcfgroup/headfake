@@ -118,14 +118,12 @@ def locate_file(file):
 
     path = Path(file)
 
-    if path.is_file():
-        return path
-
-    # if file does not exist then check to see if it's in the package resources
-    with resources.path("headfake", ".") as resource_root:
-        path = resource_root / path
+    if not path.is_file():
+        # if file does not exist then check to see if it's in the package resources
+        with resources.path("headfake", ".") as resource_root:
+            path = resource_root / path
 
     if path.is_file():
-        return path
+        return path.absolute()
 
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))
