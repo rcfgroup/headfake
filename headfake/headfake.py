@@ -14,16 +14,16 @@ class HeadFake:
     """
     HeadFake class provide
     """
-    def __init__(self, prarms, seed=None):
+    def __init__(self, params, seed=None):
         """
         constructor - creates an instance of HeadFake object
 
         Args:
-            prarms: parameters for generating data as a hierarchical dictionary
+            params: parameters for generating data as a hierarchical dictionary
             seed: seed for initializing the pseudo-random generator
         """
 
-        self.prarms = prarms
+        self.params = params
 
         if seed:
             random.seed(seed)
@@ -57,7 +57,7 @@ class HeadFake:
             a pandas dataframe
         """
 
-        class_tree = create_class_tree(None, self.prarms)
+        class_tree = create_class_tree(None, self.params)
 
         fieldset = class_tree.get("fieldset")
         for field in fieldset.fields.values():

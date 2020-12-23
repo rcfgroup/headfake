@@ -37,7 +37,7 @@ pip install git+ssh://git@github.com/rcfgroup/headfake.git
 
 You can run `headfake` from the command line without writing any code. 
 
-```bash
+```
 usage: headfake [-h] [-o OUTPUT_FILE] [-n NO_ROWS] [-s SEED] template
 
 HEAlth Data Faker provides a command-line script to create mock data files based on a YAML-based 
@@ -45,7 +45,8 @@ template file (see examples/* for example templates). HEADFake uses the python p
 generate names and contact details.
 
 positional arguments:
-  template              YAML-based template file describing structure of health data fields to generate
+  template              YAML-based template file describing structure of health data fields to 
+                        generate
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -55,7 +56,6 @@ optional arguments:
                         Number of rows to generate
   -s SEED, --seed SEED  Seed for the random data generator
 ````
-
 
 You can either write your own template or use one from the examples directory as shown below:
 

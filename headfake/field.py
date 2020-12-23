@@ -584,8 +584,8 @@ class PasswordField(FakerField):
     length = attr.ib(16)
     special_chars = attr.ib(True)
     digits = attr.ib(True)
-    upper_case= attr.ib(True)
-    lower_case= attr.ib(True)
+    upper_case = attr.ib(True)
+    lower_case = attr.ib(True)
 
     def _next_value(self, row):
         return self._fake.password(
