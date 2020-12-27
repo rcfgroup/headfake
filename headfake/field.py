@@ -410,8 +410,13 @@ class PhoneField(FakerField):
     Mock phone number field.
     """
 
+    type = attr.ib(default='default')
+
     def _next_value(self, row):
-        return self._fake.phone_number()
+        if self.type in ['cell', 'mobile']:
+            return self._fake.cellphone_number()
+        else:
+            return self._fake.phone_number()
 
 
 @attr.s(kw_only=True)
