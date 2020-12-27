@@ -22,13 +22,9 @@ class HeadFake:
             params: parameters for generating data as a hierarchical dictionary
             seed: seed for initializing the pseudo-random generator
         """
+        self.set_seed(seed)
+        self.fieldset = self.create_fieldset(params)
 
-        self.params = params
-
-        if seed:
-            random.seed(seed)
-            np.random.seed(seed)
-            Faker.seed(seed)
 
     @staticmethod
     def from_yaml(filename, **kwargs):
@@ -46,7 +42,45 @@ class HeadFake:
         path = locate_file(filename)
         return HeadFake(yaml.load(open(path), yaml.SafeLoader), **kwargs)
 
-    def generate(self, num_rows):
+    @staticmethod
+    def set_seed(seed):
+        """
+        Set the seed for initializing random number generator
+
+        Args:
+            seed: seed for initializing random number generator
+
+        Returns:
+            None
+
+        """
+        if seed:
+            random.seed(seed)
+            np.random.seed(seed)
+            Faker.seed(seed)
+
+
+    def create_fieldset(self, params):
+        """
+        create the FieldSet from the parameters passed
+
+        Args:
+            params: parameters for the fieldset
+
+        Returns:
+            A FieldSet object
+        """
+
+        class_tree = create_class_tree(None, params)
+
+        fieldset = class_tree.get("fieldset")
+        for field in fieldset.fields.values():
+            field.init_from_fieldset(fieldset)
+
+        return fieldset
+
+
+    def generate(self, num_rows=1):
         """
         generate random data based on the parameters specified in the constructor
 
@@ -57,10 +91,4 @@ class HeadFake:
             a pandas dataframe
         """
 
-        class_tree = create_class_tree(None, self.params)
-
-        fieldset = class_tree.get("fieldset")
-        for field in fieldset.fields.values():
-            field.init_from_fieldset(fieldset)
-
-        return fieldset.generate_data(num_rows)
+        return self.fieldset.generate_data(num_rows)
