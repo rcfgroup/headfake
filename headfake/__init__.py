@@ -1,4 +1,2 @@
-
-class Fieldset:
-    def __init__(self, fields, **kwargs):
-        self.fields = fields
+from .fieldset import Fieldset
+from .headfake import HeadFake
