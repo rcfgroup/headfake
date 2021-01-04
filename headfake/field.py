@@ -10,10 +10,10 @@ from typing import List, Dict, Any, Optional, Union
 import attr
 import faker
 
-from headfake import Fieldset
 from headfake.error import ChangeValue
+from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
-from .util import create_package_class, calculate_age
+from headfake.util import create_package_class, calculate_age, locate_file
 
 LOCALE = "en_GB"
 
@@ -410,8 +410,13 @@ class PhoneField(FakerField):
     Mock phone number field.
     """
 
+    type = attr.ib(default='default')
+
     def _next_value(self, row):
-        return self._fake.phone_number()
+        if self.type in ['cell', 'mobile']:
+            return self._fake.cellphone_number()
+        else:
+            return self._fake.phone_number()
 
 
 @attr.s(kw_only=True)
@@ -517,7 +522,7 @@ class MapFileField(Field):
 
     @key_field_store.default
     def _default_key_field_store(self):
-        input_file = self.mapping_file
+        input_file = locate_file(self.mapping_file)
         with open(input_file, "r") as out:
             reader = csv.DictReader(out)
             map = {l.get(self.key_field): l for l in reader}
@@ -560,3 +565,38 @@ class TimeField(FakerField):
 
     def _next_value(self, row):
         return self._fake.time(pattern=self.format)
+
+
+@attr.s(kw_only=True)
+class EmailField(FakerField):
+    """
+    Create mock email using faker
+    """
+    safe = attr.ib(True)
+
+    def _next_value(self, row):
+        if self.safe:
+            return self._fake.safe_email()
+        else:
+            return self._fake.email()
+
+
+@attr.s(kw_only=True)
+class PasswordField(FakerField):
+    """
+    Create mock password using faker
+    """
+    length = attr.ib(16)
+    special_chars = attr.ib(True)
+    digits = attr.ib(True)
+    upper_case = attr.ib(True)
+    lower_case = attr.ib(True)
+
+    def _next_value(self, row):
+        return self._fake.password(
+            length=self.length,
+            special_chars=self.special_chars,
+            digits=self.digits,
+            upper_case=self.upper_case,
+            lower_case=self.lower_case
+        )

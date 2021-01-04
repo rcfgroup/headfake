@@ -23,4 +23,9 @@ ex_extras = dict(filter(lambda i: i[0] not in exclude_keys, extras.items()))
 # Concatenate all the values together for 'all'
 extras["all"] = list(chain.from_iterable(ex_extras.values()))
 
-setup(extras_require=extras, use_scm_version=True, setup_requires=['setuptools_scm'])
+setup(
+    extras_require=extras,
+    use_scm_version=True,
+    setup_requires=['setuptools_scm'],
+    package_data={'headfake': ['examples/*', 'examples/test_data/*']}
+)

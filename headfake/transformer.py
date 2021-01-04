@@ -1,4 +1,5 @@
 import random as rnd
+import re
 import uuid
 
 import attr
@@ -48,3 +49,47 @@ class IntermittentBlanks(Transformer):
     def before_next(self, field, row, value):
         if rnd.random() < self.blank_probability:
             raise ChangeValue(self.blank_value)
+
+
+@attr.s(kw_only=True)
+class RegexSubstitute(Transformer):
+    """
+    Perform a regular expression substitution
+    """
+    pattern = attr.ib()
+    replace = attr.ib()
+
+    def after_next(self, field, row, value):
+        return re.sub(self.pattern, self.replace, value)
+
+@attr.s(kw_only=True)
+class Truncate(Transformer):
+    """
+    Truncate a value
+    """
+    length = attr.ib()
+
+    def after_next(self, field, row, value):
+        return value[:int(self.length)]
+
+
+@attr.s(kw_only=True)
+class Padding(Transformer):
+    """
+    Pad a value to be a given length with the specified fill character
+    """
+    length = attr.ib()
+    fill = attr.ib()
+    align = attr.ib('left')
+
+    def after_next(self, field, row, value):
+        methods = {
+            'left': value.ljust,
+            'right': value.rjust,
+        }
+        pad = methods.get(self.align)
+        if pad:
+            return pad(self.length, str(self.fill))
+        else:
+            return value
+
