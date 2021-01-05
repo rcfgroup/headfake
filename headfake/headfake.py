@@ -40,7 +40,9 @@ class HeadFake:
 
         """
         path = locate_file(filename)
-        return HeadFake(yaml.load(open(path), yaml.SafeLoader), **kwargs)
+        with open(path) as file:
+            params = yaml.safe_load(file)
+        return HeadFake(params, **kwargs)
 
     @staticmethod
     def set_seed(seed):
