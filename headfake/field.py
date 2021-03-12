@@ -1,4 +1,6 @@
-# Fake/mock field generation logic
+"""
+Fake/mock field generation logic
+"""
 
 import csv
 import datetime
@@ -14,6 +16,7 @@ from headfake.error import ChangeValue
 from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
 from headfake.util import create_package_class, calculate_age, locate_file
+from dataclasses import dataclass
 
 LOCALE = "en_GB"
 
@@ -74,7 +77,6 @@ class Field(ABC):
     @abstractmethod
     def _next_value(self, row:Dict[str,Any]):
         pass
-
 
 @attr.s(kw_only=True)
 class IdGenerator(ABC):
@@ -167,33 +169,6 @@ class IdField(Field):
         val = self.generator.select_id()
 
         return self.prefix + val + self.suffix
-
-
-@attr.s(kw_only=True)
-class GenderField(Field):
-    """
-    Field which generates gender values according to a 'male_probability' (default=0.5). Options include male_value (value of male selection), female_value (value of female
-    selection and male_probability (probability that gender is male, default=0.5).
-
-    e.g.
-    ....
-    field = GenderField(male_value="M",female_value="F", male_probability=0.55)
-    field.next_value(row)
-
-    M
-    F
-    M
-    M
-    F
-
-    """
-
-    male_probability = attr.ib(default=0.5)
-    male_value = attr.ib()
-    female_value = attr.ib()
-
-    def _next_value(self, row):
-        return self.male_value if rnd.random() < self.male_probability else self.female_value
 
 
 @attr.s(kw_only=True)
@@ -326,6 +301,47 @@ class OptionValueField(Field):
     def _next_value(self, row):
         return rnd.choice(self._option_picks)
 
+
+@attr.s(kw_only=True)
+class DerivedField(Field):
+    @abstractmethod
+    def _internal_field(self):
+        pass
+
+    def __attrs_post_init__(self):
+        self._internal_field = self._internal_field()
+
+    def next_value(self, row):
+        self._internal_field.next_value(row)
+
+@attr.s(kw_only=True)
+class GenderField(DerivedField):
+    """
+    Field which generates gender values according to a 'male_probability' (default=0.5). Options include male_value (value of male selection), female_value (value of female
+    selection and male_probability (probability that gender is male, default=0.5).
+
+    e.g.
+    ```python
+    field = GenderField(male_value="M",female_value="F", male_probability=0.55)
+    field.next_value(row)
+
+    M
+    F
+    M
+    M
+    F
+    ```
+    """
+    male_probability = attr.ib(default=0.5)
+    male_value = attr.ib()
+    female_value = attr.ib()
+
+    def _internal_field(self):
+        gender_probs = {
+            self.male_value:self.male_probability,
+            self.female_value:1-self.male_probability
+        }
+        return OptionValueField(probabilities=gender_probs)
 
 @attr.s
 class NhsNoField(Field):
@@ -508,10 +524,10 @@ class MapFileField(Field):
     Acts as focal point for random selection from a 'mapping_file'. N.B. Currently the mapping file is an absolute path
     to a file, but in future it should take into account interlinked fieldsets.
 
-    The 'key_field' has two roles:
+    The `key_field` has two roles:
 
-    1) it specifies the field in the mapping file where the values in this field come from
-    2) it is used as the key to lookup values when used in conjunction with one or LookupMapFileFields
+    1. it specifies the field in the mapping file where the values in this field come from
+    2. it is used as the key to lookup values when used in conjunction with one or LookupMapFileFields
 
     This class also acts as a store for the mapping file and has to be specified in the LookupMapFileField.
     """

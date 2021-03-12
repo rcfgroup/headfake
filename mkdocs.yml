@@ -1,0 +1,48 @@
+docs_dir: docs
+markdown_extensions: ['admonition',
+                                    'codehilite',
+                                    'extra',
+                                    'pymdownx.details',
+                                    'pymdownx.highlight']
+repo_name: 'headfake'
+repo_url: 'https://github.com/rcfgroup/headfake'
+theme:
+    name: 'material'
+    features:
+      - navigation.instant
+      - navigation.sections
+    #icon:
+      #logo: "/assets/headfake-logo.png"
+
+
+site_name: HEADFAKE
+site_description: HEAlth Data FAKer for all your fake data needs
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            filters:
+              - "!^_"  # exlude all members starting with _
+              - "^__init__$"  # but always include __init__ modules and methods
+          show_root_heading: true
+nav:
+  - Installation and basic usage: "installation.md"
+  - Tutorials:
+      "1. Generate a fake data file": 'tutorials/tutorial1.md'
+      "2. Use HEADFAKE to generate data in a program": 'tutorials/tutorial2.md'
+  - Discussion:
+      "Fieldsets": "discussion/fieldsets.md"
+  - 'How to..':
+      "Creating custom fields": "how-to/create-custom-field.md"
+      "Use field transformers": "how-to/create-custom-transformer.md"
+  - Reference:
+    - headfake: api/headfake.md
+    - cli: api/cli.md
+    - field: api/field.md
+    - fieldset: api/fieldset.md
+    - transformer: api/transformer.md
+    - output: api/output.md
+    - error: api/error.md
+    - util: api/util.md

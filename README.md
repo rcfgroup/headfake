@@ -86,6 +86,16 @@ If you're developing this package, you can install it using pip as shown below:
 pip install -e ".[tests]"
 ```
 
+# Building the documentation
+To build the documentation you can install dependencies using pip as shown below:
+```bash
+pip install -e ".[docs]"
+```
+Then to build the docs it should be as simple as running:
+```bash
+mkdocs build
+```
+
 # Future development
 - [ ] Support for clinical coding systems (e.g. ICD10, READ, SNOMED-CT)
 - [ ] Dependent fields (e.g. one field's values are dependent on the values from one or more)
