@@ -3,7 +3,6 @@ Fake/mock field generation logic
 """
 
 import csv
-import datetime
 import random as rnd
 import uuid
 from abc import ABC, abstractmethod
@@ -16,7 +15,6 @@ from headfake.error import ChangeValue
 from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
 from headfake.util import create_package_class, calculate_age, locate_file
-from dataclasses import dataclass
 
 LOCALE = "en_GB"
 
@@ -185,102 +183,6 @@ class FakerField(Field):
 
 
 @attr.s(kw_only=True)
-class NameField(FakerField):
-    """
-    Base for a name field which uses faker to generate. The supplied 'gender_field' points to the field in the fieldset
-    which generates the gender value. It uses this field and row value to determine whether the generated name is male
-    or female.
-    """
-    gender_field = attr.ib()
-
-    def init_from_fieldset(self, fieldset):
-        self.gender = fieldset.fields.get(self.gender_field)
-
-    def _next_value(self, row):
-        if row.get(self.gender_field) == self.gender.male_value:
-            return self._male_name()
-        if row.get(self.gender_field) == self.gender.female_value:
-            return self._female_name()
-
-class FirstNameField(NameField):
-    """
-    Generate first name based on gender using the faker module (see NameField).
-    """
-    def _male_name(self):
-        return self._fake.first_name_male()
-
-    def _female_name(self):
-        return self._fake.first_name_female()
-
-
-class LastNameField(NameField):
-    """
-    Generate last name using the faker module.
-    """
-    def _male_name(self):
-        return self._fake.last_name_male()
-
-    def _female_name(self):
-        return self._fake.last_name_female()
-
-
-@attr.s(kw_only=True)
-class MiddleNameField(NameField):
-    """
-    Mock middle name field.
-    """
-
-    first_name_field = attr.ib()
-
-    def _male_name(self):
-        return self._fake.first_name_male()
-
-    def _female_name(self):
-        return self._fake.first_name_female()
-
-    def next_value(self, row):
-        val = super().next_value(row)
-        if val == "":
-            return val
-        if val == row.get(self.first_name_field):
-            return self.next_value(row)
-
-        return val
-
-
-@attr.s(kw_only=True)
-class DateOfBirthField(Field):
-    """
-    Mock date of birth field. Calculates age based on random float selection from a scipy statistical distribution.
-    This is multiplied by 365.25 to get age in days and a delta age (in days) from now is determined.
-    The date is then output according to the date_format property.
-
-    A min and max property are also required to keep the distribution within a particular range.
-    """
-    distribution: str = attr.ib()
-    mean: float = attr.ib()
-    sd: float = attr.ib()
-    min: float = attr.ib()
-    max: float = attr.ib()
-    date_format: str = attr.ib()
-
-    _dist_cls = attr.ib()
-
-    @_dist_cls.default
-    def _default_dist_cls(self):
-        return create_package_class(self.distribution)(loc=self.mean, scale=self.sd)
-
-    def _next_value(self, row):
-        age_in_years = self._dist_cls.rvs()
-        if age_in_years < self.min or age_in_years > self.max:
-            return self.next_value(row)
-
-        age_in_days = age_in_years * 365.25
-        dob = datetime.datetime.now() - datetime.timedelta(days=age_in_days)
-        return dob.strftime(self.date_format)
-
-
-@attr.s(kw_only=True)
 class OptionValueField(Field):
     """
     Mock option value field, which uses a list of probabilities to determine which to pick.
@@ -311,128 +213,18 @@ class DerivedField(Field):
     def __attrs_post_init__(self):
         self._internal_field = self._internal_field()
 
-    def next_value(self, row):
-        self._internal_field.next_value(row)
-
-@attr.s(kw_only=True)
-class GenderField(DerivedField):
-    """
-    Field which generates gender values according to a 'male_probability' (default=0.5). Options include male_value (value of male selection), female_value (value of female
-    selection and male_probability (probability that gender is male, default=0.5).
-
-    e.g.
-    ```python
-    field = GenderField(male_value="M",female_value="F", male_probability=0.55)
-    field.next_value(row)
-
-    M
-    F
-    M
-    M
-    F
-    ```
-    """
-    male_probability = attr.ib(default=0.5)
-    male_value = attr.ib()
-    female_value = attr.ib()
-
-    def _internal_field(self):
-        gender_probs = {
-            self.male_value:self.male_probability,
-            self.female_value:1-self.male_probability
-        }
-        return OptionValueField(probabilities=gender_probs)
-
-@attr.s
-class NhsNoField(Field):
-    """
-    Mock NHS number field which creates valid NHS numbers with the correct checksum digit.
-    See https://www.closer.ac.uk/wp-content/uploads/CLOSER-NHS-ID-Resource-Report-Apr2018.pdf for details.
-    """
-    _used_values = attr.ib(factory=list)
-
     def _next_value(self, row):
-        val = rnd.randrange(100000000, 999999999)
-        if val in self._used_values:
-            return self._next_value(row)
-
-        self._used_values.append(val)
-
-        strval = str(val)
-        checksum = 0
-
-        multiplier = 10
-
-        for char in strval:
-            checksum += (multiplier * int(char))
-            multiplier -= 1
-
-        checkdigit = 11 - (checksum % 11)
-        if checkdigit == 11:
-            checkdigit = 0
-
-        if checkdigit == 10:
-            return self._next_value(row)
-
-        return strval[0:3] + " " + strval[3:6] + " " + strval[6:9] + str(checkdigit)
-
+        return self._internal_field.next_value(row)
 
 @attr.s(kw_only=True)
 class ConstantField(Field):
     """
-    Mock constant field.
+    Mock constant field. Deprecated: no longer needed - can simply use scalar value (e.g. string, number)
     """
     value = attr.ib()
 
     def _next_value(self, row):
         return self.value
-
-
-@attr.s
-class AddressField(FakerField):
-    """
-    Mock address line field.
-    """
-
-    line_no = attr.ib()
-
-    def _next_value(self, row):
-        if self.line_no == 1:
-            return self._fake.street_address()
-
-        if self.line_no == 2:
-            return self._fake.secondary_address()
-
-        if self.line_no == 3:
-            return self._fake.city()
-
-        if self.line_no == 4:
-            return ""
-
-
-@attr.s(kw_only=True)
-class PostcodeField(FakerField):
-    """
-    Mock postcode field.
-    """
-
-    def _next_value(self, row):
-        return self._fake.postcode()
-
-
-@attr.s(kw_only=True)
-class PhoneField(FakerField):
-    """
-    Mock phone number field.
-    """
-
-    type = attr.ib(default='default')
-
-    def _next_value(self, row):
-        if self.type in ['cell', 'mobile']:
-            return self._fake.cellphone_number()
-        else:
-            return self._fake.phone_number()
 
 
 @attr.s(kw_only=True)
@@ -454,68 +246,6 @@ class ConcatField(Field):
     def init_from_fieldset(self, fieldset):
         for field in self.fields:
             field.init_from_fieldset(fieldset)
-
-
-@attr.s(kw_only=True)
-class DeceasedField(Field):
-    """
-    Deceased mock field which uses a list of age range/mortality risk and a simulated patient 'aging' to determine if a
-    patient is deceased and when they died.
-    """
-    deceased_true_value = attr.ib(default=1)
-    deceased_false_value = attr.ib(default=0)
-    dob_field: str = attr.ib()
-    deceased_date_field: str = attr.ib()
-
-    risk_of_death: Dict[str, str] = attr.ib()
-    date_format = attr.ib()
-    _risk_by_age: Dict[int, float] = attr.ib()
-
-    @_risk_by_age.default
-    def _default_risk_by_age(self):
-        risk_by_age = {}
-        for k, v in self.risk_of_death.items():
-            from_age, to_age = k.split("-")
-
-            risk = 1 / int(v)
-            for i in range(int(from_age), int(to_age) + 1):
-                risk_by_age[i] = risk
-
-        return risk_by_age
-
-    def init_from_fieldset(self, fieldset):
-        self._dob_field = fieldset.fields.get(self.dob_field)
-
-    def _next_value(self, row):
-        dob = row.get(self.dob_field)
-        dob = datetime.datetime.strptime(dob, self._dob_field.date_format).date()
-
-        today = datetime.date.today()
-        prev_date = dob
-        curr_date = dob + datetime.timedelta(weeks=52)
-
-        while (curr_date < today):
-            curr_age = calculate_age(dob, curr_date)
-            curr_risk = self._risk_by_age[curr_age]
-
-            if rnd.random() <= curr_risk:
-                int_bt_curr_and_prev = curr_date - prev_date
-                rnd_days_after_curr = rnd.randrange(0, int_bt_curr_and_prev.days)
-                dod = curr_date + datetime.timedelta(days=rnd_days_after_curr)
-
-                return {self.name: self.deceased_true_value, self.deceased_date_field: dod.strftime(self.date_format)}
-
-            prev_date = curr_date
-            curr_date = curr_date + datetime.timedelta(weeks=52)
-
-        return {self.name: self.deceased_false_value, self.deceased_date_field: ""}
-
-    def _age(self, start_date, end_date):
-        pass
-
-    @property
-    def names(self):
-        return [self.name, self.deceased_date_field]
 
 
 @attr.s(kw_only=True)
@@ -573,46 +303,47 @@ class LookupMapFileField(Field):
 
 
 @attr.s(kw_only=True)
-class TimeField(FakerField):
+class IfElseField(Field):
     """
-    Create mock time using faker
+    Create field based on condition
     """
-    format = attr.ib("%H:%M")
+    condition = attr.ib()
+    true = attr.ib()
+    false = attr.ib()
 
     def _next_value(self, row):
-        return self._fake.time(pattern=self.format)
-
-
-@attr.s(kw_only=True)
-class EmailField(FakerField):
-    """
-    Create mock email using faker
-    """
-    safe = attr.ib(True)
-
-    def _next_value(self, row):
-        if self.safe:
-            return self._fake.safe_email()
+        if self.condition.is_true(row):
+            return self.true.next_value(row) if hasattr(self.true, "next_value") else self.true
         else:
-            return self._fake.email()
+            return self.false.next_value(row) if hasattr(self.false, "next_value") else self.false
 
 
 @attr.s(kw_only=True)
-class PasswordField(FakerField):
+class Condition:
     """
-    Create mock password using faker
+    Dependent field condition
     """
-    length = attr.ib(16)
-    special_chars = attr.ib(True)
-    digits = attr.ib(True)
-    upper_case = attr.ib(True)
-    lower_case = attr.ib(True)
+    field = attr.ib()  # name of field to check or field definition (e.g. could nest IfElseField)
+    operator = attr.ib()
+    value = attr.ib()
+
+    def is_true(self, row):
+        return self.operator(row.get(self.field),self.value)
+
+
+@attr.s(kw_only=True)
+class MultiField(Field):
+    """
+    Generate a list of fields
+    """
+    field: Field = attr.ib()
+    min_values: int = attr.ib()
+    max_values: int = attr.ib()
+    glue: str = attr.ib(default=None)
 
     def _next_value(self, row):
-        return self._fake.password(
-            length=self.length,
-            special_chars=self.special_chars,
-            digits=self.digits,
-            upper_case=self.upper_case,
-            lower_case=self.lower_case
-        )
+        num_values = rnd.randrange(self.min_values, self.max_values)
+
+        outputs = [self.field.next_value(row) for n in range(1,num_values+1)]
+
+        return self.glue.join(outputs) if self.glue else outputs
