@@ -203,8 +203,8 @@ def test_RepeatField_generates_list_of_values():
     random.seed(124)
     gender_field = field.RepeatField(
         field = field.GenderField(male_value="M",female_value="F",male_probability=0.6),
-        min_values=3,
-        max_values=7
+        min_repeats=3,
+        max_repeats=7
     )
 
     assert gender_field.next_value({}) == ['M', 'M', 'F', 'M', 'F']
@@ -214,8 +214,8 @@ def test_RepeatField_generates_joined_list_of_values():
     random.seed(124)
     gender_field = field.RepeatField(
         field = field.GenderField(male_value="M",female_value="F",male_probability=0.6),
-        min_values=3,
-        max_values=7,
+        min_repeats=3,
+        max_repeats=7,
         glue=","
     )
 
@@ -227,12 +227,12 @@ def test_RepeatField_nested_generates_multiple_joined_list_of_values():
     gender_field = field.RepeatField(
         field = field.RepeatField(
             field = field.GenderField(male_value="M",female_value="F",male_probability=0.6),
-            min_values=3,
-            max_values=7,
+            min_repeats=3,
+            max_repeats=7,
             glue=","
         ),
-        min_values=2,
-        max_values=8,
+        min_repeats=2,
+        max_repeats=8,
         glue="|"
     )
 
