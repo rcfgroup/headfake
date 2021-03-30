@@ -76,7 +76,8 @@ class HeadFake:
         class_tree = create_class_tree(None, params)
 
         fieldset = class_tree.get("fieldset")
-        for field in fieldset.fields.values():
+
+        for field in fieldset.fields:
             field.init_from_fieldset(fieldset)
 
         return fieldset
