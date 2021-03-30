@@ -177,3 +177,24 @@ def test_PhoneField_outputs_phone_number(monkeypatch):
     monkeypatch.setattr("faker.Faker", f)
 
     assert field.PhoneField().next_value(row) == PHONE_NUMBER
+
+def test_TextField_outputs_random_text_shorter_than_the_default_50_chars():
+    from faker import Faker
+    Faker.seed(123)
+    txt = field.TextField()
+
+    assert txt.next_value({})=="Eaque quisquam eaque. Fugit natus exercitationem."
+
+def test_TextField_outputs_random_text_shorter_than_max_length(monkeypatch):
+    from faker import Faker
+    Faker.seed(123)
+    txt = field.TextField(max_length=10)
+
+    assert txt.next_value({})=="Fugiat."
+
+def test_MemoField_outputs_multiple_sentences(monkeypatch):
+    from faker import Faker
+    Faker.seed(123)
+    mem = field.MemoField(sentences=2,exact=True)
+
+    assert mem.next_value({})=="Eaque quisquam eaque. Fugit natus exercitationem."

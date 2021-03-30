@@ -1,3 +1,5 @@
+import logging
+
 from headfake import field, Fieldset
 import pytest
 from unittest import mock
@@ -197,9 +199,9 @@ def test_IfElseField_handles_non_if_else_logic():
     assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "PROF"
 
 
-def test_MultiField_generates_list_of_values():
+def test_RepeatField_generates_list_of_values():
     random.seed(124)
-    gender_field = field.MultiField(
+    gender_field = field.RepeatField(
         field = field.GenderField(male_value="M",female_value="F",male_probability=0.6),
         min_values=3,
         max_values=7
@@ -208,9 +210,9 @@ def test_MultiField_generates_list_of_values():
     assert gender_field.next_value({}) == ['M', 'M', 'F', 'M', 'F']
     assert gender_field.next_value({}) == ['M', 'M', 'M']
 
-def test_MultiField_generates_joined_list_of_values():
+def test_RepeatField_generates_joined_list_of_values():
     random.seed(124)
-    gender_field = field.MultiField(
+    gender_field = field.RepeatField(
         field = field.GenderField(male_value="M",female_value="F",male_probability=0.6),
         min_values=3,
         max_values=7,
@@ -220,10 +222,10 @@ def test_MultiField_generates_joined_list_of_values():
     assert gender_field.next_value({}) == "M,M,F,M,F"
     assert gender_field.next_value({}) == "M,M,M"
 
-def test_MultiField_nested_generates_multiple_joined_list_of_values():
+def test_RepeatField_nested_generates_multiple_joined_list_of_values():
     random.seed(124)
-    gender_field = field.MultiField(
-        field = field.MultiField(
+    gender_field = field.RepeatField(
+        field = field.RepeatField(
             field = field.GenderField(male_value="M",female_value="F",male_probability=0.6),
             min_values=3,
             max_values=7,
@@ -236,3 +238,216 @@ def test_MultiField_nested_generates_multiple_joined_list_of_values():
 
     assert gender_field.next_value({}) == "M,F,M|M,M,F,F,M|F,M,M,M,M,M|M,F,M,M,F"
     assert gender_field.next_value({}) == "M,M,F|F,M,M|F,F,M,M,F,M|F,M,M,M,M,M|F,M,M|F,M,M"
+
+MOCK_NORM_NUM1 = 3.131313
+
+def test_NumberField_generates_random_number_with_no_formatting(monkeypatch):
+    monkeypatch.setattr("scipy.stats.norm",mock_norm)
+    number_field = field.NumberField(
+        distribution = "scipy.stats.norm",
+        mean=2,
+        sd=0.5
+    )
+    assert number_field.next_value({}) == MOCK_NORM_NUM1
+
+class mock_norm:
+    def __init__(self, **kwargs):
+        pass
+
+    def rvs(self):
+        return MOCK_NORM_NUM1
+
+def test_NumberField_generates_random_number_with_specified_decimal_places(monkeypatch):
+    monkeypatch.setattr("scipy.stats.norm",mock_norm)
+    random.seed(125)
+    number_field = field.NumberField(
+        distribution = "scipy.stats.norm",
+        mean=2,
+        sd=0.5,
+        dp=2
+    )
+    assert number_field.next_value({}) == 3.13
+
+
+def test_BooleanField_returns_default_values_if_no_parameters(monkeypatch):
+    random.seed(120)
+    gender = field.BooleanField()
+
+    assert gender.next_value(row) == 0
+    assert gender.next_value(row) == 1
+
+
+
+def test_BooleanField_uses_value_parameters_if_provided(monkeypatch):
+
+    random.seed(120)
+    gender = field.BooleanField(true_value=True,false_value=False)
+
+    assert gender.next_value(row) is False
+    assert gender.next_value(row) is True
+
+
+def test_BooleanField_returns_value_based_on_true_probability_parameter(monkeypatch):
+
+    gender = field.BooleanField(true_probability=0.3)
+
+    monkeypatch.setattr("random.random", lambda: 0.29)
+
+    assert gender.next_value(row) == 1
+
+    monkeypatch.setattr("random.random", lambda: 0.31)
+
+    assert gender.next_value(row) == 0
+
+
+def test_NumberField_returns_value_within_range_of_two_value(monkeypatch):
+
+    fset = Fieldset(fields=[
+        field.NumberField(
+            name="num",
+            distribution="scipy.stats.norm",
+            sd=3,
+            mean=0,
+            min=-2,
+            max=2,
+            dp=1
+        )
+    ])
+
+    df = fset.generate_data(5)
+
+    for idx, item in df.iterrows():
+        assert item['num']>-2 and item['num']<2
+
+def test_NumberField_returns_value_within_range_of_two_existing_fields(monkeypatch):
+
+    fset = Fieldset(fields=[
+        field.NumberField(
+            name="floor",
+            distribution="scipy.stats.norm",
+            sd=1,
+            mean=-5,
+            min=-3,
+            dp=0
+        ),
+        field.NumberField(
+            name="ceil",
+            distribution="scipy.stats.norm",
+            sd=1,
+            mean=5,
+            max=3,
+            dp=0
+        ),
+        field.NumberField(
+            name="num",
+            distribution="scipy.stats.norm",
+            sd=3,
+            mean=0,
+            min="floor",
+            max="ceil",
+            dp=1
+        )
+    ])
+
+    df = fset.generate_data(5)
+
+    for idx, item in df.iterrows():
+        assert item['num']>item['floor'] and item['num']<item['ceil']
+
+def test_NumberField_returns_value_within_range_of_two_embedded_fields(monkeypatch):
+
+    fset = Fieldset(fields=[
+        field.NumberField(
+            name="num",
+            distribution="scipy.stats.norm",
+            sd=3,
+            mean=0,
+            min=field.NumberField(
+                name="floor",
+                distribution="scipy.stats.norm",
+                sd=1,
+                mean=-5,
+                min=-3,
+                dp=0
+            ),
+            max=field.NumberField(
+                name="ceil",
+                distribution="scipy.stats.norm",
+                sd=1,
+                mean=5,
+                max=3,
+                dp=0
+            ),
+            dp=1
+        )
+    ])
+
+    df = fset.generate_data(5)
+
+    for idx, item in df.iterrows():
+        assert item['num']>-3 and item['num']<3
+
+def test_DateField_returns_value_within_range_of_two_values_with_specified_sd_in_days(monkeypatch):
+    min = datetime.date(2020,1,1)
+    max = datetime.date(2020,6,1)
+
+    fset = Fieldset(fields=[
+        field.DateField(
+            name="date",
+            distribution="scipy.stats.norm",
+            sd=10,
+            mean=datetime.date(2020,3,1),
+            min=min,
+            max=max,
+
+        )
+    ])
+
+    df = fset.generate_data(5)
+
+    for idx, item in df.iterrows():
+        assert item['date']>min and item['date']<max
+
+def test_DateField_returns_value_within_range_of_two_values_with_specified_sd_in_years(monkeypatch):
+    min = datetime.date(1954,1,1)
+    max = datetime.date(2020,6,1)
+
+    fset = Fieldset(fields=[
+        field.DateField(
+            name="date",
+            distribution="scipy.stats.norm",
+            sd=5,
+            mean=datetime.date(1970,3,1),
+            min=min,
+            max=max,
+            use_years=True
+        )
+    ])
+
+    df = fset.generate_data(5)
+
+    for idx, item in df.iterrows():
+        assert item['date']>min and item['date']<max
+
+
+def test_DateField_returns_value_within_range_of_two_values_with_specified_sd_in_years(monkeypatch):
+    min = datetime.date(1954,1,1)
+    max = datetime.date(2020,6,1)
+
+    fset = Fieldset(fields=[
+        field.DateField(
+            name="date",
+            distribution="scipy.stats.norm",
+            sd=5,
+            mean=datetime.date(1970,3,1),
+            min=min,
+            max=max,
+            use_years=True
+        )
+    ])
+
+    df = fset.generate_data(5)
+
+    for idx, item in df.iterrows():
+        assert item['date']>min and item['date']<max
+

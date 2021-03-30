@@ -5,7 +5,7 @@ import datetime
 from tests.field.test_field_common import MALE_VALUE, FEMALE_VALUE
 
 row = {}
-
+import numpy as np
 
 class mock_datetime:
     @classmethod
@@ -65,3 +65,27 @@ def test_NhsNoField_handles_duplicate_nhs_number_by_reselecting(monkeypatch):
     assert nhs_no.next_value(row) == "123 456 7873"
     assert nhs_no.next_value(row) == "123 456 7830"
 
+def test_AgeField_calculates_correct_age_using_to_and_from_fields_containing_dates():
+    age = field.AgeField(from_value="from_date",to_value="to_date")
+    assert age.next_value({"from_date":datetime.date(1953,3,5),"to_date":datetime.date(2010,5,4)}) == 57
+
+def test_AgeField_calculates_correct_age_using_to_and_from_fields_containing_strings():
+    age = field.AgeField(from_value="from_date",to_value="to_date", from_format="%d/%m/%Y",to_format="%d/%m/%Y")
+    assert age.next_value({"from_date":"05/03/1953","to_date":"04/05/2010"}) == 57
+
+def test_AgeField_calculates_correct_age_using_to_and_from_values_as_fields():
+    np.random.seed(123)
+    age = field.AgeField(
+        from_value=field.DateField(
+            min=datetime.date(1953,3,5),
+            mean=datetime.date(1974,1,1),
+            sd=13,
+            max=datetime.date.today(),
+            use_years=True,
+            distribution="scipy.stats.norm"
+        ),
+        to_value=datetime.date.today()
+    )
+    assert age.next_value({}) == 61
+    assert age.next_value({}) == 34
+    assert age.next_value({}) == 43
