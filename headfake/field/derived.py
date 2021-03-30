@@ -1,13 +1,13 @@
-from .core import Field, DerivedField, OptionValueField
+from .core import Field, DerivedField, NumberField, BooleanField, extract_date
 import attr
 import datetime
-from headfake.util import create_package_class, calculate_age
 import random as rnd
-from typing import Dict, List
+from typing import Dict, List, Any
 
+from headfake.util import calculate_age
 
 @attr.s(kw_only=True)
-class DateOfBirthField(Field):
+class DateOfBirthField(DerivedField):
     """
     Mock date of birth field. Calculates age based on random float selection from a scipy statistical distribution.
     This is multiplied by 365.25 to get age in days and a delta age (in days) from now is determined.
@@ -22,16 +22,11 @@ class DateOfBirthField(Field):
     max: float = attr.ib()
     date_format: str = attr.ib()
 
-    _dist_cls = attr.ib()
-
-    @_dist_cls.default
-    def _default_dist_cls(self):
-        return create_package_class(self.distribution)(loc=self.mean, scale=self.sd)
+    def _internal_field(self):
+        return NumberField(mean=self.mean, sd=self.sd, min=self.min, max=self.max, distribution = self.distribution)
 
     def _next_value(self, row):
-        age_in_years = self._dist_cls.rvs()
-        if age_in_years < self.min or age_in_years > self.max:
-            return self.next_value(row)
+        age_in_years = super()._next_value(row)
 
         age_in_days = age_in_years * 365.25
         dob = datetime.datetime.now() - datetime.timedelta(days=age_in_days)
@@ -39,7 +34,7 @@ class DateOfBirthField(Field):
 
 
 @attr.s(kw_only=True)
-class GenderField(Field):
+class GenderField(DerivedField):
     """
     Field which generates gender values according to a 'male_probability' (default=0.5). Options include male_value (value of male selection), female_value (value of female
     selection and male_probability (probability that gender is male, default=0.5).
@@ -60,9 +55,8 @@ class GenderField(Field):
     male_value = attr.ib()
     female_value = attr.ib()
 
-
-    def _next_value(self, row):
-        return self.male_value if rnd.random() < self.male_probability else self.female_value
+    def _internal_field(self):
+        return BooleanField(true_value = self.male_value, false_value=self.female_value, true_probability=self.male_probability)
 
 @attr.s(kw_only=True)
 class NhsNoField(Field):
@@ -104,7 +98,13 @@ class NhsNoField(Field):
 class DeceasedField(Field):
     """
     Deceased mock field which uses a list of age range/mortality risk and a simulated patient 'aging' to determine if a
-    patient is deceased and when they died.
+    patient is deceased and when they died. The ages are specified in a dictionary of the form {"X1-Y1":R1, "X2-Y2":R2}.
+
+    The risk is defined as the 1 in R risk of death.
+
+    The end date to use to determine the age defaults to today, but can be set using the 'end_date' argument as a date
+    object, a field name or a Field object.
+
     """
     deceased_true_value = attr.ib(default=1)
     deceased_false_value = attr.ib(default=0)
@@ -114,6 +114,8 @@ class DeceasedField(Field):
     risk_of_death: Dict[str, str] = attr.ib()
     date_format = attr.ib()
     _risk_by_age: Dict[int, float] = attr.ib()
+    end_date = attr.ib(default=datetime.date.today())
+    end_date_format = attr.ib(default=None)
 
     @_risk_by_age.default
     def _default_risk_by_age(self):
@@ -128,13 +130,13 @@ class DeceasedField(Field):
         return risk_by_age
 
     def init_from_fieldset(self, fieldset):
-        self._dob_field = fieldset.fields.get(self.dob_field)
+        self._dob_field = fieldset.field_map.get(self.dob_field)
 
     def _next_value(self, row):
         dob = row.get(self.dob_field)
         dob = datetime.datetime.strptime(dob, self._dob_field.date_format).date()
 
-        today = datetime.date.today()
+        today = extract_date(self.end_date, row, self.end_date_format)
         prev_date = dob
         curr_date = dob + datetime.timedelta(weeks=52)
 
@@ -161,3 +163,18 @@ class DeceasedField(Field):
     def names(self):
         return [self.name, self.deceased_date_field]
 
+@attr.s(kw_only=True)
+class AgeField(Field):
+    """
+    Calculates age in years from two fields or values. The specified from_value and to_value can be either strings,
+    date objects or Fields. If the former, then it is treated as the name of the field to obtain from the row.
+    """
+    from_value = attr.ib()
+    to_value = attr.ib()
+    from_format = attr.ib(default=None)
+    to_format = attr.ib(default=None)
+
+    def _next_value(self, row:Dict[str,Any]):
+        from_date = extract_date(self.from_value, row, self.from_format)
+        to_date = extract_date(self.to_value, row, self.to_format)
+        return calculate_age(from_date, to_date)
