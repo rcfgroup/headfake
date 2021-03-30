@@ -18,6 +18,8 @@ def create_package_class(package_name):
     return getattr(module, class_name)
 
 
+import re
+
 def create_class_tree(name, params, data=None):
     """
     Create class tree given parameters. The name is only given if the original source had a key/value structure,
@@ -44,6 +46,8 @@ def create_class_tree(name, params, data=None):
         try:
             return cls(**sub_params)
         except TypeError as ex:
+            handle_missing_keyword(ex)
+
             raise TypeError("Problem creating '%s' %s. Original error:%s" % (name, cls.__name__, ex))
 
     new_params = OrderedDict()
@@ -53,7 +57,7 @@ def create_class_tree(name, params, data=None):
         elif isinstance(value, list):
             block = []
             for item in value:
-                block.append(create_class_tree(None, item, data))
+                block.append(create_class_tree(item.get("name",None), item, data))
             new_params[key] = block
         else:
             new_params[key] = value
@@ -127,3 +131,9 @@ def locate_file(file):
         return path.absolute()
 
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))
+
+def handle_missing_keyword(ex):
+    kwonly_error = re.search("required keyword-only argument[s]{0,1}: ('.+')$", str(ex))
+
+    if kwonly_error:
+        raise TypeError("The following required parameter(s) were missing: %s" % kwonly_error.group(1))

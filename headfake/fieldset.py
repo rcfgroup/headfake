@@ -18,8 +18,12 @@ class Fieldset:
             **kwargs: dictionary of keyword arguments
         """
 
-        self.fields = fields
-
+        if isinstance(fields, list):
+            self.fields = fields
+            self.field_map = {f.name: f for f in fields}
+        else:
+            self.fields = list(fields.values())
+            self.field_map = fields
 
     def generate_data(self, num_rows):
         """
@@ -36,12 +40,12 @@ class Fieldset:
 
         for i in range(num_rows):
             row = {}
-            for fname, field in self.fields.items():
+            for field in self.fields:
                 next_val = field.next_value(row)
                 if isinstance(next_val, dict):
                     row.update(next_val)
                 else:
-                    row[fname] = next_val
+                    row[field.name] = next_val
 
             dataset = dataset.append(row, ignore_index=True)
 
