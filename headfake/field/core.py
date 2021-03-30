@@ -14,7 +14,9 @@ import faker
 from headfake.error import ChangeValue
 from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
-from headfake.util import create_package_class, calculate_age, locate_file
+from headfake.util import create_package_class, locate_file, handle_missing_keyword
+from datetime import datetime as dt, timedelta as td
+import datetime
 
 LOCALE = "en_GB"
 
@@ -72,9 +74,11 @@ class Field(ABC):
 
         return val
 
+
     @abstractmethod
     def _next_value(self, row:Dict[str,Any]):
         pass
+
 
 @attr.s(kw_only=True)
 class IdGenerator(ABC):
@@ -211,7 +215,10 @@ class DerivedField(Field):
         pass
 
     def __attrs_post_init__(self):
-        self._internal_field = self._internal_field()
+        try:
+            self._internal_field = self._internal_field()
+        except TypeError as ex:
+            handle_missing_keyword(ex)
 
     def _next_value(self, row):
         return self._internal_field.next_value(row)
@@ -296,7 +303,7 @@ class LookupMapFileField(Field):
         return map_line.get(self.lookup_value_field)
 
     def init_from_fieldset(self, fieldset):
-        self._map_file_field_obj = fieldset.fields.get(self.map_file_field)
+        self._map_file_field_obj = fieldset.field_map.get(self.map_file_field)
         first_store_row = list(self._map_file_field_obj.key_field_store.values())[0]
         if self.lookup_value_field not in first_store_row:
             raise ValueError("Lookup value field  '%s' not found in file" % self.lookup_value_field)
@@ -332,18 +339,179 @@ class Condition:
 
 
 @attr.s(kw_only=True)
-class MultiField(Field):
+class RepeatField(Field):
     """
-    Generate a list of fields
+    Repeat the creation of field values a random number of times as either a list or a joined value
     """
     field: Field = attr.ib()
-    min_values: int = attr.ib()
-    max_values: int = attr.ib()
+    min_repeats: int = attr.ib()
+    max_repeats: int = attr.ib()
     glue: str = attr.ib(default=None)
 
     def _next_value(self, row):
-        num_values = rnd.randrange(self.min_values, self.max_values)
+        min_values = extract_number(self.min_repeats, row)
+        max_values = extract_number(self.max_repeats, row)
+
+        num_values = rnd.randrange(min_values, max_values)
 
         outputs = [self.field.next_value(row) for n in range(1,num_values+1)]
 
         return self.glue.join(outputs) if self.glue else outputs
+
+
+@attr.s(kw_only=True)
+class NumberField(Field):
+    """
+    Mock number field. Creates a number based on random float selection from a scipy statistical distribution.
+
+    Available scipy distributions include all those from the scipy.stats module (see https://docs.scipy.org/doc/scipy/reference/stats.html).
+    For custom distributions, any class can be used provided it follows the same constructor arguments (loc and scale)
+    and has an rvs() function.
+
+    Includes support for a mean and standard distribution. Also an optional decimal places (dp), min and max can be
+    provided to produce numbers with these criteria.
+    """
+    distribution: str = attr.ib()
+    mean: float = attr.ib()
+    sd: float = attr.ib()
+    min: float = attr.ib(default=None)
+    max: float = attr.ib(default=None)
+    dp: int = attr.ib(default=None)
+
+    _dist_cls = attr.ib()
+
+    @_dist_cls.default
+    def _default_dist_cls(self):
+        return create_package_class(self.distribution)(loc=self.mean, scale=self.sd)
+
+    def _next_value(self, row):
+        number = self._dist_cls.rvs()
+        min = extract_number(self.min, row)
+        max = extract_number(self.max, row)
+
+        if (min and number < min) or (max and number > max):
+            return self.next_value(row)
+
+        if self.dp is not None:
+            return round(number, self.dp)
+
+        return number
+
+@attr.s(kw_only=True)
+class BooleanField(Field):
+    """
+    Mock boolean field. Creates a boolean (e.g. true/false) value.
+    The true_value (default=1), false_value (default=0) and true_probability (default=0.5) can be passed as arguments.
+
+    Forms the basis of the derived GenderField
+    """
+    true_value: Any = attr.ib(default=1)
+    false_value: Any = attr.ib(default=0)
+    true_probability: float = attr.ib(default=0.5)
+
+    def _next_value(self, row):
+        return self.true_value if rnd.random() < self.true_probability else self.false_value
+
+
+@attr.s(kw_only=True)
+class DateField(NumberField):
+    """
+    Mock date field. Creates a date based on random number from a scipy statistical distribution (see NumberField),
+    based on the mean date and standard deviation. Adds the generated number as days to the mean date.
+
+    Available scipy distributions include all those from the scipy.stats module
+    (see https://docs.scipy.org/doc/scipy/reference/stats.html).
+
+    For custom distributions, any class can be used provided it follows the same constructor arguments (loc and scale)
+    and has an rvs() function.
+
+    Includes mean, min and max which can be provided as date objects or strings.
+    If the latter, the mean_format, min_format and max_format define the date formats.
+    """
+    min_format:str = attr.ib(default=None)
+    max_format:str = attr.ib(default=None)
+    mean_format:str = attr.ib(default=None)
+    format:str = attr.ib(default=None)
+    use_years:bool = attr.ib(default=False)
+
+    _dist_cls = attr.ib()
+
+    @_dist_cls.default
+    def _default_dist_cls(self):
+        return create_package_class(self.distribution)(loc=0, scale=self.sd)
+
+    def _next_value(self, row):
+        min = extract_date(self.min, row, self.min_format)
+        max = extract_date(self.max, row, self.max_format)
+        mean = extract_date(self.mean, row, self.mean_format)
+
+        num_to_mean = self._dist_cls.rvs()
+
+        if self.use_years:
+            num_to_mean *= 365.25
+
+        date = mean + td(days=num_to_mean)
+
+        if (min and date < min) or (max and date > max):
+            return self.next_value(row)
+
+        if self.format:
+            return date.strftime(self.format)
+
+        return date
+
+
+def extract_number(value, row):
+    """
+    Extract number to use for min/max or other input parameter.
+
+    If value is a string, it will be assumed it is the name of a field in the row (and the value of that field will
+    be returned).
+
+    If it is a Field class, then the next_value function will be used to generate the value.
+
+    Otherwise, the original value will be returned.
+
+    :param value:
+    :param row:
+    :return:
+    """
+    if isinstance(value, str):
+        if not value in row:
+            raise ValueError("Field with name '%s' is not present in the row or has not been generated yet" % value)
+        return row.get(value)
+
+    if isinstance(value, Field):
+        return value.next_value(row)
+
+    return value
+
+def extract_date(value, row, date_format):
+    """
+    Extract date to use for min/max or other input parameter.
+
+    If value is a string, it will be assumed it is the name of a field in the row (and the value of that field will
+    be converted into a date object.
+
+    If it is a Field class, then the next_value function will be used to generate the value.
+
+    Otherwise, the original value will be returned.
+
+    :param value:
+    :param row:
+    :return:
+    """
+    if isinstance(value, str):
+        if not value in row:
+            raise ValueError("Field with name '%s' is not present in the row or has not been generated yet" % value)
+
+        data = row.get(value)
+        if isinstance(data, datetime.date):
+            return data
+
+        return dt.strptime(data, date_format)
+
+    if isinstance(value, Field):
+        return value.next_value(row)
+
+    return value
