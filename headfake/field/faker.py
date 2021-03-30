@@ -1,4 +1,5 @@
 import attr
+
 from .core import FakerField
 
 @attr.s(kw_only=True)
@@ -11,7 +12,7 @@ class NameField(FakerField):
     gender_field = attr.ib()
 
     def init_from_fieldset(self, fieldset):
-        self.gender = fieldset.fields.get(self.gender_field)
+        self.gender = fieldset.field_map.get(self.gender_field)
 
     def _next_value(self, row):
         if row.get(self.gender_field) == self.gender.male_value:
@@ -156,3 +157,27 @@ class PasswordField(FakerField):
             upper_case=self.upper_case,
             lower_case=self.lower_case
         )
+
+@attr.s(kw_only=True)
+class TextField(FakerField):
+    """
+    Generate  text using the faker.lorem provider. 'max_length' controls how long the text is allowed to be.
+    """
+    max_length: int = attr.ib(default=50)
+
+    def _next_value(self, row):
+        return self._fake.text(max_nb_chars=self.max_length)
+
+
+@attr.s(kw_only=True)
+class MemoField(FakerField):
+    """
+    Generate paragraphs using the faker.lorem provider. 'sentences' controls the exact number of sentences, when 'exact' is
+    set to True, when set to False it will return a variable number of sentences (never less than 1) +- 40% of the
+    'sentences' parameter.
+    """
+    sentences: int = attr.ib(default=3)
+    exact:bool = attr.ib(default=False)
+
+    def _next_value(self, row):
+        return self._fake.paragraph(nb_sentences=self.sentences,variable_nb_sentences=not self.exact)
