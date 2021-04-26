@@ -1,4 +1,0 @@
-## headfake.HeadFake
-
-::: headfake.HeadFake
-

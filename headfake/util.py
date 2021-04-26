@@ -7,8 +7,15 @@ from importlib import import_module
 from inspect import signature
 from pathlib import Path
 
-
 def create_package_class(package_name):
+    """
+    Utility method which loads and returns the class corresponding to the provided package name.
+    :param package_name: Fully qualified package name.
+    :return:
+    """
+    if not isinstance(package_name,str):
+        return package_name
+
     package_bits = package_name.split(".")
     class_name = package_bits.pop()
     module = import_module(".".join(package_bits))
@@ -22,10 +29,10 @@ import re
 
 def create_class_tree(name, params, data=None):
     """
-    Create class tree given parameters. The name is only given if the original source had a key/value structure,
+    Create recursive class tree given parameters. The name is only given if the original source had a key/value structure,
     otherwise None is supplied.
     :param name:
-    :param params:
+    :param params: The dictionary or list of parameters
     :param data:
     :return:
     """
@@ -38,9 +45,7 @@ def create_class_tree(name, params, data=None):
         sub_params = create_class_tree(name, params, data)
 
         cls = create_package_class(class_name)
-        sig = signature(cls)
 
-        # if "name" in sig.parameters:
         sub_params["name"] = name
 
         try:
@@ -65,32 +70,13 @@ def create_class_tree(name, params, data=None):
     return new_params
 
 
-def class_tree_from_yaml_file(yaml_filename):
+def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
     """
-    Builds class tree recursively using YAML file as a template. The current algorithm may not be the most performant.
-    :param yaml_filename:
+    Calculate age in years when given start date and end date
+    :param start_date: Date object for start
+    :param end_date: Date object for end
     :return:
     """
-    with open(yaml_filename, "r") as yaml_file:
-        data = yaml.load(yaml_file, yaml.SafeLoader)
-
-    class_tree = create_class_tree(None, data)
-
-    fset = class_tree.get("fieldset")
-    for fname, field in fset.fields.items():
-        field.init_from_fieldset(fset)
-
-    return class_tree
-
-
-def retrieve_from_data(placeholder, data):
-    if len(placeholder) == 1:
-        return data[placeholder[0]]
-
-    return retrieve_from_data(placeholder[1:], data[placeholder[0]])
-
-
-def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
     try:
         birthday = start_date.replace(year=end_date.year)
 
@@ -108,7 +94,7 @@ def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
 
 def locate_file(file):
     """
-    locate a file either from the given path or in the package resources
+    Locates a file either from the given path or in the package resources
 
     :param file: The file to locate. It can either be an absolute or relative path in the
     filesystem or in the package resources
@@ -133,6 +119,11 @@ def locate_file(file):
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))
 
 def handle_missing_keyword(ex):
+    """
+    Used to provides more informative error when a keyword is missing from parameters.
+    :param ex: Original exception
+    :return:
+    """
     kwonly_error = re.search("required keyword-only argument[s]{0,1}: ('.+')$", str(ex))
 
     if kwonly_error:

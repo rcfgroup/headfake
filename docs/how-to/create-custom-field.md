@@ -14,20 +14,23 @@ An example checkbox field could look like this.
 ```python
 
 @attr.s(kw_only=True)
-class CheckboxField(DerivedField):
+class YesNoUnsureField(DerivedField):
     yes_probability = attr.ib() #probability that Y is generated
+	unsure_probability = attr.ib()
 
     def _internal_field(self):
-        cbox_probs = {
+        ynu_probs = {
+        	2:self.unsure_probability,
             1:self.yes_probability,
-            0:1-self.yes_probability
+            0:1-self.yes_probability-self.unsure_probability,
+
         }
 
-        return OptionValueField(probabilities=cbox_probs)
+        return OptionValueField(probabilities=ynu_probs)
 
 ..
 
-cbox_field = CheckboxField(yes_probability=0.4)
+cbox_field = YesNoUnsureField(yes_probability=0.4, unsure_probablity=0.05)
 
 ```
 
@@ -86,7 +89,7 @@ It can be difficult to handle randomly generated fields so you can either replac
 
 ```python
 def test_CheckboxField_returns_expected_value(monkeypatch):
-    random.seed(10)
+    HeadFake.set_seed(10)
 
     assert ov.next_value(row) == 1
     assert ov.next_value(row) == 1

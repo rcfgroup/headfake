@@ -14,6 +14,7 @@ class DateOfBirthField(DerivedField):
     The date is then output according to the date_format property.
 
     A min and max property are also required to keep the distribution within a particular range.
+
     """
     distribution: str = attr.ib()
     mean: float = attr.ib()
@@ -109,7 +110,9 @@ class DeceasedField(Field):
     deceased_true_value = attr.ib(default=1)
     deceased_false_value = attr.ib(default=0)
     dob_field: str = attr.ib()
-    deceased_date_field: str = attr.ib()
+    deceased_date_field: str = attr.ib(default=None)
+
+    age_field: str = attr.ib(default=None)
 
     risk_of_death: Dict[str, str] = attr.ib()
     date_format = attr.ib()
@@ -149,19 +152,39 @@ class DeceasedField(Field):
                 rnd_days_after_curr = rnd.randrange(0, int_bt_curr_and_prev.days)
                 dod = curr_date + datetime.timedelta(days=rnd_days_after_curr)
 
-                return {self.name: self.deceased_true_value, self.deceased_date_field: dod.strftime(self.date_format)}
+                value = {self.name: self.deceased_true_value}
+
+                if self.deceased_date_field:
+                    value[self.deceased_date_field] = dod.strftime(self.date_format)
+
+                if self.age_field:
+                    value[self.age_field] = curr_age
+
+                return value
 
             prev_date = curr_date
             curr_date = curr_date + datetime.timedelta(weeks=52)
 
-        return {self.name: self.deceased_false_value, self.deceased_date_field: ""}
+        value = {self.name: self.deceased_false_value}
+        if self.deceased_date_field:
+            value[self.deceased_date_field] = ""
 
-    def _age(self, start_date, end_date):
-        pass
+        if self.age_field:
+            value[self.age_field] = curr_age
+
+        return value
 
     @property
     def names(self):
-        return [self.name, self.deceased_date_field]
+        default_names = [self.name]
+
+        if self.deceased_date_field:
+            default_names.append(self.deceased_date_field)
+
+        if self.age_field:
+            default_names.append(self.age_field)
+
+        return default_names
 
 @attr.s(kw_only=True)
 class AgeField(Field):

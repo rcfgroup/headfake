@@ -1,5 +1,5 @@
 """
-This file implements the command line interface for headfake
+This package implements the command line interface for headfake
 """
 
 import argparse
@@ -8,13 +8,13 @@ from headfake import output, HeadFake
 
 class Command:
     """
-    Command line script
+    Class for command line script
     """
 
     @staticmethod
     def run(args=None):
         """
-        entrypoint for command line script. this entry point is registered by setup.py when the
+        Entrypoint for command line script. this entry point is registered by setup.py when the
         package is installed.
 
         Returns:
@@ -27,7 +27,7 @@ class Command:
         """
         __init__ constructor.
 
-        initializes ArgumentParser and parses arguments passed at the  command line.
+        Initializes ArgumentParser and parses arguments passed at the command line.
         """
 
         parser = argparse.ArgumentParser(
@@ -78,7 +78,7 @@ class Command:
         headfake = HeadFake.from_yaml(self.args.template, seed=self.args.seed)
 
         if self.args.output_file:
-            outfile = output.FileOutput(self.args)
+            outfile = output.CsvFileOutput(self.args)
         else:
             outfile = output.StdoutOutput(self.args)
 

@@ -15,12 +15,12 @@ class mock_datetime:
         return datetime.date(2020, 3, 24)
 
 
-def test_IncrementIdFieldType_returns_incremental_values():
+def test_IncrementIdGenerator_returns_incremental_values():
     id = field.IncrementIdGenerator(length=2)
 
     assert ["01","02","03","04","05","06","07"]==[id.select_id() for i in range(1,8)]
 
-def test_IncrementIdFieldType_fails_if_passes_maximum():
+def test_IncrementIdGenerator_fails_if_passes_maximum():
     id = field.IncrementIdGenerator(length=2)
 
     [id.select_id() for i in range(1, 100)]
@@ -28,7 +28,7 @@ def test_IncrementIdFieldType_fails_if_passes_maximum():
     with pytest.raises(ValueError,match = r"next number is greater than length"):
         id.select_id()
 
-def test_IdFieldType_is_correct_length():
+def test_IdGenerator_is_correct_length():
     id1 = field.IncrementIdGenerator(length=6)
     assert id1.select_id() == "000001"
     assert id1.select_id() == "000002"
@@ -37,8 +37,8 @@ def test_IdFieldType_is_correct_length():
     assert id1.select_id() == "0001"
     assert id1.select_id() == "0002"
 
-def test_RandomNoReuseIdFieldType_generates_random_no_with_no_replacement(monkeypatch):
-    id = field.RandomNoReuseIdFieldType(length=3)
+def test_RandomNoReuseIdGenerator_generates_random_no_with_no_replacement(monkeypatch):
+    id = field.RandomNoReuseIdGenerator(length=3)
 
     monkeypatch.setattr("random.randrange",mock.Mock(side_effect=[5,8,4,6,5,9]))
     assert id.select_id() == "005"
@@ -47,8 +47,8 @@ def test_RandomNoReuseIdFieldType_generates_random_no_with_no_replacement(monkey
     assert id.select_id() == "006"
     assert id.select_id() == "009"
 
-def test_RandomNoReuseIdFieldType_generates_random_no_with_replacement(monkeypatch):
-    id = field.RandomReuseIdFieldType(length=3)
+def test_RandomNoReuseIdGenerator_generates_random_no_with_replacement(monkeypatch):
+    id = field.RandomReuseIdGenerator(length=3)
 
     monkeypatch.setattr("random.randrange",mock.Mock(side_effect=[5,8,4,6,5,9]))
     assert id.select_id() == "005"
@@ -107,8 +107,8 @@ def test_IfElseField_handles_simple_setup():
 
     if_else = field.IfElseField(
         condition = gender_cond,
-        true = "MR",
-        false = "MRS"
+        true_value = "MR",
+        false_value = "MRS"
     )
 
     if_else.init_from_fieldset(fset)
@@ -134,14 +134,14 @@ def test_IfElseField_handles_nested_setup():
 
     ms_if_else = field.IfElseField(
         condition=ms_test_cond,
-        true="MRS",
-        false="MISS"
+        true_value="MRS",
+        false_value="MISS"
     )
 
     gender_if_else = field.IfElseField(
         condition = gender_cond,
-        true = "MR",
-        false = ms_if_else
+        true_value = "MR",
+        false_value = ms_if_else
     )
 
     gender_if_else.init_from_fieldset(fset)
@@ -179,15 +179,15 @@ def test_IfElseField_handles_non_if_else_logic():
 
     ms_if_else = field.IfElseField(
         condition=ms_test_cond,
-        true="MRS",
-        false=female_ov
+        true_value="MRS",
+        false_value=female_ov
     )
 
 
     gender_if_else = field.IfElseField(
         condition = gender_cond,
-        true = "MR",
-        false = ms_if_else
+        true_value = "MR",
+        false_value = ms_if_else
     )
 
     gender_if_else.init_from_fieldset(fset)

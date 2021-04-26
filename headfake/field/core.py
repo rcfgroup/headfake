@@ -15,17 +15,17 @@ from headfake.error import ChangeValue
 from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
 from headfake.util import create_package_class, locate_file, handle_missing_keyword
+from headfake import HeadFake
 from datetime import datetime as dt, timedelta as td
 import datetime
 
-LOCALE = "en_GB"
 
 @attr.s(kw_only=True)
 class Field(ABC):
     """
-    Basic field class. This uses the attrs module to handle available/required class attributes/defaults.
-    The key properties are 'transformers' which is a list of transformer class instances which will act upon the values
-    at various points and 'name' which is the field name (this can be None where it is not needed).
+    Abstract field class. Fields use the attrs module to handle available/required class attributes/defaults.
+    The base properties present in ALL fields are 'transformers' (a list of transformer class instances which will act upon the values
+    at various points) and 'name' (the field name), although the latter can be None where it is not needed.
     """
     transformers:List[Transformer] = attr.ib(factory=list)
     name:Optional[str] = attr.ib(default=uuid.uuid4())
@@ -42,7 +42,7 @@ class Field(ABC):
 
     def init_from_fieldset(self, fieldset:Fieldset):
         """
-        Initialise from containing fieldset. This is often used to obtain information on other fields in the
+        Initialise from containing fieldset. This is generally used to obtain information on other fields in the
         fieldset for later use.
         :param fieldset:
         :return:
@@ -51,9 +51,8 @@ class Field(ABC):
 
     def next_value(self, row:Dict[str,Any])->Union[Any,Dict[str,Any]]:
         """
-        Get next mock value for field. Acts as a decorator on the private '_next_value' method.
-        If 'transformers' have been provided in the constructor they surround the '_next_value' method by
-        with 'before_next' and 'after_next' methods for each transformer.
+        Get next generated value for field. Acts as a decorator around the private '_next_value' method.
+        If 'transformers' have been provided in the constructor they can act on the value before or after it has been generated.
 
         Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
         returned.
@@ -69,21 +68,31 @@ class Field(ABC):
 
         val = self._next_value(row)
 
-        for t in self.transformers:
-            val = t.after_next(self, row, val)
+        try:
+            for t in self.transformers:
+                val = t.after_next(self, row, val)
+        except ChangeValue as ex:
+            return ex.value
 
         return val
 
 
     @abstractmethod
     def _next_value(self, row:Dict[str,Any]):
+        """
+        This method should be over-ridden in inheriting Field classes. It provides the generated next value.
+        :param row:
+        :return:
+        """
         pass
 
 
 @attr.s(kw_only=True)
 class IdGenerator(ABC):
     """
-    Base class which handles the generation of zero-padded values for ID fields.
+    Base class which handles the generation of zero-padded values for ID fields. The key function is 'select_id'
+    which returns a zero-filled ID number to the specified length.
+
     :param length:int Length of zero-padded ID value
     :param min_value:int Minimum value/start point for ID value (default=1)
     """
@@ -95,11 +104,18 @@ class IdGenerator(ABC):
         val = self._select_number()
         return str(val).zfill(self.length)
 
+    @abstractmethod
+    def _select_number(self):
+        """
+        Generates the integer value used to create the ID in the 'select_id' function.
+        :return:
+        """
+        pass
 
 @attr.s(kw_only=True)
 class IncrementIdGenerator(IdGenerator):
     """
-    Incremental ID generator.
+    Incremental ID generator, increments by 1 each time an ID is generated.
     """
     current_no: int = attr.ib()
 
@@ -130,9 +146,9 @@ class RandomIdGenerator(IdGenerator):
 
 
 @attr.s
-class RandomNoReuseIdFieldType(RandomIdGenerator):
+class RandomNoReuseIdGenerator(RandomIdGenerator):
     """
-    Random unique ID generator.
+    Random unique ID generator which retains the used IDs so it does not reuse them.
     """
     _used_values: List[id] = attr.ib(factory=list)
 
@@ -147,11 +163,10 @@ class RandomNoReuseIdFieldType(RandomIdGenerator):
 
 
 @attr.s
-class RandomReuseIdFieldType(RandomIdGenerator):
+class RandomReuseIdGenerator(RandomIdGenerator):
     """
-    Random non-unique ID generator.
+    Random non-unique ID generator. Simply generates a random number between the min_value and max_value.
     """
-    _used_values: List[id] = attr.ib(factory=list)
 
     def _select_number(self):
         val = rnd.randrange(self.min_value, self.max_value)
@@ -161,7 +176,8 @@ class RandomReuseIdFieldType(RandomIdGenerator):
 @attr.s(kw_only=True)
 class IdField(Field):
     """
-    Field which generates ID values with prefix and suffix based on the supplied 'generator' class.
+    This field generates ID values using the provided IdGenerator class.
+    IDs can be generated with an optional prefix and/or suffix.
     """
     prefix: str = attr.ib(default="")
     suffix: str = attr.ib(default="")
@@ -176,20 +192,20 @@ class IdField(Field):
 @attr.s(kw_only=True)
 class FakerField(Field):
     """
-    Base field for Faker-based value creation.
+    Abstract base field for Faker-based value creation.
     """
     _fake = attr.ib()
 
     @_fake.default
     def _default_faker(self):
-        fake = faker.Faker(LOCALE)
+        fake = faker.Faker(HeadFake.locale)
         return fake
 
 
 @attr.s(kw_only=True)
 class OptionValueField(Field):
     """
-    Mock option value field, which uses a list of probabilities to determine which to pick.
+    This field generates option values, based on a provided dictionary of probabilities.
     """
 
     probabilities = attr.ib()
@@ -210,6 +226,10 @@ class OptionValueField(Field):
 
 @attr.s(kw_only=True)
 class DerivedField(Field):
+    """
+    This base field provides a decorator which uses an existing field type (_internal_field) to generate values.
+    The class can be extended with new properties which can be used to setup the _internal_field.
+    """
     @abstractmethod
     def _internal_field(self):
         pass
@@ -226,7 +246,7 @@ class DerivedField(Field):
 @attr.s(kw_only=True)
 class ConstantField(Field):
     """
-    Mock constant field. Deprecated: no longer needed - can simply use scalar value (e.g. string, number)
+    This field generates constant values. Deprecated: no longer needed - can simply use scalar value (e.g. string, number)
     """
     value = attr.ib()
 
@@ -237,7 +257,7 @@ class ConstantField(Field):
 @attr.s(kw_only=True)
 class ConcatField(Field):
     """
-    Concatenate multiple mock fields together
+    This field will concatenate values generated by multiple fields together, with an optional glue string.
     """
     fields: List[Field] = attr.ib(factory=list)
     glue: str = attr.ib(default="")
@@ -258,15 +278,9 @@ class ConcatField(Field):
 @attr.s(kw_only=True)
 class MapFileField(Field):
     """
-    Acts as focal point for random selection from a 'mapping_file'. N.B. Currently the mapping file is an absolute path
-    to a file, but in future it should take into account interlinked fieldsets.
-
-    The `key_field` has two roles:
-
-    1. it specifies the field in the mapping file where the values in this field come from
-    2. it is used as the key to lookup values when used in conjunction with one or LookupMapFileFields
-
-    This class also acts as a store for the mapping file and has to be specified in the LookupMapFileField.
+    This field loads a CSV-based mapping file and randomises the rows based on a particular 'key_field'
+    It is then used in conjuction with one or more LookupMapFileFields to lookup values in other fields in the mapping
+    file.
     """
 
     mapping_file = attr.ib()
@@ -290,7 +304,7 @@ class MapFileField(Field):
 @attr.s(kw_only=True)
 class LookupMapFileField(Field):
     """
-    Uses a specified MapFileField to get a data value for a specified column, using the key value from that field.
+    This field uses the specified MapFileField to get a data value from a specified column, using the key value from that field.
     """
 
     lookup_value_field = attr.ib()
@@ -312,36 +326,49 @@ class LookupMapFileField(Field):
 @attr.s(kw_only=True)
 class IfElseField(Field):
     """
-    Create field based on condition
+    This field generates the value based on the results of a condition.
+    If the result is true, the true_value is generated/returned and if false, the false_value is generated.
+
+    The true and false values can be field definitions or scalar values (e.g. strings, numbers, dates).
     """
     condition = attr.ib()
-    true = attr.ib()
-    false = attr.ib()
+    true_value = attr.ib()
+    false_value = attr.ib()
 
     def _next_value(self, row):
         if self.condition.is_true(row):
-            return self.true.next_value(row) if hasattr(self.true, "next_value") else self.true
+            return self.true_value.next_value(row) if hasattr(self.true_value, "next_value") else self.true_value
         else:
-            return self.false.next_value(row) if hasattr(self.false, "next_value") else self.false
+            return self.false_value.next_value(row) if hasattr(self.false_value, "next_value") else self.false_value
 
 
 @attr.s(kw_only=True)
 class Condition:
     """
-    Dependent field condition
+    Dependent field condition which compares the results of a field expression with a value, using an operator function.
+    In general it is easiest to use builtin Python "operator" functions such as `operator.or_`, `operator.and_`,
+    `operator.eq` etc., however, it is possible to use a custom function if required (provided it accepts
+    two values and returns a boolean value).
     """
+    name = attr.ib(default=None)
     field = attr.ib()  # name of field to check or field definition (e.g. could nest IfElseField)
     operator = attr.ib()
     value = attr.ib()
+    _operator_fn = attr.ib()
+
+    @_operator_fn.default
+    def _default_operator_fn(self):
+        return create_package_class(self.operator)
 
     def is_true(self, row):
-        return self.operator(row.get(self.field),self.value)
+        return self._operator_fn(row.get(self.field),self.value)
 
 
 @attr.s(kw_only=True)
 class RepeatField(Field):
     """
-    Repeat the creation of field values a random number of times as either a list or a joined value
+    This field repeat the generation of field values a random number of times within a specified range
+    as either a list or, if a glue string is provided, as a concatenated value separated by that string.
     """
     field: Field = attr.ib()
     min_repeats: int = attr.ib()
@@ -362,7 +389,7 @@ class RepeatField(Field):
 @attr.s(kw_only=True)
 class NumberField(Field):
     """
-    Mock number field. Creates a number based on random float selection from a scipy statistical distribution.
+    This field generates a number based on a random float selection from a scipy statistical distribution.
 
     Available scipy distributions include all those from the scipy.stats module (see https://docs.scipy.org/doc/scipy/reference/stats.html).
     For custom distributions, any class can be used provided it follows the same constructor arguments (loc and scale)
@@ -400,8 +427,8 @@ class NumberField(Field):
 @attr.s(kw_only=True)
 class BooleanField(Field):
     """
-    Mock boolean field. Creates a boolean (e.g. true/false) value.
-    The true_value (default=1), false_value (default=0) and true_probability (default=0.5) can be passed as arguments.
+    This field generate a boolean (e.g. true/false) value based on a true_probability (default=0.5).
+    The true_value (default=1) and false_value (default=0) which are returned can be specified.
 
     Forms the basis of the derived GenderField
     """
@@ -416,8 +443,8 @@ class BooleanField(Field):
 @attr.s(kw_only=True)
 class DateField(NumberField):
     """
-    Mock date field. Creates a date based on random number from a scipy statistical distribution (see NumberField),
-    based on the mean date and standard deviation. Adds the generated number as days to the mean date.
+    This field generates a date based on a random number of days from a scipy statistical distribution (see NumberField)
+    based on the mean date and standard deviation. It adds the generated number of days to the mean date.
 
     Available scipy distributions include all those from the scipy.stats module
     (see https://docs.scipy.org/doc/scipy/reference/stats.html).

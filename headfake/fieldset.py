@@ -1,12 +1,12 @@
 """
-This file implements the Fieldset class
+This package includes fieldset classes
 """
 
 import pandas as pd
 
 class Fieldset:
     """
-    A Fieldset object defines the parameters for the data generation process
+    The basic Fieldset object which contains the fields and parameters for the data generation process.
     """
 
     def __init__(self, fields, **kwargs):
@@ -27,7 +27,7 @@ class Fieldset:
 
     def generate_data(self, num_rows):
         """
-        generate data based on the parameters of this fieldset and return as a pandas dataframe
+        Generates data based on the fields and parameters in this fieldset and return as a pandas dataframe
 
         Args:
             num_rows: number of rows to generate

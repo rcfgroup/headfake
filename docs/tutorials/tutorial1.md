@@ -41,9 +41,6 @@ fieldset:
         length: 7
         min_value: 1000000
 
-      transformers:
-        - class: headfake.transformer.UpperCase
-
     gender:
       class: headfake.field.GenderField
       male_value: "M"
@@ -53,8 +50,6 @@ fieldset:
     last_name:
       class: headfake.field.LastNameField
       gender_field: gender
-      transformers:
-        - class: headfake.transformer.UpperCase
 
     dob:
       class: headfake.field.DateOfBirthField
