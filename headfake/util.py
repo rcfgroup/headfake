@@ -9,7 +9,7 @@ from collections import OrderedDict
 from importlib import import_module
 
 from pathlib import Path
-from importlib import resources
+import importlib_resources as resources
 
 def create_package_class(package_name):
     """
