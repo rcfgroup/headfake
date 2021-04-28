@@ -7,9 +7,9 @@ import os
 
 from collections import OrderedDict
 from importlib import import_module
-from inspect import getsourcefile
 
 from pathlib import Path
+import importlib_resources as resources
 
 def create_package_class(package_name):
     """
@@ -115,9 +115,8 @@ def locate_file(file):
 
     if not path.is_file():
         # if file does not exist then check to see if it's in the package resources
-
-        py_module = import_module("headfake")
-        path = Path(os.path.dirname(getsourcefile(py_module))) / path
+        with resources.path("headfake", ".") as resource_root:
+            path = resource_root / path
 
     if path.is_file():
         return path.absolute()
