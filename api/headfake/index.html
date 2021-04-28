@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>headfake - HEADFAKE</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
+  <link href="../../css/mkapi-common.css" rel="stylesheet" />
+  <link href="../../css/mkapi-readthedocs.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "headfake";
+    var mkdocs_page_input_path = "api/headfake.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../usage/">Usage</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Discussion</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../discussion/initialising-headfake/">Initialising Headfake</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">How to..</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-fields/">Create custom fields</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-transformers/">Create custom transformers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">headfake</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#headfakeheadfakeheadfake">HeadFake</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfakeheadfakepyheadfake">PyHeadFake</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">field</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../field/core/">core</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../field/id/">id</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../field/faker/">faker</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../field/derived/">derived</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli/">cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../fieldset/">fieldset</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../transformer/">transformer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../output/">output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../error/">error</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../util/">util</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">HEADFAKE</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>headfake</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/api/headfake.md"> Edit on headfake</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <div class="mkapi-node" id="headfake.headfake">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module plain top">
+    <div class="mkapi-object-kind module top">module</div>
+    <h3 id="headfakeheadfake" class="mkapi-object-body module top"><span class="mkapi-object-prefix">headfake.</span><span class="mkapi-object-name">headfake</span></h3>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>This file implements the HeadFake public API</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake">HeadFake</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Provides the core logic as a class which has an input a parameter dictions.
+Includes support for populating the HeadFake class from a YAML file.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.headfake.PyHeadFake">PyHeadFake</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Provides the core logic as a class which has an input a parameter dictions.
+Includes support for populating the HeadFake class from a YAML file.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakeheadfakeheadfake" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.headfake.</code><code class="mkapi-object-name">HeadFake</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">params</code>, <code class="mkapi-object-signature">seed=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Provides the core logic as a class which has an input a parameter dictions.
+Includes support for populating the HeadFake class from a YAML file.</p></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_python">from_python</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">class_tree</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class from a pre-defined class tree</span></li>
+
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_yaml">from_yaml</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class with parameters loaded from a .yaml file</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.generate">generate</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">num_rows</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Generate fake data based on the parameters specified in the constructor</span></li>
+
+<li class="classmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.set_locale">set_locale</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">locale</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Set the locale for random value generation</span></li>
+
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.set_seed">set_seed</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">seed</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Set the seed for initializing random number generator</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.from_yaml">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">from_yaml</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance of the HeadFake class with parameters loaded from a .yaml file</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">filename</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">name of yaml template</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">additional arguments passed to HeadFake constructor</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a HeadFake instance</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.from_python">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">from_python</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">class_tree</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance of the HeadFake class from a pre-defined class tree</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">class_tree</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">the pre-defined class_tree</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">additional arguments passed to HeadFake constructor</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a HeadFake instance</p></div>
+    </div>
+  <div class="mkapi-section examples">
+      <div class="mkapi-section-name examples">
+          <span class="mkapi-section-name-body examples">Examples</span> 
+        </div>
+      <div class="mkapi-section-body examples"><div class="codehilite"><pre><span></span><code><span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_python</span><span class="p">(</span>
+    <span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
+                <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+                <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
+                <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
+            <span class="p">)</span>
+    <span class="p">])</span>
+<span class="p">)</span>
+</code></pre></div></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.set_seed">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">set_seed</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">seed</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Set the seed for initializing random number generator</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">seed</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">seed for initializing random number generator</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.set_locale">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object classmethod code">
+    <div class="mkapi-object-kind classmethod">classmethod</div>
+    <div class="mkapi-object-body classmethod"><code class="mkapi-object-name">set_locale</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">locale</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Set the locale for random value generation</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+
+<li><code class="mkapi-item-name">seed</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">seed for initializing random number generator</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.generate">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">generate</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">num_rows=1</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Generate fake data based on the parameters specified in the constructor</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">num_rows</code>
+<span class="mkapi-item-type">(optional)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">number of rows to generate</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a pandas dataframe</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.PyHeadFake">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakeheadfakepyheadfake" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.headfake.</code><code class="mkapi-object-name">PyHeadFake</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">params</code>, <code class="mkapi-object-signature">seed=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.headfake.HeadFake</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Provides the core logic as a class which has an input a parameter dictions.
+Includes support for populating the HeadFake class from a YAML file.</p></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_python">from_python</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">class_tree</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class from a pre-defined class tree</span></li>
+
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_yaml">from_yaml</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class with parameters loaded from a .yaml file</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.generate">generate</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">num_rows</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Generate fake data based on the parameters specified in the constructor</span></li>
+
+<li class="classmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.set_locale">set_locale</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">locale</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Set the locale for random value generation</span></li>
+
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.set_seed">set_seed</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">seed</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Set the seed for initializing random number generator</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.from_yaml">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">from_yaml</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance of the HeadFake class with parameters loaded from a .yaml file</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">filename</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">name of yaml template</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">additional arguments passed to HeadFake constructor</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a HeadFake instance</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.from_python">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">from_python</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">class_tree</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance of the HeadFake class from a pre-defined class tree</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">class_tree</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">the pre-defined class_tree</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">additional arguments passed to HeadFake constructor</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a HeadFake instance</p></div>
+    </div>
+  <div class="mkapi-section examples">
+      <div class="mkapi-section-name examples">
+          <span class="mkapi-section-name-body examples">Examples</span> 
+        </div>
+      <div class="mkapi-section-body examples"><div class="codehilite"><pre><span></span><code><span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_python</span><span class="p">(</span>
+    <span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
+                <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+                <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
+                <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
+            <span class="p">)</span>
+    <span class="p">])</span>
+<span class="p">)</span>
+</code></pre></div></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.set_seed">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">set_seed</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">seed</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Set the seed for initializing random number generator</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">seed</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">seed for initializing random number generator</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.set_locale">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object classmethod code">
+    <div class="mkapi-object-kind classmethod">classmethod</div>
+    <div class="mkapi-object-body classmethod"><code class="mkapi-object-name">set_locale</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">locale</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Set the locale for random value generation</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+
+<li><code class="mkapi-item-name">seed</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">seed for initializing random number generator</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.generate">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">generate</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">num_rows=1</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Generate fake data based on the parameters specified in the constructor</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">num_rows</code>
+<span class="mkapi-item-type">(optional)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">number of rows to generate</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a pandas dataframe</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../field/core/" class="btn btn-neutral float-right" title="core">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../how-to/add-a-lookup-field/" class="btn btn-neutral" title="Add a lookup field"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../how-to/add-a-lookup-field/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../field/core/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/mkapi.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

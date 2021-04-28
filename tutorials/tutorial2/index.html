@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>2. Templates and conditional logic - HEADFAKE</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
+  <link href="../../css/mkapi-common.css" rel="stylesheet" />
+  <link href="../../css/mkapi-readthedocs.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "2. Templates and conditional logic";
+    var mkdocs_page_input_path = "tutorials/tutorial2.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../usage/">Usage</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../tutorial1/">1. Generating fake data files</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">2. Templates and conditional logic</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#aims-of-tutorial">Aims of tutorial</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adjust-the-proportion-of-male-individuals">Adjust the proportion of male individuals</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#add-a-first-name-field">Add a first name field</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generating-patients-who-are-deceased">Generating patients who are deceased</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#changing-generated-data-using-a-transformer">Changing generated data using a transformer</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#analysis">Analysis</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tutorial3/">3. Lookups and transformers</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Discussion</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../discussion/initialising-headfake/">Initialising Headfake</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">How to..</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-fields/">Create custom fields</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-transformers/">Create custom transformers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/headfake/">headfake</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">field</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/core/">core</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/id/">id</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/faker/">faker</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/derived/">derived</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/cli/">cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/fieldset/">fieldset</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/transformer/">transformer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/output/">output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/error/">error</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/util/">util</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">HEADFAKE</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>2. Templates and conditional logic</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/tutorials/tutorial2.md"> Edit on headfake</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="tutorial-2-changing-headfake-configuration-files">Tutorial 2. Changing Headfake configuration files</h1>
+<h2 id="aims-of-tutorial">Aims of tutorial</h2>
+<p>This tutorial will take a closer look at the YAML template including how changing the YAML file modifies the configuration, introduces some more advanced fields and look at how transformers can help post-process data.</p>
+<h2 id="adjust-the-proportion-of-male-individuals">Adjust the proportion of male individuals</h2>
+<p>Open <code>tutorial1.yml</code> that you created in <a href="/tutorials/tutorial1.md">Tutorial 1</a> in a text editor.
+You will see that it consists of a hierarchy of Python classes, with the fieldset as the base element, which contains one or more fields. The properties of the fields are the arguments passed when the class is initialised, so by changing these values in the YAML file we change how the fields behave.</p>
+<p>In the 'gender' field change the default <code>male_probability</code> from 0.3 to 0.5 and save the file as <code>tutorial2.yml</code>:</p>
+<p>e.g.</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">gender</span><span class="p">:</span>
+    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
+    <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
+    <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
+    <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+</code></pre></div>
+
+<p>Then re-run HEADFAKE:</p>
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2a.txt -n100
+</code></pre></div>
+
+<p>If you open <code>tutorial2.txt</code> and compare with <code>tutorial1.txt</code> you should see that the balance in the former is about a third, whereas the latter is half.</p>
+<h2 id="add-a-first-name-field">Add a first name field</h2>
+<p>You can also add additional fields by adding them into the 'fields' section of the YAML file.
+You can try this by copying the following and pasting it into <code>tutorial2.yml</code> and saving:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">first_name</span><span class="p">:</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.FirstNameField</span>
+  <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
+</code></pre></div>
+
+<p>Then re-run HEADFAKE:</p>
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2b.txt -n100
+</code></pre></div>
+
+<p>If you now open the <code>tutorial2b.txt</code> file you should see that the new first_name field is generated according to the specified gender_field.</p>
+<h2 id="generating-patients-who-are-deceased">Generating patients who are deceased</h2>
+<p>Next you will add a field which can be very useful from a health perspective as it is a flag for deceased status.</p>
+<p>Open <code>tutorial2.yml</code> and add a new field to the fieldset config as below:</p>
+<p>e.g.</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">deceased</span><span class="p">:</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.DeceasedField</span>
+  <span class="nt">dob_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dob</span>
+  <span class="nt">deceased_date_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">date_of_death</span>
+  <span class="nt">age_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">age</span>
+  <span class="nt">date_format</span><span class="p">:</span> <span class="s">&quot;%Y-%m-%d&quot;</span>
+  <span class="c1"># 1 in X risks taken from here. Used Male values. http://www.bandolier.org.uk/booth/Risk/dyingage.html</span>
+  <span class="nt">risk_of_death</span><span class="p">:</span>
+    <span class="nt">0-1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">177</span>
+    <span class="nt">1-4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4386</span>
+    <span class="nt">5-14</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8333</span>
+    <span class="nt">15-24</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1908</span>
+    <span class="nt">25-34</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1215</span>
+    <span class="nt">35-44</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">663</span>
+    <span class="nt">45-54</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">279</span>
+    <span class="nt">55-64</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">112</span>
+    <span class="nt">65-74</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+    <span class="nt">75-84</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">15</span>
+    <span class="nt">85-120</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6</span>
+</code></pre></div>
+
+<p>Then re-run HEADFAKE:</p>
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2c.txt -n100
+</code></pre></div>
+
+<p>If you now open <code>tutorial2c.txt</code> you will see that some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.</p>
+<h2 id="changing-generated-data-using-a-transformer">Changing generated data using a transformer</h2>
+<p>Transformers are special classes which act before or after data is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.</p>
+<p>Change the last_name in <code>tutorial2.yml</code> to add both transformers and re-run the generation:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">last_name</span><span class="p">:</span>
+      <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.LastNameField</span>
+      <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
+      <span class="nt">transformers</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.transformer.IntermittentBlanks</span>
+          <span class="nt">blank_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+          <span class="nt">blank_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NULL</span>
+        <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.transformer.UpperCase</span>
+</code></pre></div>
+
+<p>headfake /path/to/tutorial2.yml -o /path/to/tutorial2d.txt -n100
+```</p>
+<p>As expected, ~20% of the values will now be NULL and those which are not will now be uppercase.</p>
+<h3 id="analysis">Analysis</h3>
+<p>In this tutorial we showed how adaptable HEADFAKE can be for generating data by changing the YAML file. We were able to change the arguments to set up fields and add new fields. We also showed how transformers can be used to pre- and post-process generated field values.</p>
+<p>In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tutorial3/" class="btn btn-neutral float-right" title="3. Lookups and transformers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../tutorial1/" class="btn btn-neutral" title="1. Generating fake data files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../tutorial1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../tutorial3/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/mkapi.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

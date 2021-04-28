@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Create custom fields - HEADFAKE</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
+  <link href="../../css/mkapi-common.css" rel="stylesheet" />
+  <link href="../../css/mkapi-readthedocs.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Create custom fields";
+    var mkdocs_page_input_path = "how-to/create-custom-fields.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../usage/">Usage</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Discussion</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../discussion/initialising-headfake/">Initialising Headfake</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">How to..</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Create custom fields</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#an-example-derived-custom-field">An example derived custom field</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#an-example-non-derived-field">An example non-derived field</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-custom-fields-in-yaml-templates">Using custom fields in YAML templates</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adding-tests-for-a-custom-field">Adding tests for a custom field</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../create-custom-transformers/">Create custom transformers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../add-a-lookup-field/">Add a lookup field</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/headfake/">headfake</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">field</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/core/">core</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/id/">id</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/faker/">faker</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/derived/">derived</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/cli/">cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/fieldset/">fieldset</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/transformer/">transformer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/output/">output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/error/">error</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/util/">util</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">HEADFAKE</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>How to.. &raquo;</li>
+        
+      
+    
+    <li>Create custom fields</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/how-to/create-custom-fields.md"> Edit on headfake</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="creating-custom-fields">Creating custom fields</h1>
+<p>Custom fields can be created by extending from one of the field classes in headfake.field. Headfake uses the <a href="https://www.attrs.org">attrs</a> package  to provide a simpler way of initialising and handling class properties, although this does make it a little more difficult to sub-class field classes if the generated data is similar to that generated by other field types.</p>
+<p>To deal with this Headfake provides a <code>DerivedField</code> class which acts as a decorator around another field (created through the <code>_internal_field</code> method).</p>
+<p>In some cases, what you want to achieve may be better achieved by using a <code>Transformer</code> class instead, for example processing the generated value in some way.</p>
+<h2 id="an-example-derived-custom-field">An example derived custom field</h2>
+<p>Below is a simple derived custom checkbox field which uses an internal OptionValueField to generate a 0 or 1 value. The user only provides a single 'yes_probability' to use the field.</p>
+<p>An example checkbox field could look like this.</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">YesNoUnsureField</span><span class="p">(</span><span class="n">DerivedField</span><span class="p">):</span>
+    <span class="n">yes_probability</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span> <span class="c1">#probability that Y is generated</span>
+    <span class="n">unsure_probability</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_internal_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ynu_probs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">2</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">unsure_probability</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">yes_probability</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">yes_probability</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">unsure_probability</span><span class="p">,</span>
+
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">OptionValueField</span><span class="p">(</span><span class="n">probabilities</span><span class="o">=</span><span class="n">ynu_probs</span><span class="p">)</span>
+
+<span class="o">..</span>
+
+<span class="n">ynu_field</span> <span class="o">=</span> <span class="n">YesNoUnsureField</span><span class="p">(</span><span class="n">yes_probability</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">unsure_probablity</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="an-example-non-derived-field">An example non-derived field</h2>
+<p>When generated data is completely different from any existing functionality then you should extend <code>headfake.field.Field</code> and create appropriate attributes. Then over-ride the <code>_next_value</code> function to create the value.</p>
+<p>For example, this field will continuously rotate through a list of supplied characters with a different one one each row.</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">RotatingCharacterField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="n">characters</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="n">_curr_char_pos</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_next_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="n">char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characters</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_curr_char_pos</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_curr_char_pos</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_curr_char_pos</span><span class="o">&gt;</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">characters</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">curr_char_pos</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">char</span>
+</code></pre></div>
+
+<h2 id="using-custom-fields-in-yaml-templates">Using custom fields in YAML templates</h2>
+<p>This is as simple as entering the classname in the 'class' property in the YAML file along with the additional parameters. For example to use the RotatingCharacterField:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">my_character</span><span class="p">:</span>
+    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mypackage.RotatingCharacterField</span>
+    <span class="nt">characters</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ABCDEFGH</span>
+</code></pre></div>
+
+<p>Providing your package is within the Python library path, it should be found and used to generate the field values.</p>
+<h2 id="adding-tests-for-a-custom-field">Adding tests for a custom field</h2>
+<p>It is recommended that a test file is setup for new custom fields, particularly if the logic is complex.
+To aid this, a field class can be created standalone the <code>next_value</code> method can be tested.</p>
+<p>Below is an example using pytest to test the logic for the RotatingCharacterField:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="k">def</span> <span class="nf">test_characters_are_rotated</span><span class="p">():</span>
+    <span class="n">rc_field</span> <span class="o">=</span> <span class="n">RotatingCharacterField</span><span class="p">(</span><span class="n">characters</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ABC&quot;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">rc_field</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="p">{})</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">assert</span> <span class="n">rc_field</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="p">{})</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span>
+    <span class="k">assert</span> <span class="n">rc_field</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="p">{})</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span>
+    <span class="k">assert</span> <span class="n">rc_field</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="p">{})</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span>
+</code></pre></div>
+
+<p>It can be difficult to handle randomly generated fields so you can either replace functions used internally with ones which you can control or you can set the random seed to a known value. For example in the CheckboxField.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">test_CheckboxField_returns_expected_value</span><span class="p">(</span><span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">HeadFake</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">ov</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">ov</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">ov</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">ov</span><span class="o">.</span><span class="n">next_value</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</code></pre></div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../create-custom-transformers/" class="btn btn-neutral float-right" title="Create custom transformers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../discussion/initialising-headfake/" class="btn btn-neutral" title="Initialising Headfake"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../discussion/initialising-headfake/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../create-custom-transformers/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/mkapi.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

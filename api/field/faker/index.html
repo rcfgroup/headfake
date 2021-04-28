@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>faker - HEADFAKE</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
+  <link href="../../../css/mkapi-common.css" rel="stylesheet" />
+  <link href="../../../css/mkapi-readthedocs.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "faker";
+    var mkdocs_page_input_path = "api/field/faker.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> HEADFAKE</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../installation/">Installation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../usage/">Usage</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial1/">1. Generating fake data files</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Discussion</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../discussion/initialising-headfake/">Initialising Headfake</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">How to..</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/create-custom-fields/">Create custom fields</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/create-custom-transformers/">Create custom transformers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/add-a-lookup-field/">Add a lookup field</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../../headfake/">headfake</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">field</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../core/">core</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../id/">id</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">faker</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakernamefield">NameField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakertimefield">TimeField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakerfirstnamefield">FirstNameField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakerlastnamefield">LastNameField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakermiddlenamefield">MiddleNameField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakeraddressfield">AddressField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakerpostcodefield">PostcodeField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakerphonefield">PhoneField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakeremailfield">EmailField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakerpasswordfield">PasswordField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakertextfield">TextField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldfakermemofield">MemoField</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../derived/">derived</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cli/">cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../fieldset/">fieldset</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../transformer/">transformer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../output/">output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../error/">error</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../util/">util</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">HEADFAKE</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>field &raquo;</li>
+        
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>faker</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/api/field/faker.md"> Edit on headfake</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <div class="mkapi-node" id="headfake.field.faker">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module plain top">
+    <div class="mkapi-object-kind module top">module</div>
+    <h3 id="headfakefieldfaker" class="mkapi-object-body module top"><span class="mkapi-object-prefix">headfake.field.</span><span class="mkapi-object-name">faker</span></h3>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.NameField">NameField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Base for a name field which uses faker to generate. The supplied 'gender_field' points to the field in the fieldset
+which generates the gender value. It uses this field and row value to determine whether the generated name is male
+or female.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.TimeField">TimeField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create mock time using faker</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.FirstNameField">FirstNameField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Generate first name based on gender using the faker module (see NameField).</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.LastNameField">LastNameField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Generate last name using the faker module.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.MiddleNameField">MiddleNameField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Mock middle name field.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.AddressField">AddressField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Mock address line field.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.PostcodeField">PostcodeField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Mock postcode field.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.PhoneField">PhoneField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Mock phone number field.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.EmailField">EmailField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create mock email using faker</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.PasswordField">PasswordField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create mock password using faker</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.TextField">TextField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Generate  text using the faker.lorem provider. 'max_length' controls how long the text is allowed to be.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.faker.MemoField">MemoField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Generate paragraphs using the faker.lorem provider. 'sentences' controls the exact number of sentences, when 'exact' is
+set to True, when set to False it will return a variable number of sentences (never less than 1) +- 40% of the
+'sentences' parameter.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.NameField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakernamefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">NameField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">gender_field</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Base for a name field which uses faker to generate. The supplied 'gender_field' points to the field in the fieldset
+which generates the gender value. It uses this field and row value to determine whether the generated name is male
+or female.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.faker.NameField.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.NameField.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.TimeField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakertimefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">TimeField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">format=&#39;%H:%M&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create mock time using faker</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.FirstNameField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakerfirstnamefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">FirstNameField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">gender_field</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.faker.NameField</span>
+
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Generate first name based on gender using the faker module (see NameField).</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.faker.NameField.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.NameField.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.LastNameField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakerlastnamefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">LastNameField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">gender_field</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.faker.NameField</span>
+
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Generate last name using the faker module.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.faker.NameField.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.NameField.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.MiddleNameField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakermiddlenamefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">MiddleNameField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">gender_field</code>, <code class="mkapi-object-signature">first_name_field</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.faker.NameField</span>
+
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Mock middle name field.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.faker.NameField.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.faker.MiddleNameField.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.NameField.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.MiddleNameField.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.AddressField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakeraddressfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">AddressField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">line_no</code>, <code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Mock address line field.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.PostcodeField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakerpostcodefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">PostcodeField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Mock postcode field.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.PhoneField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakerphonefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">PhoneField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">type=&#39;default&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Mock phone number field.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.EmailField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakeremailfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">EmailField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">safe=True</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create mock email using faker</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.PasswordField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakerpasswordfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">PasswordField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">length=16</code>, <code class="mkapi-object-signature">special_chars=True</code>, <code class="mkapi-object-signature">digits=True</code>, <code class="mkapi-object-signature">upper_case=True</code>, <code class="mkapi-object-signature">lower_case=True</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create mock password using faker</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.TextField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakertextfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">TextField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">max_length=50</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Generate  text using the faker.lorem provider. 'max_length' controls how long the text is allowed to be.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.faker.MemoField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldfakermemofield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.faker.</code><code class="mkapi-object-name">MemoField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;8b314b44-0d2b-459c-9e4a-e0d507384929&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code>, <code class="mkapi-object-signature">sentences=3</code>, <code class="mkapi-object-signature">exact=False</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.FakerField</span>
+
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Generate paragraphs using the faker.lorem provider. 'sentences' controls the exact number of sentences, when 'exact' is
+set to True, when set to False it will return a variable number of sentences (never less than 1) +- 40% of the
+'sentences' parameter.</p></div>
+    </div>
+  <div class="mkapi-section attributes">
+      <div class="mkapi-section-name attributes">
+          <span class="mkapi-section-name-body attributes">Attributes</span> 
+        </div>
+      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
+<li class="readonly-property"><code class="mkapi-item-name">names</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+generated.</p>
+<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
+returned.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../derived/" class="btn btn-neutral float-right" title="derived">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../id/" class="btn btn-neutral" title="id"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../id/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../derived/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../js/mkapi.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

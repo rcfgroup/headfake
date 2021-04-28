@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Initialising Headfake - HEADFAKE</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+  <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
+  <link href="../../css/mkapi-common.css" rel="stylesheet" />
+  <link href="../../css/mkapi-readthedocs.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Initialising Headfake";
+    var mkdocs_page_input_path = "discussion/initialising-headfake.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../usage/">Usage</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Discussion</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Initialising Headfake</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">How to..</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-fields/">Create custom fields</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-transformers/">Create custom transformers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/headfake/">headfake</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">field</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/core/">core</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/id/">id</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/faker/">faker</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/field/derived/">derived</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/cli/">cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/fieldset/">fieldset</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/transformer/">transformer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/output/">output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/error/">error</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/util/">util</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">HEADFAKE</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Discussion &raquo;</li>
+        
+      
+    
+    <li>Initialising Headfake</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/discussion/initialising-headfake.md"> Edit on headfake</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>HEADFAKE is built around the concept of field sets which contain one or more fields.  Each field has a type (class) which determines what type of data is generated. The definition of fieldsets and their fields can be done through a YAML file or in Python code.</p>
+<h1 id="fieldsets-from-a-yaml-file">Fieldsets from a YAML file</h1>
+<p>A YAML file can be used to describe the class tree which is created internally, and is then used to generate the data. For each item in the YAML file, the 'class' property defines the Python class used and all other properties are passed into the class constructor as parameters.</p>
+<p>For example, for a dictionary-based template:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
+  <span class="nt">fields</span><span class="p">:</span>
+    <span class="nt">gender</span><span class="p">:</span>
+        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
+        <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
+        <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
+        <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+</code></pre></div>
+
+<p>Or for a list-based template:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
+  <span class="nt">fields</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
+        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
+        <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
+        <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
+        <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+</code></pre></div>
+
+<p>The <code>from_yaml</code> function is used:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">headfake</span> <span class="kn">import</span> <span class="n">HeadFake</span>
+
+<span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;/path/to/template.yaml&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hf</span><span class="o">.</span><span class="n">fieldset</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The first template prints:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
+    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
+            <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
+            <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>
+
+<p>While the second gets turned into:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
+    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span>
+            <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
+            <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+
+<p>The advantage of the list-based approach is that the order of fields is always retained, whereas it may not with a dictionary-based template - as the YAML specification does not retain the order of values in the file.</p>
+<h1 id="fieldset-in-python-code">Fieldset in Python code</h1>
+<p>If preferred, the fieldset definition can be written in Python code directly. This should be fed to the 'from_python' method:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_python</span><span class="p">(</span><span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
+    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span>
+            <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
+            <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="p">)</span>
+<span class="p">]))</span>
+</code></pre></div>
+
+<p>This will initialise the fields appropriately.</p>
+<h2 id="generate-data">Generate data</h2>
+<p>Once the HeadFake object has been obtained, the key method is generate_data which processes each field to create a pandas DataFrame containing the specified number of rows of generated data.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../how-to/create-custom-fields/" class="btn btn-neutral float-right" title="Create custom fields">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../tutorials/tutorial3/" class="btn btn-neutral" title="3. Lookups and transformers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../tutorials/tutorial3/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../how-to/create-custom-fields/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/mkapi.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
