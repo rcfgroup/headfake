@@ -1,7 +1,7 @@
-HEADFAKE is built around the concept of fieldsets which contain one or more fields.  Each field has a type (class) which determines what type of data is generated. The fieldsets are initialised through the HeadFake class, and there are two options to do this: through a YAML file or as Python code.
+HEADFAKE is built around the concept of field sets which contain one or more fields.  Each field has a type (class) which determines what type of data is generated. The definition of fieldsets and their fields can be done through a YAML file or in Python code.
 
-# Using a YAML file
-A YAML file can be used to describe a class tree which is created and used to populate the HeadFake object, which is then used to generate the data. For each item in the YAML file, the 'class' property defines the Python class used and all other properties are passed into the class constructor as parameters.
+# Fieldsets from a YAML file
+A YAML file can be used to describe the class tree which is created internally, and is then used to generate the data. For each item in the YAML file, the 'class' property defines the Python class used and all other properties are passed into the class constructor as parameters.
 
 For example, for a dictionary-based template:
 
@@ -17,6 +17,8 @@ fieldset:
 ```
 
 Or for a list-based template:
+
+```yaml
 fieldset:
   class: headfake.Fieldset
   fields:
@@ -25,6 +27,7 @@ fieldset:
         male_value: "M"
         female_value: "F"
         male_probability: 0.5
+```
 
 The `from_yaml` function is used:
 
@@ -33,6 +36,7 @@ from headfake import HeadFake
 
 hf = HeadFake.from_yaml("/path/to/template.yaml")
 print(hf.fieldset)
+```
 
 The first template prints:
 ```python
@@ -48,6 +52,7 @@ headfake.Fieldset(
 ```
 
 While the second gets turned into:
+
 ```python
 headfake.Fieldset(
     fieldsets = [
@@ -58,13 +63,14 @@ headfake.Fieldset(
             male_probability=0.5
         )
 ])
-
+```
 
 The advantage of the list-based approach is that the order of fields is always retained, whereas it may not with a dictionary-based template - as the YAML specification does not retain the order of values in the file.
 
-# Using Python code
-If preferred, the fieldset definition can be written in Python code directly. This should be fed to the `from_python` method:
+# Fieldset in Python code
+If preferred, the fieldset definition can be written in Python code directly. This should be fed to the 'from_python' method:
 
+```python
 hf = HeadFake.from_python(headfake.Fieldset(
     fieldsets = [
         headfake.field.GenderField(
@@ -74,8 +80,9 @@ hf = HeadFake.from_python(headfake.Fieldset(
             male_probability=0.5
         )
 ]))
+```
 
-This will initialise the fieldsets appropriately.
+This will initialise the fields appropriately.
 
 ## Generate data
 Once the HeadFake object has been obtained, the key method is generate_data which processes each field to create a pandas DataFrame containing the specified number of rows of generated data.

@@ -134,6 +134,10 @@ fieldset:
 
     postcode:
       class: headfake.field.PostcodeField
+      transformers:
+        - class: headfake.transformer.SplitPiece
+          separator: " "
+          index: 0
 
     homephone:
       class: headfake.field.PhoneField

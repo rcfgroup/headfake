@@ -4,10 +4,10 @@ Custom fields can be created by extending from one of the field classes in headf
 
 To deal with this Headfake provides a `DerivedField` class which acts as a decorator around another field (created through the `_internal_field` method).
 
-In some cases, customising the field may be achieved best by using an existing or custom `Transformer` class. For example, changing text case.
+In some cases, what you want to achieve may be better achieved by using a `Transformer` class instead, for example processing the generated value in some way.
 
 
-## Create a derived custom field
+## An example derived custom field
 Below is a simple derived custom checkbox field which uses an internal OptionValueField to generate a 0 or 1 value. The user only provides a single 'yes_probability' to use the field.
 
 An example checkbox field could look like this.
@@ -30,11 +30,11 @@ class YesNoUnsureField(DerivedField):
 
 ..
 
-cbox_field = YesNoUnsureField(yes_probability=0.4, unsure_probablity=0.05)
+ynu_field = YesNoUnsureField(yes_probability=0.4, unsure_probablity=0.05)
 
 ```
 
-## Creating a non-derived custom field
+## An example non-derived field
 When generated data is completely different from any existing functionality then you should extend `headfake.field.Field` and create appropriate attributes. Then over-ride the `_next_value` function to create the value.
 
 For example, this field will continuously rotate through a list of supplied characters with a different one one each row.
@@ -56,7 +56,7 @@ class RotatingCharacterField(Field):
 
 ```
 
-## Using custom fields in templates
+## Using custom fields in YAML templates
 This is as simple as entering the classname in the 'class' property in the YAML file along with the additional parameters. For example to use the RotatingCharacterField:
 
 ```yaml

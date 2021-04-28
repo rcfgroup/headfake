@@ -6,6 +6,7 @@ import argparse
 
 from headfake import output, HeadFake
 
+
 class Command:
     """
     Class for command line script
@@ -32,10 +33,10 @@ class Command:
 
         parser = argparse.ArgumentParser(
 
-            description="HEAlth Data Faker provides a command-line script to create mock data " \
-                "files based on a YAML-based template file (see examples/* for example " \
-                "templates). HeadFake uses the python package 'faker' to generate names and " \
-                "contact details.")
+            description="HEAlth Data Faker provides a command-line script to create mock data "
+            "files based on a YAML-based template file (see examples/* for example "
+            "templates). HeadFake uses the python package 'faker' to generate names and "
+            "contact details.")
 
         parser.add_argument(
             "template",
@@ -62,7 +63,7 @@ class Command:
             "--seed",
             type=int,
             help="Seed for the random data generator",
-            default=0
+            required=False
         )
 
         self.args = parser.parse_args(args)
@@ -83,4 +84,3 @@ class Command:
             outfile = output.StdoutOutput(self.args)
 
         outfile.write(headfake.generate(self.args.no_rows))
-

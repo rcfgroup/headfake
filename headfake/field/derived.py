@@ -6,6 +6,7 @@ from typing import Dict, List, Any
 
 from headfake.util import calculate_age
 
+
 @attr.s(kw_only=True)
 class DateOfBirthField(DerivedField):
     """
@@ -24,7 +25,8 @@ class DateOfBirthField(DerivedField):
     date_format: str = attr.ib()
 
     def _internal_field(self):
-        return NumberField(mean=self.mean, sd=self.sd, min=self.min, max=self.max, distribution = self.distribution)
+        return NumberField(mean=self.mean, sd=self.sd, min=self.min,
+                           max=self.max, distribution=self.distribution)
 
     def _next_value(self, row):
         age_in_years = super()._next_value(row)
@@ -57,7 +59,9 @@ class GenderField(DerivedField):
     female_value = attr.ib()
 
     def _internal_field(self):
-        return BooleanField(true_value = self.male_value, false_value=self.female_value, true_probability=self.male_probability)
+        return BooleanField(true_value=self.male_value,
+                            false_value=self.female_value, true_probability=self.male_probability)
+
 
 @attr.s(kw_only=True)
 class NhsNoField(Field):
@@ -91,8 +95,6 @@ class NhsNoField(Field):
             return self.next_value(row)
 
         return strval[0:3] + " " + strval[3:6] + " " + strval[6:9] + str(checkdigit)
-
-
 
 
 @attr.s(kw_only=True)
@@ -186,6 +188,7 @@ class DeceasedField(Field):
 
         return default_names
 
+
 @attr.s(kw_only=True)
 class AgeField(Field):
     """
@@ -197,7 +200,7 @@ class AgeField(Field):
     from_format = attr.ib(default=None)
     to_format = attr.ib(default=None)
 
-    def _next_value(self, row:Dict[str,Any]):
+    def _next_value(self, row: Dict[str, Any]):
         from_date = extract_date(self.from_value, row, self.from_format)
         to_date = extract_date(self.to_value, row, self.to_format)
         return calculate_age(from_date, to_date)

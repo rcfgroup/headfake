@@ -10,6 +10,7 @@ from faker import Faker
 
 from headfake.util import create_class_tree, locate_file
 
+
 class HeadFake:
     """
     Provides the core logic as a class which has an input a parameter dictions.
@@ -29,11 +30,10 @@ class HeadFake:
         self.set_seed(seed)
         self.fieldset = self._create_fieldset(params)
 
-
     @staticmethod
     def from_yaml(filename, **kwargs):
         """
-        Create and instance of the HeadFake instance with parameters loaded from a .yaml file
+        Create an instance of the HeadFake class with parameters loaded from a .yaml file
 
         Args:
             filename: name of yaml template
@@ -47,6 +47,36 @@ class HeadFake:
         with open(path) as file:
             params = yaml.safe_load(file)
         return HeadFake(params, **kwargs)
+
+    @staticmethod
+    def from_python(class_tree, **kwargs):
+        """
+        Create an instance of the HeadFake class from a pre-defined class tree
+
+        Args:
+            class_tree: the pre-defined class_tree
+            **kwargs: additional arguments passed to HeadFake constructor
+
+        Returns:
+            a HeadFake instance
+
+        Examples:
+            ```python
+            hf = HeadFake.from_python(
+                headfake.Fieldset(
+                    fields = {
+                        "gender": headfake.field.GenderField(
+                            male_value="M",
+                            female_value="F",
+                            male_probability=0.5
+                        )
+                ])
+            )
+            ```
+        """
+
+        return PyHeadFake(class_tree, **kwargs)
+
 
     @staticmethod
     def set_seed(seed):
@@ -79,7 +109,6 @@ class HeadFake:
         """
         cls.locale = locale
 
-
     def _create_fieldset(self, params):
         """
         Create the FieldSet from the parameters passed
@@ -100,7 +129,6 @@ class HeadFake:
 
         return fieldset
 
-
     def generate(self, num_rows=1):
         """
         Generate fake data based on the parameters specified in the constructor
@@ -113,3 +141,22 @@ class HeadFake:
         """
 
         return self.fieldset.generate_data(num_rows)
+
+class PyHeadFake(HeadFake):
+    def _create_fieldset(self, params):
+        """
+        Create the FieldSet from the parameters passed
+
+        Args:
+            params: parameters for the fieldset
+
+        Returns:
+            A FieldSet object
+        """
+
+        fieldset = params.get("fieldset")
+
+        for field in fieldset.fields:
+            field.init_from_fieldset(fieldset)
+
+        return fieldset

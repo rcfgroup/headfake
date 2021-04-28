@@ -1,11 +1,15 @@
+"""
+Utility methods used by other parts of Headfake
+"""
+import re
 import errno
 import os
-import yaml
 
 from collections import OrderedDict
 from importlib import import_module
-from inspect import signature
+
 from pathlib import Path
+from importlib import resources
 
 def create_package_class(package_name):
     """
@@ -13,7 +17,7 @@ def create_package_class(package_name):
     :param package_name: Fully qualified package name.
     :return:
     """
-    if not isinstance(package_name,str):
+    if not isinstance(package_name, str):
         return package_name
 
     package_bits = package_name.split(".")
@@ -25,24 +29,28 @@ def create_package_class(package_name):
     return getattr(module, class_name)
 
 
-import re
+def create_class_tree(name, params):
+    """Create recursive class tree given parameters.
 
-def create_class_tree(name, params, data=None):
+    The name is only given if the original source had a key/value
+    structure, otherwise None is supplied.
+
+    Args:
+        name:
+            Name of the current class/object in the tree
+        params:
+            A dictionary or list of parameters used to build the class
+
+    Returns:
+        A class tree containing recursive classes, lists and dictionaries.
+
     """
-    Create recursive class tree given parameters. The name is only given if the original source had a key/value structure,
-    otherwise None is supplied.
-    :param name:
-    :param params: The dictionary or list of parameters
-    :param data:
-    :return:
-    """
-    if data is None:
-        data = {}
+
 
     if isinstance(params, dict) and "class" in params:
         class_name = params["class"]
-        del (params["class"])
-        sub_params = create_class_tree(name, params, data)
+        del params["class"]
+        sub_params = create_class_tree(name, params)
 
         cls = create_package_class(class_name)
 
@@ -53,16 +61,18 @@ def create_class_tree(name, params, data=None):
         except TypeError as ex:
             handle_missing_keyword(ex)
 
-            raise TypeError("Problem creating '%s' %s. Original error:%s" % (name, cls.__name__, ex))
+            raise TypeError(
+                "Problem creating '%s' %s. Original error:%s" %
+                (name, cls, ex)) from ex
 
     new_params = OrderedDict()
     for key, value in params.items():
         if isinstance(value, dict):
-            new_params[key] = create_class_tree(key, value, data)
+            new_params[key] = create_class_tree(key, value)
         elif isinstance(value, list):
             block = []
             for item in value:
-                block.append(create_class_tree(item.get("name",None), item, data))
+                block.append(create_class_tree(item.get("name", None), item))
             new_params[key] = block
         else:
             new_params[key] = value
@@ -88,8 +98,8 @@ def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
 
     if birthday > end_date:
         return end_date.year - start_date.year - 1
-    else:
-        return end_date.year - start_date.year
+
+    return end_date.year - start_date.year
 
 
 def locate_file(file):
@@ -100,11 +110,6 @@ def locate_file(file):
     filesystem or in the package resources
     :return: a PosixPath of the file if found. If the file is not found then an exception is raised
     """
-
-    try:
-        from importlib import resources
-    except ImportError:
-        import importlib_resources as resources
 
     path = Path(file)
 
@@ -118,6 +123,7 @@ def locate_file(file):
 
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))
 
+
 def handle_missing_keyword(ex):
     """
     Used to provides more informative error when a keyword is missing from parameters.
@@ -127,4 +133,6 @@ def handle_missing_keyword(ex):
     kwonly_error = re.search("required keyword-only argument[s]{0,1}: ('.+')$", str(ex))
 
     if kwonly_error:
-        raise TypeError("The following required parameter(s) were missing: %s" % kwonly_error.group(1))
+        raise TypeError(
+            "The following required parameter(s) were missing: %s" %
+            kwonly_error.group(1))

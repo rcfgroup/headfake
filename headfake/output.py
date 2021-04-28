@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Output(ABC):
     """
     Base output class.
@@ -31,6 +32,7 @@ class FileOutput(Output):
     @abstractmethod
     def write(self, dataframe):
         pass
+
 
 class CsvFileOutput(Output):
     """
@@ -73,5 +75,3 @@ class StdoutOutput(FileOutput):
 
     def write(self, dataframe):
         print(dataframe)
-
-

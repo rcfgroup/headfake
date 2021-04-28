@@ -2,6 +2,7 @@ import attr
 
 from .core import FakerField
 
+
 @attr.s(kw_only=True)
 class NameField(FakerField):
     """
@@ -21,7 +22,6 @@ class NameField(FakerField):
             return self._female_name()
 
 
-
 @attr.s(kw_only=True)
 class TimeField(FakerField):
     """
@@ -37,6 +37,7 @@ class FirstNameField(NameField):
     """
     Generate first name based on gender using the faker module (see NameField).
     """
+
     def _male_name(self):
         return self._fake.first_name_male()
 
@@ -48,6 +49,7 @@ class LastNameField(NameField):
     """
     Generate last name using the faker module.
     """
+
     def _male_name(self):
         return self._fake.last_name_male()
 
@@ -77,6 +79,7 @@ class MiddleNameField(NameField):
             return self.next_value(row)
 
         return val
+
 
 @attr.s
 class AddressField(FakerField):
@@ -124,6 +127,7 @@ class PhoneField(FakerField):
         else:
             return self._fake.phone_number()
 
+
 @attr.s(kw_only=True)
 class EmailField(FakerField):
     """
@@ -158,6 +162,7 @@ class PasswordField(FakerField):
             lower_case=self.lower_case
         )
 
+
 @attr.s(kw_only=True)
 class TextField(FakerField):
     """
@@ -177,7 +182,8 @@ class MemoField(FakerField):
     'sentences' parameter.
     """
     sentences: int = attr.ib(default=3)
-    exact:bool = attr.ib(default=False)
+    exact: bool = attr.ib(default=False)
 
     def _next_value(self, row):
-        return self._fake.paragraph(nb_sentences=self.sentences,variable_nb_sentences=not self.exact)
+        return self._fake.paragraph(nb_sentences=self.sentences,
+                                    variable_nb_sentences=not self.exact)

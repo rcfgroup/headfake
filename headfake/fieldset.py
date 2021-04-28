@@ -4,6 +4,7 @@ This package includes fieldset classes
 
 import pandas as pd
 
+
 class Fieldset:
     """
     The basic Fieldset object which contains the fields and parameters for the data generation process.
@@ -50,5 +51,3 @@ class Fieldset:
             dataset = dataset.append(row, ignore_index=True)
 
         return dataset
-
-

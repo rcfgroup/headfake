@@ -6,7 +6,6 @@ import attr
 
 from .error import ChangeValue
 
-
 @attr.s
 class Transformer:
     """
@@ -24,7 +23,7 @@ class Transformer:
         :param row:
         :return:
         """
-        pass
+
 
     def after_next(self, field, row, value):
         return value
@@ -34,6 +33,7 @@ class UpperCase(Transformer):
     """
     Converts value to upper case.
     """
+
     def after_next(self, field, row, value):
         return str(value).upper()
 
@@ -61,6 +61,7 @@ class RegexSubstitute(Transformer):
 
     def after_next(self, field, row, value):
         return re.sub(self.pattern, self.replace, value)
+
 
 @attr.s(kw_only=True)
 class Truncate(Transformer):
@@ -93,3 +94,16 @@ class Padding(Transformer):
         else:
             return value
 
+
+@attr.s(kw_only=True)
+class SplitPiece(Transformer):
+    separator = attr.ib() #string to separator on
+    index = attr.ib() #index of separated string to return
+
+    def after_next(self, field, row, value):
+        pieces = value.split(self.separator)
+
+        if len(pieces)<self.index:
+            return ""
+
+        return pieces[self.index]
