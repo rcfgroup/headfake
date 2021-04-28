@@ -1,0 +1,40 @@
+fieldset:
+  class: headfake.Fieldset
+  fields:
+    - name: spell_id
+      class: headfake.field.IdField
+      prefix: SPL
+      generator:
+        class: headfake.field.IncrementIdGenerator
+        length: 10
+        min_value: 1000000000
+
+    - name: identifier
+      class: headfake.field.MapFileField
+      key_field: main_pat_id
+      mapping_file: "templates/example_data.txt"
+
+    - name: admission_date
+      value: "2020-03-10"
+
+    - name: admission_time
+      class: headfake.field.TimeField
+
+    - name: first_names
+      class: headfake.field.ConcatField
+      fields:
+      - class: headfake.field.LookupMapFileField
+        map_file_field: identifier
+        lookup_value_field: first_name
+      - class: headfake.field.ConstantField
+        value: " "
+      - class: headfake.field.LookupMapFileField
+        map_file_field: identifier
+        lookup_value_field: middle_name
+
+    - name: last_name
+      class: headfake.field.LookupMapFileField
+      map_file_field: identifier
+      lookup_value_field: last_name
+
+

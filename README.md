@@ -2,14 +2,20 @@
 
 ![](https://github.com/rcfgroup/headfake/workflows/main/badge.svg)
 
-**HEA**lth **D**ata **F**aker provides a package and command-line scripts to create mock data files based on a YAML-based config file (see examples for example templates). It uses the Python package [Faker](https://faker.readthedocs.io/en/master/index.html) to provide generated names and contact details.
+## What is HEADFAKE?
+**HEA**lth **D**ata **F**aker is a Python-based package which allows the user to create fake or test data sets as described through a YAML-based config file. The package can be embedded directly into Python scripts, or it can be used through a command-line script.
 
-Key features include:
+Additionally a version of the package is available through our group web site at https://headfake.rcfgroup.org. This includes limitations on the number of lines which can be generated (maximum 10,000) and only includes the features available within the `headfake` package.
 
-* Extensible field types to handle generation of different types of data.
 
-* Template-based config which automatically constructs the Python class tree
-in order to then perform the data generation.
+## Why would I use HEADFAKE?
+HEADFAKE makes it simple and straightforward to generate fake or test data. It has a number of features which make this easier:
+
+* Support for shareable template-based config or direct Python implementation to setup and perform the data generation.
+
+* Generation of names and contact details through use of the Python package [Faker](https://faker.readthedocs.io/en/master/index.html).
+
+* A selection of fields to handle generation of different types of data.
 
 * Use of the library to embed mock data generation into your own projects (either using a YAML config or constructing the classes manually).
 
@@ -23,71 +29,19 @@ in order to then perform the data generation.
 
 * Clinical data supported includes random NHS numbers and deceased flags/date of death based on age-based odds of death.
 
-More comprehensive documentation is in progress. As it stands there are probably more efficient ways to generate some of the data (e.g. the age simulation could be done using bayesian approaches with prior odds).
+* Dependent fields (e.g. one field's values are dependent on the values from one or more)
 
-# Installation
+* Easily create and use custom fields to generate your own data types and values
 
-This package requires Python 3.6 or above. In your virtual environment, install the package from github:
+## How do I install and use HEADFAKE?
+To install HEADFAKE please go to the [Installation](installation.md) page and then start with the [Tutorials](tutorials/tutorial1.md) or the [usage page](usage.md).
 
-```bash
-pip install git+ssh://git@github.com/rcfgroup/headfake.git
-```
+## Is HEADFAKE being actively maintained?
+Yes, we are using HEADFAKE is our own projects and as result are keep it maintained and adding new features when we need them.
 
-# Command Line Usage
+## Is HEADFAKE suitable for my project?
+The library has been released under an MIT license so can be embedded into your own tools with no restrictions on use.
 
-You can run `headfake` from the command line without writing any code. 
+## If I use HEADFAKE to generate data in my research project which source should I cite?
+We are working on a journal paper, for now please cite the project URL (https://rcfgroup.org/headfake).
 
-```
-usage: headfake [-h] [-o OUTPUT_FILE] [-n NO_ROWS] [-s SEED] template
-
-HEAlth Data Faker provides a command-line script to create mock data files based on a YAML-based 
-template file (see examples/* for example templates). HEADFake uses the python package Faker to 
-generate names and contact details.
-
-positional arguments:
-  template              YAML-based template file describing structure of health data fields to 
-                        generate
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -o OUTPUT_FILE, --output-file OUTPUT_FILE
-                        Output data to file rather than STDOUT
-  -n NO_ROWS, --no-rows NO_ROWS
-                        Number of rows to generate
-  -s SEED, --seed SEED  Seed for the random data generator
-````
-
-You can either write your own template or use one from the examples directory as shown below:
-
-```bash
-headfake examples/patients.yaml --no-rows=100
-```
-
-This should generate 100 rows of example data. Using an --output-file flag will send it to a file rather than to the screen.  
-
-# API
-
-HEADFake provides an API that you can use in your python code to generate data. The following code loads the `patients.yaml` template and is equivalent to the command line interface shown above.
-
-```python
-from headfake import HeadFake
-
-headfake = HeadFake.from_yaml("examples/patients.yaml")
-data = headfake.generate(num_rows=100)
-```
-
-The return value from `HeadFake.generate` is a [pandas DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html)
-
-# Development
-
-If you're developing this package, you can install it using pip as shown below: 
-
-```bash
-pip install -e ".[tests]"
-```
-
-# Future development
-- [ ] Support for clinical coding systems (e.g. ICD10, READ, SNOMED-CT)
-- [ ] Dependent fields (e.g. one field's values are dependent on the values from one or more)
-- [ ] Multiple interlinked fieldsets
-- [ ] Specific ordering of output fields

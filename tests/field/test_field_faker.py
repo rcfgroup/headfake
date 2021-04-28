@@ -1,28 +1,14 @@
 from headfake import field, Fieldset
-import pytest
 from unittest import mock
 import datetime
 
-MALE_NAME = "JEFF"
-MALE_NAME2 = "BIFF"
-
-FEMALE_NAME = "JENNIFER"
-FEMALE_NAME2 = "JANE"
-
-MALE_SURNAME = "BRIDGES"
-FEMALE_SURNAME = "SAUNDERS"
-
-MALE_VALUE = "M"
-FEMALE_VALUE = "F"
-
-ADDRESS_LINE_1 = "15 THE DRIVE"
-ADDRESS_LINE_2 = "SOMEWHERETON"
-ADDRESS_LINE_3 = "SOMEWHERESHIRE"
-ADDRESS_POSTCODE = "SW1 3AB"
-PHONE_NUMBER = "01234 567890"
+from tests.field.test_field_common import MALE_VALUE, FEMALE_VALUE, MALE_NAME, FEMALE_NAME, MALE_SURNAME, \
+    FEMALE_SURNAME, MALE_NAME2, FEMALE_NAME2, ADDRESS_LINE_1, ADDRESS_LINE_2, ADDRESS_LINE_3, ADDRESS_POSTCODE, \
+    PHONE_NUMBER
 
 row = {}
 
+import random
 
 class mock_datetime:
     @classmethod
@@ -30,72 +16,6 @@ class mock_datetime:
         return datetime.date(2020, 3, 24)
 
 
-def test_IncrementIdFieldType_returns_incremental_values():
-    id = field.IncrementIdGenerator(length=2)
-
-    assert ["01","02","03","04","05","06","07"]==[id.select_id() for i in range(1,8)]
-
-def test_IncrementIdFieldType_fails_if_passes_maximum():
-    id = field.IncrementIdGenerator(length=2)
-
-    [id.select_id() for i in range(1, 100)]
-
-    with pytest.raises(ValueError,match = r"next number is greater than length"):
-        id.select_id()
-
-def test_IdFieldType_is_correct_length():
-    id1 = field.IncrementIdGenerator(length=6)
-    assert id1.select_id() == "000001"
-    assert id1.select_id() == "000002"
-
-    id1 = field.IncrementIdGenerator(length=4)
-    assert id1.select_id() == "0001"
-    assert id1.select_id() == "0002"
-
-def test_RandomNoReuseIdFieldType_generates_random_no_with_no_replacement(monkeypatch):
-    id = field.RandomNoReuseIdFieldType(length=3)
-
-    monkeypatch.setattr("random.randrange",mock.Mock(side_effect=[5,8,4,6,5,9]))
-    assert id.select_id() == "005"
-    assert id.select_id() == "008"
-    assert id.select_id() == "004"
-    assert id.select_id() == "006"
-    assert id.select_id() == "009"
-
-def test_RandomNoReuseIdFieldType_generates_random_no_with_replacement(monkeypatch):
-    id = field.RandomReuseIdFieldType(length=3)
-
-    monkeypatch.setattr("random.randrange",mock.Mock(side_effect=[5,8,4,6,5,9]))
-    assert id.select_id() == "005"
-    assert id.select_id() == "008"
-    assert id.select_id() == "004"
-    assert id.select_id() == "006"
-    assert id.select_id() == "005"
-    assert id.select_id() == "009"
-
-def test_IdField_returns_values_from_id_field_type_with_suffix_and_prefix():
-    id_generator = mock.MagicMock(field.IncrementIdGenerator)
-    id_generator.select_id.side_effect = ["003","006","005","008","004"]
-
-    id = field.IdField(prefix="P", suffix="S", generator=id_generator)
-
-    assert id.next_value(row) == "P003S"
-    assert id.next_value(row) == "P006S"
-    assert id.next_value(row) == "P005S"
-    assert id.next_value(row) == "P008S"
-    assert id.next_value(row) == "P004S"
-
-def test_GenderField_returns_male_value_if_random_no_is_lt_male_probability(monkeypatch):
-    monkeypatch.setattr("random.random", lambda: 0.4999)
-    gender = field.GenderField(male_value = MALE_VALUE, female_value = FEMALE_VALUE)
-    obs = gender.next_value(row)
-    assert obs == MALE_VALUE
-
-def test_GenderField_returns_female_value_if_random_no_is_gt_or_eq_male_probability(monkeypatch):
-    monkeypatch.setattr("random.random", lambda: 0.5)
-    gender = field.GenderField(male_value = MALE_VALUE, female_value = FEMALE_VALUE)
-    obs = gender.next_value(row)
-    assert obs == FEMALE_VALUE
 
 def test_FirstNameField_returns_male_name_if_gender_field_is_male(monkeypatch):
     f = mock.Mock()
@@ -230,56 +150,6 @@ def test_DateOfBirthField_creates_date_using_value_from_distribution(monkeypatch
     dob = field.DateOfBirthField(distribution = "scipy.stats.norm", min=0, max=105, mean=45, sd=13, date_format="%d/%m/%Y")
     assert dob.next_value(row) == "06/12/1994"
 
-def test_OptionValueField_chooses_value_basedon_probability_from_distribution(monkeypatch):
-    n = mock.Mock()
-    mock_choices = {"M":0.2,"F":0.8}
-    n.return_value = "M"
-    monkeypatch.setattr("random.choice",n)
-
-    dob = field.OptionValueField(probabilities = mock_choices)
-
-    assert dob.next_value(row) == "M"
-    n.assert_called_with(dob._option_picks)
-
-def test_NhsNoField_generates_valid_nhs_number(monkeypatch):
-    n = mock.Mock()
-    n.return_value = 123456787
-    monkeypatch.setattr("random.randrange",n)
-
-    nhs_no = field.NhsNoField()
-
-    assert nhs_no.next_value(row) == "123 456 7873"
-    n.assert_called_with(100000000, 999999999)
-
-def test_NhsNoField_handles_invalid_nhs_number_by_reselecting(monkeypatch):
-    n = mock.Mock()
-    n.side_effect = [123456789, 123456787]
-    monkeypatch.setattr("random.randrange",n)
-
-    nhs_no = field.NhsNoField()
-
-    assert nhs_no.next_value(row) == "123 456 7873"
-
-def test_NhsNoField_handles_duplicate_nhs_number_by_reselecting(monkeypatch):
-    n = mock.Mock()
-    n.side_effect = [123456787,123456787,123456783]
-    monkeypatch.setattr("random.randrange",n)
-
-    nhs_no = field.NhsNoField()
-
-    assert nhs_no.next_value(row) == "123 456 7873"
-    assert nhs_no.next_value(row) == "123 456 7830"
-
-def test_ConcatField_joins_multiple_fields_together(monkeypatch):
-    n = mock.Mock()
-    n.side_effect = [123456787,123456787,123456783]
-    monkeypatch.setattr("random.randrange",n)
-
-    fields  = [field.ConstantField(value="X"),field.ConstantField(value="Y"),field.ConstantField(value="Z")]
-    concat = field.ConcatField(fields = fields, glue=" ")
-
-    assert concat.next_value(row) == "X Y Z"
-
 def test_AddressField_outputs_address(monkeypatch):
     f = mock.Mock()
     f.return_value.street_address.return_value = ADDRESS_LINE_1
@@ -300,10 +170,31 @@ def test_PostcodeField_outputs_postcode(monkeypatch):
 
     assert field.PostcodeField().next_value(row) == ADDRESS_POSTCODE
 
-def test_PhoneField_outputs_postcode(monkeypatch):
+def test_PhoneField_outputs_phone_number(monkeypatch):
     f = mock.Mock()
     f.return_value.phone_number.return_value = PHONE_NUMBER
 
     monkeypatch.setattr("faker.Faker", f)
 
     assert field.PhoneField().next_value(row) == PHONE_NUMBER
+
+def test_TextField_outputs_random_text_shorter_than_the_default_50_chars():
+    from faker import Faker
+    Faker.seed(123)
+    txt = field.TextField()
+
+    assert txt.next_value({})=="Eaque quisquam eaque. Fugit natus exercitationem."
+
+def test_TextField_outputs_random_text_shorter_than_max_length(monkeypatch):
+    from faker import Faker
+    Faker.seed(123)
+    txt = field.TextField(max_length=10)
+
+    assert txt.next_value({})=="Fugiat."
+
+def test_MemoField_outputs_multiple_sentences(monkeypatch):
+    from faker import Faker
+    Faker.seed(123)
+    mem = field.MemoField(sentences=2,exact=True)
+
+    assert mem.next_value({})=="Eaque quisquam eaque. Fugit natus exercitationem."

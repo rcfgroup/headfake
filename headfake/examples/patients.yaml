@@ -134,6 +134,10 @@ fieldset:
 
     postcode:
       class: headfake.field.PostcodeField
+      transformers:
+        - class: headfake.transformer.SplitPiece
+          separator: " "
+          index: 0
 
     homephone:
       class: headfake.field.PhoneField
@@ -148,7 +152,7 @@ fieldset:
             C: 0.1
         - class: headfake.field.IdField
           generator:
-            class: headfake.field.RandomNoReuseIdFieldType
+            class: headfake.field.RandomNoReuseIdGenerator
             length: 7
             min_value: 1000000
 
@@ -175,19 +179,19 @@ fieldset:
       class: headfake.field.IdField
       prefix: Q
       generator:
-        class: headfake.field.RandomReuseIdFieldType
+        class: headfake.field.RandomReuseIdGenerator
         length: 2
 
     gp_doh_code:
       class: headfake.field.IdField
       prefix: G
       generator:
-        class: headfake.field.RandomReuseIdFieldType
+        class: headfake.field.RandomReuseIdGenerator
         length: 7
 
     gp_practicecode:
       class: headfake.field.IdField
       prefix: C82
       generator:
-        class: headfake.field.RandomReuseIdFieldType
+        class: headfake.field.RandomReuseIdGenerator
         length: 3
