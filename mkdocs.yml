@@ -22,14 +22,6 @@ plugins:
   - mkapi:
         src_dirs: ['../headfake']
 
-#  - mkdocstrings:
-#      handlers:
-#        python:
-#          selection:
-#            filters:
-#              - "!^_"  # exlude all members starting with _
-#              - "^__init__$"  # but always include __init__ modules and methods
-#          show_root_heading: true
 nav:
   - Home: "index.md"
   - Installation: "installation.md"
@@ -45,7 +37,7 @@ nav:
       "Create custom fields": "how-to/create-custom-fields.md"
       "Create custom transformers": "how-to/create-custom-transformers.md"
       "Add a lookup field": "how-to/add-a-lookup-field.md"
-      "Generate identical datasets":"how-to/generate-identical-datasets.md"
+      "Generate identical datasets": "how-to/generate-identical-datasets.md"
 
   - API:
     - headfake: api/headfake.md
