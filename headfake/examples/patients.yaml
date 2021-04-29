@@ -53,13 +53,13 @@ fieldset:
       class: headfake.field.OptionValueField
       probabilities:
         S: 0.5
-        M: 0.3
+        M: 0.4
         C: 0.1
 
     ethnicity:
       class: headfake.field.OptionValueField
       probabilities:
-        A: 0.1
+        A: 0.4
         B: 0.3
         C1: 0.2
         C2: 0.1
@@ -149,7 +149,7 @@ fieldset:
           probabilities:
             S: 0.5
             M: 0.3
-            C: 0.1
+            C: 0.2
         - class: headfake.field.IdField
           generator:
             class: headfake.field.RandomNoReuseIdGenerator

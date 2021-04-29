@@ -1,7 +1,4 @@
-import logging
-
-import headfake.field.id
-from headfake import field, Fieldset
+from headfake import field, Fieldset, HeadFake
 import pytest
 from unittest import mock
 import datetime
@@ -14,63 +11,6 @@ class mock_datetime:
     @classmethod
     def now(cls):
         return datetime.date(2020, 3, 24)
-
-
-def test_IncrementIdGenerator_returns_incremental_values():
-    id = headfake.field.id.IncrementIdGenerator(length=2)
-
-    assert ["01","02","03","04","05","06","07"]==[id.select_id() for i in range(1,8)]
-
-def test_IncrementIdGenerator_fails_if_passes_maximum():
-    id = headfake.field.id.IncrementIdGenerator(length=2)
-
-    [id.select_id() for i in range(1, 100)]
-
-    with pytest.raises(ValueError,match = r"next number is greater than length"):
-        id.select_id()
-
-def test_IdGenerator_is_correct_length():
-    id1 = headfake.field.id.IncrementIdGenerator(length=6)
-    assert id1.select_id() == "000001"
-    assert id1.select_id() == "000002"
-
-    id1 = headfake.field.id.IncrementIdGenerator(length=4)
-    assert id1.select_id() == "0001"
-    assert id1.select_id() == "0002"
-
-def test_RandomNoReuseIdGenerator_generates_random_no_with_no_replacement(monkeypatch):
-    id = headfake.field.id.RandomNoReuseIdGenerator(length=3)
-
-    monkeypatch.setattr("random.randrange",mock.Mock(side_effect=[5,8,4,6,5,9]))
-    assert id.select_id() == "005"
-    assert id.select_id() == "008"
-    assert id.select_id() == "004"
-    assert id.select_id() == "006"
-    assert id.select_id() == "009"
-
-def test_RandomNoReuseIdGenerator_generates_random_no_with_replacement(monkeypatch):
-    id = headfake.field.id.RandomReuseIdGenerator(length=3)
-
-    monkeypatch.setattr("random.randrange",mock.Mock(side_effect=[5,8,4,6,5,9]))
-    assert id.select_id() == "005"
-    assert id.select_id() == "008"
-    assert id.select_id() == "004"
-    assert id.select_id() == "006"
-    assert id.select_id() == "005"
-    assert id.select_id() == "009"
-
-def test_IdField_returns_values_from_id_field_type_with_suffix_and_prefix():
-    id_generator = mock.MagicMock(headfake.field.id.IncrementIdGenerator)
-    id_generator.select_id.side_effect = ["003","006","005","008","004"]
-
-    id = headfake.field.id.IdField(prefix="P", suffix="S", generator=id_generator)
-
-    assert id.next_value(row) == "P003S"
-    assert id.next_value(row) == "P006S"
-    assert id.next_value(row) == "P005S"
-    assert id.next_value(row) == "P008S"
-    assert id.next_value(row) == "P004S"
-
 
 def test_OptionValueField_chooses_value_basedon_probability_from_distribution(monkeypatch):
     n = mock.Mock()
@@ -155,7 +95,7 @@ def test_IfElseField_handles_nested_setup():
 
 def test_IfElseField_handles_non_if_else_logic():
     fset = Fieldset(fields={"marital_status": "M"})
-    random.seed(5)
+    HeadFake.set_seed(5)
     gender_cond = field.Condition(
         field="gender",
         operator=operator.eq,
@@ -195,9 +135,9 @@ def test_IfElseField_handles_non_if_else_logic():
 
     assert gender_if_else.next_value({"gender":"M","marital_status":"M"}) == "MR"
     assert gender_if_else.next_value({"gender": "M", "marital_status": "S"}) == "MR"
-    assert gender_if_else.next_value({"gender":"F","marital_status": "S"}) == "MS"
+    assert gender_if_else.next_value({"gender":"F","marital_status": "S"}) == "PROF"
     assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "MISS"
-    assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "PROF"
+    assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "MISS"
 
 
 def test_RepeatField_generates_list_of_values():
@@ -314,7 +254,7 @@ def test_NumberField_returns_value_within_range_of_two_value(monkeypatch):
             dp=1
         )
     ])
-
+    HeadFake.set_seed(1234)
     df = fset.generate_data(5)
 
     for idx, item in df.iterrows():
@@ -452,3 +392,44 @@ def test_DateField_returns_value_within_range_of_two_values_with_specified_sd_in
     for idx, item in df.iterrows():
         assert item['date']>min and item['date']<max
 
+def test_OptionValueField_raises_error_when_sum_of_probabilities_is_not_one():
+    probs = {"A":0.8,"B":0.02}
+
+    with pytest.raises(ValueError):
+        field.OptionValueField(probabilities = probs)
+
+    probs = {"A": 0.8, "B": 2}
+
+    with pytest.raises(ValueError):
+        field.OptionValueField(probabilities=probs)
+
+
+def test_OptionValueField_handles_small_probability_when_choosing_options():
+    probs = {"A":0.8,"B":0.02,"C":0.0001,"D":0.1799}
+
+    ovf = field.OptionValueField(probabilities = probs)
+    HeadFake.set_seed(1234)
+
+    assert len(ovf._option_picks) == 10000
+    assert len(list(filter(lambda x: x == "A", ovf._option_picks))) == 8000
+    assert len(list(filter(lambda x: x == "B", ovf._option_picks))) == 200
+    assert len(list(filter(lambda x: x == "C", ovf._option_picks))) == 1
+    assert len(list(filter(lambda x: x == "D", ovf._option_picks))) == 1799
+    assert ["A","A","A","A","D"] == [ovf.next_value(row) for i in range(1,6) ]
+
+def test_OptionValueField_handles_very_small_probability_with_warning_when_choosing_options(monkeypatch):
+    from unittest.mock import Mock
+    warn = Mock()
+    monkeypatch.setattr("warnings.warn", warn)
+    probs = {"A":0.8,"B":0.02,"C":0.000001,"D":0.179999}
+
+    ovf = field.OptionValueField(probabilities = probs)
+    HeadFake.set_seed(1234)
+
+    assert len(ovf._option_picks) == 1000000
+    assert len(list(filter(lambda x: x == "A", ovf._option_picks))) == 800000
+    assert len(list(filter(lambda x: x == "B", ovf._option_picks))) == 20000
+    assert len(list(filter(lambda x: x == "C", ovf._option_picks))) == 1
+    assert len(list(filter(lambda x: x == "D", ovf._option_picks))) == 179999
+    assert ["B","A","A","A","A"] == [ovf.next_value(row) for i in range(1,6) ]
+    warn.assert_called_with("Options include probabilities of 1e-6. This requires the creation of 1e6 possible options")

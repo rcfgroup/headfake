@@ -19,6 +19,7 @@ from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
 from headfake.util import create_package_class, locate_file, handle_missing_keyword
 from headfake import HeadFake
+import numpy as np
 
 @attr.s(kw_only=True)
 class Field(ABC):
@@ -124,6 +125,12 @@ class FakerField(Field):
 @attr.s(kw_only=True)
 class OptionValueField(Field):
     """Field to generate option values, based on a provided dictionary of probabilities.
+
+    Attributes:
+        probabilities (dict): Dictionary of values/probabilities (e.g. {"A":0.2,"B":0.8})
+
+    Raises:
+        ValueError: when probabilities do not add up to 1
     """
 
     probabilities = attr.ib()
@@ -132,15 +139,44 @@ class OptionValueField(Field):
     @_option_picks.default
     def _default_option_picks(self):
         option_picks = []
+        probs = [np.float32(prob) for prob in self.probabilities.values()]
+        tot = np.sum(probs)
+        print("probs:%s" % self.probabilities.values())
+        print("tot:%s" % tot)
+        if tot != 1:
+            raise ValueError("Probabilities provided do not add up to 1")
+
+        min_prob = min(self.probabilities.values())
+        max_dp = count_decimal_places(min_prob)
+        print("max_dp:%s" % max_dp)
+
+        if max_dp>5:
+            warnings.warn("Options include probabilities of 1e-" + str(max_dp) + ". This requires the creation of 1e" + str(max_dp) + " possible options")
 
         for val, prob in self.probabilities.items():
-            option_picks += [val] * int(prob * 100)
+            num_picks = int((pow(10, max_dp)) * prob)
+            print("probs:%s = %s (%s)" % (val, prob,  num_picks))
+            option_picks += [val] * num_picks
 
         return option_picks
 
     def _next_value(self, row):
         return rnd.choice(self._option_picks)
 
+import re
+from locale import localeconv
+
+import warnings
+
+def count_decimal_places(value):
+    value = str(value)
+    dec_pt = localeconv()['decimal_point']
+    decrgx = re.compile("\d+(%s\d+)?e(-)(\d+)" % dec_pt)
+    find_e_value = decrgx.match(value)
+    if find_e_value:
+        return int(find_e_value.group(3))
+    else:
+        return len(value.split(dec_pt)[-1])
 
 @attr.s(kw_only=True)
 class DerivedField(Field):
