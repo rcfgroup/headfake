@@ -97,6 +97,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
                 <ul>
@@ -181,7 +183,7 @@ You will see that it consists of a hierarchy of Python classes, with the fieldse
 </code></pre></div>
 
 <p>Then re-run HEADFAKE:</p>
-<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2a.txt -n100
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2.txt -n100
 </code></pre></div>
 
 <p>If you open <code>tutorial2.txt</code> and compare with <code>tutorial1.txt</code> you should see that the balance in the former is about a third, whereas the latter is half.</p>
@@ -194,10 +196,10 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
 </code></pre></div>
 
 <p>Then re-run HEADFAKE:</p>
-<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2b.txt -n100
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml
 </code></pre></div>
 
-<p>If you now open the <code>tutorial2b.txt</code> file you should see that the new first_name field is generated according to the specified gender_field.</p>
+<p>The output should show that the new first_name field is generated according to the specified gender_field.</p>
 <h2 id="generating-patients-who-are-deceased">Generating patients who are deceased</h2>
 <p>Next you will add a field which can be very useful from a health perspective as it is a flag for deceased status.</p>
 <p>Open <code>tutorial2.yml</code> and add a new field to the fieldset config as below:</p>
@@ -224,10 +226,10 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
 </code></pre></div>
 
 <p>Then re-run HEADFAKE:</p>
-<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2c.txt -n100
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml
 </code></pre></div>
 
-<p>If you now open <code>tutorial2c.txt</code> you will see that some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.</p>
+<p>The output will show some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.</p>
 <h2 id="changing-generated-data-using-a-transformer">Changing generated data using a transformer</h2>
 <p>Transformers are special classes which act before or after data is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.</p>
 <p>Change the last_name in <code>tutorial2.yml</code> to add both transformers and re-run the generation:</p>
@@ -245,7 +247,9 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
 ```</p>
 <p>As expected, ~20% of the values will now be NULL and those which are not will now be uppercase.</p>
 <h3 id="analysis">Analysis</h3>
-<p>In this tutorial we showed how adaptable HEADFAKE can be for generating data by changing the YAML file. We were able to change the arguments to set up fields and add new fields. We also showed how transformers can be used to pre- and post-process generated field values.</p>
+<p>In this tutorial we were able to adjust the field parameters in the YAML file to change the data generated, we also
+added one of the in-built dependent fields to generate gender appropriate first names and risk-based deceased status.
+We also showed how powerful transformers can be to pre- and post-process the generated field values.</p>
 <p>In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.</p>
               
             </div>

@@ -93,6 +93,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
                 <ul>
@@ -163,10 +165,11 @@
               
                 <h1 id="tutorial-3-adding-conditional-fields">Tutorial 3. Adding conditional fields</h1>
 <h2 id="aims-of-tutorial">Aims of tutorial</h2>
-<p>This tutorial will introduce the IfElseField which allows you to define conditional logic for field value generation.</p>
+<p>This tutorial will introduce a way of adding conditional logic for field value generation.</p>
 <h2 id="add-title-field-based-on-gender-and-marital-status">Add title field based on gender and marital status</h2>
-<p>To demonstrate how IfElse fields work we are going to create a simple logic field containing the title of an individual, using the gender field and marital status field. To keep this simple at this stage we will not take into account other possible titles such as Ms. or Dr.</p>
-<p>Open <code>tutorial2.yml</code> and add a new field as below:</p>
+<p>Conditional logic is handled using the IfElseField. To demonstrate how these fields work we will create some simple logic to generate the title of an individual, using the gender field and marital status field.</p>
+<p>To keep it simpler at this stage we will not take into account other possible titles such as Ms. or Dr.</p>
+<p>Open <code>tutorial2.yml</code>, add a new field as below and save as <code>tutorial3.yml</code>:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">title</span><span class="p">:</span>
     <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.IfElseField</span>
     <span class="nt">condition</span><span class="p">:</span>
@@ -174,10 +177,9 @@
         <span class="nt">field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
         <span class="nt">operator</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">operator.equals</span>
         <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">M</span>
-    <span class="nt">true</span><span class="p">:</span>
-        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.ConstantField</span>
+    <span class="nt">true_value</span><span class="p">:</span>
         <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MR</span>
-    <span class="nt">false</span><span class="p">:</span>
+    <span class="nt">false_value</span><span class="p">:</span>
         <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.IfElseField</span>
         <span class="nt">condition</span><span class="p">:</span>
             <span class="nt">field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">marital_status</span>
@@ -187,22 +189,28 @@
         <span class="nt">false_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MISS</span>
 </code></pre></div>
 
-<p>This acts as a nested conditional using the 'gender' field as a lookup. If the value is 'M' it returns 'MR', if not then it uses another IfElse to look at the marital status. If this is 'M' then it returns 'MRS' and if not 'MISS'.</p>
-<p>The IfElseField is quite flexible. If there is a string in the true/false option it will return the string, if a field it will return the results from the field.</p>
-<h2 id="enhancing-conditional-fields-with-probability">Enhancing conditional fields with probability</h2>
-<p>Lets improve this field by adding some level of chance to it. Change the 'false_value: MISS' line to:</p>
-<div class="codehilite"><pre><span></span><code><span class="kc">false</span><span class="o">:</span>
-    <span class="kd">class</span><span class="o">:</span> <span class="n">OptionValueField</span>
-    <span class="n">probabilities</span><span class="o">:</span>
-        <span class="n">MISS</span><span class="o">:</span> <span class="mf">0.7</span>
-        <span class="n">MS</span><span class="o">:</span> <span class="mf">0.1</span>
-        <span class="n">DR</span><span class="o">:</span> <span class="mf">0.1</span>
-        <span class="n">PROF</span><span class="o">:</span> <span class="mf">0.1</span>
+<p>Then try running it:</p>
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial3.yml
 </code></pre></div>
 
-<p>And rerun headfake. If you look at the output file you will see that it is now randomly either MISS, MS, DR or PROF based on the provided probabilities.</p>
+<p>You should now see that the 'title' field uses the 'gender' field as a lookup. If the value is 'M' it returns 'MR', if not then it uses another IfElse to look at the marital status. If this is 'M' then it returns 'MRS' and if not 'MISS'.</p>
+<p>The IfElseField is quite flexible. If there is a string or number in the true_value/false_value option it will return that value, if it is a field definition it will return the generated value from the field.</p>
+<h2 id="enhancing-conditional-fields-with-probability">Enhancing conditional fields with probability</h2>
+<p>Let's improve this field by adding some level of chance to it and take into account other possible titles. Change the 'false_value: MISS' line to:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">false</span><span class="p">:</span>
+    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OptionValueField</span>
+    <span class="nt">probabilities</span><span class="p">:</span>
+        <span class="nt">MISS</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.7</span>
+        <span class="nt">MS</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+        <span class="nt">DR</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+        <span class="nt">PROF</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</code></pre></div>
+
+<p>And rerun headfake:
+ <code>headfake /path/to/tutorial3.yml</code></p>
+<p>You should now see that the output of title is now randomly either MISS, MS, DR or PROF based on the provided probabilities.</p>
 <h3 id="analysis">Analysis</h3>
-<p>In this tutorial we showed how adaptable Headfake can be for generating data, including the ability to create fields dependent on the values of others. The ability to nest the if/else fields can add a huge amount of variety to the data generation process.</p>
+<p>In this tutorial we showed how Headfake can be used to create fields dependent on the values of others. The ability to nest the if/else fields with constants or other field types can add a huge amount of variety to the data generation process.</p>
 <p>This is the final tutorial. For more information about the field types in Headfake you can look at the API section of the documentation. Additionally, you can also <a href="/how-to/create-custom-field">create and use your own pretty easily</a> if you find none of them meet your needs.</p>
               
             </div>

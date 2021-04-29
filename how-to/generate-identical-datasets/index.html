@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Create custom transformers - HEADFAKE</title>
+  <title>Generate identical datasets - HEADFAKE</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -22,8 +22,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Create custom transformers";
-    var mkdocs_page_input_path = "how-to/create-custom-transformers.md";
+    var mkdocs_page_name = "Generate identical datasets";
+    var mkdocs_page_input_path = "how-to/generate-identical-datasets.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -77,17 +77,13 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../create-custom-fields/">Create custom fields</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Create custom transformers</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#an-example-transformer">An example transformer</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#using-custom-transformers-in-yaml-templates">Using custom transformers in YAML templates</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../create-custom-transformers/">Create custom transformers</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../add-a-lookup-field/">Add a lookup field</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../generate-identical-datasets/">Generate identical datasets</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Generate identical datasets</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -144,10 +140,10 @@
         
       
     
-    <li>Create custom transformers</li>
+    <li>Generate identical datasets</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/how-to/create-custom-transformers.md"> Edit on headfake</a>
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/how-to/generate-identical-datasets.md"> Edit on headfake</a>
       
     </li>
   </ul>
@@ -157,44 +153,20 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="create-custom-transformers">Create custom transformers</h1>
-<p>A transformer a special class which acts before or after the data is generated from a field.</p>
-<p>Custom transformers can be created by extending the Transformer class in headfake.transformer. If you want to allow parameters to be passed to your transformer Headfake they should be setup using the approaches documented in the <a href="https://www.attrs.org">attrs</a> package, which provides a simpler way of initialising and handling class properties.</p>
-<h2 id="an-example-transformer">An example transformer</h2>
-<p>Below is a simple transformer which splits a string by a 'separator' to create a list and returns the piece from this list specified by 'index'. Each of these parameters can be specified by the user.</p>
-<p>An example of how this could be used would be generating a partial UK postcode - you want to create a column containing just the first part of it (e.g. the AB1 from AB1 2CD).</p>
-<div class="codehilite"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">headfake.transformer</span> <span class="kn">import</span> <span class="n">Transformer</span>
-
-<span class="k">class</span> <span class="nc">SplitPiece</span><span class="p">(</span><span class="n">Transformer</span><span class="p">):</span>
-    <span class="n">separator</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span> <span class="c1">#string to separator on</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span> <span class="c1">#index of separated string to return</span>
-
-    <span class="k">def</span> <span class="nf">after_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="n">pieces</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-
-<span class="o">..</span>
-
-<span class="n">postcode_field</span> <span class="o">=</span> <span class="n">PostcodeField</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
-    <span class="n">SplitPiece</span><span class="p">(</span><span class="n">separator</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="p">])</span>
+                <h1 id="generate-identical-datasets">Generate identical datasets</h1>
+<p>By default each time Headfake is run the generated data is very likely to be different (you can test this by running the same command multiple times).</p>
+<p>However, sometimes you WILL want identical data to be generated every time (particularly in a test situation).</p>
+<p>To do this you can provide a random seed which will be used through the system.</p>
+<p>This can be done on the command line with the -s option. No matter how many times you run the command below you will get the same data generated.</p>
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial1.yml -n100 -s1234
 </code></pre></div>
 
-<h2 id="using-custom-transformers-in-yaml-templates">Using custom transformers in YAML templates</h2>
-<p>This is as simple as entering the classname in the 'class' property in the YAML file along with the additional parameters. For example to use the SplitPieceTransformer in a field:</p>
-<div class="codehilite"><pre><span></span><code><span class="nn">...</span>
-<span class="nt">postcode</span><span class="p">:</span>
-    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.PostcodeField</span>
-    <span class="nt">transformers</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mypackage.SplitPieceTransformer</span>
-          <span class="nt">separator</span><span class="p">:</span> <span class="s">&quot;</span><span class="nv"> </span><span class="s">&quot;</span>
-          <span class="nt">index</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="nn">...</span>
+<p>In Python this can be done once the HeadFake object has been created with <code>set_seed</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">headfake</span> <span class="kn">import</span> <span class="n">HeadFake</span>
+
+<span class="n">headfake</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;examples/patients.yaml&quot;</span><span class="p">)</span>
+<span class="n">headfake</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">headfake</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">num_rows</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </code></pre></div>
               
             </div>
@@ -203,10 +175,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../add-a-lookup-field/" class="btn btn-neutral float-right" title="Add a lookup field">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../api/headfake/" class="btn btn-neutral float-right" title="headfake">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../create-custom-fields/" class="btn btn-neutral" title="Create custom fields"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../add-a-lookup-field/" class="btn btn-neutral" title="Add a lookup field"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -232,10 +204,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../create-custom-fields/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../add-a-lookup-field/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../add-a-lookup-field/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../api/headfake/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

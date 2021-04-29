@@ -95,6 +95,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
                 <ul>
@@ -160,10 +162,12 @@
             <div class="section">
               
                 <h1 id="headfake">HEADFAKE</h1>
-<p><img alt="" src="https://github.com/rcfgroup/headfake/workflows/main/badge.svg" /></p>
 <h2 id="what-is-headfake">What is HEADFAKE?</h2>
-<p><strong>HEA</strong>lth <strong>D</strong>ata <strong>F</strong>aker is a Python-based package which allows the user to create fake or test data sets as described through a YAML-based config file. The package can be embedded directly into Python scripts, or it can be used through a command-line script.</p>
-<p>Additionally a version of the package is available through our group web site at https://headfake.rcfgroup.org. This includes limitations on the number of lines which can be generated (maximum 10,000) and only includes the features available within the <code>headfake</code> package.</p>
+<p><strong>HEA</strong>lth <strong>D</strong>ata <strong>F</strong>aker is a Python-based package which allows the user to create fake or test data sets from a
+YAML template file.</p>
+<p>The package can be embedded directly into Python scripts, or it can be used through a command-line script.</p>
+<p>It builds upon some of the ideas in <a href="https://github.com/tirthajyoti/pydbgen">pydbgen</a> and improves on it with support for
+a number of additional features including statistically distributed random values; dependent fields and custom fields.</p>
 <h2 id="why-would-i-use-headfake">Why would I use HEADFAKE?</h2>
 <p>HEADFAKE makes it simple and straightforward to generate fake or test data. It has a number of features which make this easier:</p>
 <ul>
@@ -171,22 +175,13 @@
 <p>Support for shareable template-based config or direct Python implementation to setup and perform the data generation.</p>
 </li>
 <li>
+<p>Embeddable data generation into projects (either using a YAML config or constructing the classes manually).</p>
+</li>
+<li>
 <p>Generation of names and contact details through use of the Python package <a href="https://faker.readthedocs.io/en/master/index.html">Faker</a>.</p>
 </li>
 <li>
-<p>A selection of fields to handle generation of different types of data.</p>
-</li>
-<li>
-<p>Use of the library to embed mock data generation into your own projects (either using a YAML config or constructing the classes manually).</p>
-</li>
-<li>
-<p>Basic fields are provided for constant values and to combine values from multiple fields into a single field.</p>
-</li>
-<li>
 <p>Randomised names can be output based on a gender field.</p>
-</li>
-<li>
-<p>Field data can be looked up from another file using a key field, allowing re-use of patient details in a different field set.</p>
 </li>
 <li>
 <p>More realistic simulated data uses statistical distributions to create date of birth and also probability-based option values. Other approaches to simulate real data are also being investigated.</p>
@@ -198,15 +193,24 @@
 <p>Dependent fields (e.g. one field's values are dependent on the values from one or more)</p>
 </li>
 <li>
-<p>Easily create and use custom fields to generate your own data types and values</p>
+<p>Field data can be looked up from another file using a key field, allowing re-use of patient details in a different field set.</p>
+</li>
+<li>
+<p>A selection of fields to handle generation of different types of data.</p>
+</li>
+<li>
+<p>Ability to create and use custom fields to generate your own data types and values</p>
+</li>
+<li>
+<p>Support for transformers which pre or post-process data once it's been generated</p>
 </li>
 </ul>
 <h2 id="how-do-i-install-and-use-headfake">How do I install and use HEADFAKE?</h2>
-<p>To install HEADFAKE please go to the <a href="installation/">Installation</a> page and then start with the <a href="tutorials/tutorial1/">Tutorials</a> or the <a href="usage/">usage page</a>.</p>
+<p>To install HEADFAKE please go to the <a href="/installation.md">Installation</a> page and then start with the <a href="/tutorials/tutorial1.md">Tutorials</a> or the <a href="/usage.md">usage page</a>.</p>
 <h2 id="is-headfake-being-actively-maintained">Is HEADFAKE being actively maintained?</h2>
 <p>Yes, we are using HEADFAKE is our own projects and as result are keep it maintained and adding new features when we need them.</p>
 <h2 id="is-headfake-suitable-for-my-project">Is HEADFAKE suitable for my project?</h2>
-<p>The library has been released under an MIT license so can be embedded into your own tools with no restrictions on use.</p>
+<p>The library has been released under an MIT license so can be embedded into your own tools with minimal restrictions on use.</p>
 <h2 id="if-i-use-headfake-to-generate-data-in-my-research-project-which-source-should-i-cite">If I use HEADFAKE to generate data in my research project which source should I cite?</h2>
 <p>We are working on a journal paper, for now please cite the project URL (https://rcfgroup.org/headfake).</p>
               
@@ -262,5 +266,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-04-28 09:58:04.969521+00:00
+Build Date UTC : 2021-04-29 08:58:49.375367+00:00
 -->
