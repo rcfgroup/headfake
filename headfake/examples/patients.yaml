@@ -3,7 +3,7 @@ fieldset:
   fields:
     main_pat_id:
       class: headfake.field.IdField
-      prefix: S
+      prefix: P
       generator:
         class: headfake.field.IncrementIdGenerator
         length: 7

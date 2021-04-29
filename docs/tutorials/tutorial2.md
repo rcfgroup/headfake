@@ -20,7 +20,7 @@ gender:
 
 Then re-run HEADFAKE:
 ```
-headfake /path/to/tutorial2.yml -o /path/to/tutorial2a.txt -n100
+headfake /path/to/tutorial2.yml -o /path/to/tutorial2.txt -n100
 ```
 
 If you open `tutorial2.txt` and compare with `tutorial1.txt` you should see that the balance in the former is about a third, whereas the latter is half.
@@ -38,10 +38,10 @@ first_name:
 
 Then re-run HEADFAKE:
 ```
-headfake /path/to/tutorial2.yml -o /path/to/tutorial2b.txt -n100
+headfake /path/to/tutorial2.yml
 ```
 
-If you now open the `tutorial2b.txt` file you should see that the new first_name field is generated according to the specified gender_field.
+The output should show that the new first_name field is generated according to the specified gender_field.
 
 
 ## Generating patients who are deceased
@@ -74,10 +74,10 @@ deceased:
 
 Then re-run HEADFAKE:
 ```
-headfake /path/to/tutorial2.yml -o /path/to/tutorial2c.txt -n100
+headfake /path/to/tutorial2.yml
 ```
 
-If you now open `tutorial2c.txt` you will see that some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.
+The output will show some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.
 
 
 ## Changing generated data using a transformer
@@ -104,6 +104,8 @@ As expected, ~20% of the values will now be NULL and those which are not will no
 
 
 ### Analysis
-In this tutorial we showed how adaptable HEADFAKE can be for generating data by changing the YAML file. We were able to change the arguments to set up fields and add new fields. We also showed how transformers can be used to pre- and post-process generated field values.
+In this tutorial we were able to adjust the field parameters in the YAML file to change the data generated, we also
+added one of the in-built dependent fields to generate gender appropriate first names and risk-based deceased status.
+We also showed how powerful transformers can be to pre- and post-process the generated field values.
 
 In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.

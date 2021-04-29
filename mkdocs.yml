@@ -45,6 +45,7 @@ nav:
       "Create custom fields": "how-to/create-custom-fields.md"
       "Create custom transformers": "how-to/create-custom-transformers.md"
       "Add a lookup field": "how-to/add-a-lookup-field.md"
+      "Generate identical datasets":"how-to/generate-identical-datasets.md"
 
   - API:
     - headfake: api/headfake.md
