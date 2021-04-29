@@ -292,7 +292,7 @@ NumberField.</span></li>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldcorefield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">Field</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorefield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">Field</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -438,7 +438,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldcorefakerfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">FakerField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorefakerfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">FakerField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">fake=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -575,7 +575,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreoptionvaluefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">OptionValueField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">probabilities</code>, <code class="mkapi-object-signature">option_picks=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreoptionvaluefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">OptionValueField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">probabilities</code>, <code class="mkapi-object-signature">option_picks=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -599,6 +599,22 @@ returned.</p></div>
 <li class="readonly-property"><code class="mkapi-item-name">names</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
+
+<li><code class="mkapi-item-name">probabilities</code>
+<span class="mkapi-item-type">(dict)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Dictionary of values/probabilities (e.g. {"A":0.2,"B":0.8})</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section raises">
+      <div class="mkapi-section-name raises">
+          <span class="mkapi-section-name-body raises">Raises</span> 
+        </div>
+      <div class="mkapi-section-body raises"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">ValueError</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">when probabilities do not add up to 1</span></li>
 
 
 </ul></div>
@@ -712,7 +728,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldcorederivedfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DerivedField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorederivedfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DerivedField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -851,7 +867,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreconstantfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConstantField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreconstantfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConstantField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -989,7 +1005,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreconcatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConcatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">fields=NOTHING</code>, <code class="mkapi-object-signature">glue=&#39;&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreconcatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConcatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">fields=NOTHING</code>, <code class="mkapi-object-signature">glue=&#39;&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1127,7 +1143,7 @@ information from other fields in the fieldset for later use.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoremapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">MapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">mapping_file</code>, <code class="mkapi-object-signature">key_field</code>, <code class="mkapi-object-signature">key_field_store=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoremapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">MapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">mapping_file</code>, <code class="mkapi-object-signature">key_field</code>, <code class="mkapi-object-signature">key_field_store=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1267,7 +1283,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorelookupmapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">LookupMapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">lookup_value_field</code>, <code class="mkapi-object-signature">map_file_field</code>, <code class="mkapi-object-signature">map_file_field_obj=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorelookupmapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">LookupMapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">lookup_value_field</code>, <code class="mkapi-object-signature">map_file_field</code>, <code class="mkapi-object-signature">map_file_field_obj=None</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1406,7 +1422,7 @@ information from other fields in the fieldset for later use.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreifelsefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">IfElseField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">condition</code>, <code class="mkapi-object-signature">true_value</code>, <code class="mkapi-object-signature">false_value</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreifelsefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">IfElseField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">condition</code>, <code class="mkapi-object-signature">true_value</code>, <code class="mkapi-object-signature">false_value</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1566,7 +1582,7 @@ two values and returns a boolean value).</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorerepeatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">RepeatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">min_repeats</code>, <code class="mkapi-object-signature">max_repeats</code>, <code class="mkapi-object-signature">glue=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorerepeatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">RepeatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">min_repeats</code>, <code class="mkapi-object-signature">max_repeats</code>, <code class="mkapi-object-signature">glue=None</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1705,7 +1721,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorenumberfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">NumberField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorenumberfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">NumberField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1848,7 +1864,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorebooleanfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">BooleanField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">true_value=1</code>, <code class="mkapi-object-signature">false_value=0</code>, <code class="mkapi-object-signature">true_probability=0.5</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorebooleanfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">BooleanField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">true_value=1</code>, <code class="mkapi-object-signature">false_value=0</code>, <code class="mkapi-object-signature">true_probability=0.5</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1987,7 +2003,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoredatefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DateField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;16bd7847-20d5-43a2-b067-00657df62e11&#39;)</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">min_format=None</code>, <code class="mkapi-object-signature">max_format=None</code>, <code class="mkapi-object-signature">mean_format=None</code>, <code class="mkapi-object-signature">format=None</code>, <code class="mkapi-object-signature">use_years=False</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoredatefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DateField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">min_format=None</code>, <code class="mkapi-object-signature">max_format=None</code>, <code class="mkapi-object-signature">mean_format=None</code>, <code class="mkapi-object-signature">format=None</code>, <code class="mkapi-object-signature">use_years=False</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
