@@ -101,7 +101,7 @@ class HeadFake:
         Set the locale for random value generation
 
         Args:
-            seed: seed for initializing random number generator
+            locale: locale for generated data (e.g.
 
         Returns:
             None
