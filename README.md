@@ -1,7 +1,7 @@
-# HEADFAKE
+# Headfake
 
-## What is HEADFAKE?
-**HEA**lth **D**ata **F**aker is a Python-based package which allows the user to create fake or test data sets from a
+## What is Headfake?
+It is Health data faker: a Python-based package which allows the user to create fake or test data sets from a
 YAML template file.
 
 The package can be embedded directly into Python scripts, or it can be used through a command-line script.
@@ -9,8 +9,8 @@ The package can be embedded directly into Python scripts, or it can be used thro
 It builds upon some of the ideas in [pydbgen](https://github.com/tirthajyoti/pydbgen) and improves on it with support for
 a number of additional features including statistically distributed random values; dependent fields and custom fields.
 
-## Why would I use HEADFAKE?
-HEADFAKE makes it simple and straightforward to generate fake or test data. It has a number of features which make this easier:
+## Why would I use Headfake?
+Headfake makes it simple and straightforward to generate fake or test data. It has a number of features which make this easier:
 
 * Support for shareable template-based config or direct Python implementation to setup and perform the data generation.
 
@@ -34,15 +34,15 @@ HEADFAKE makes it simple and straightforward to generate fake or test data. It h
 
 * Support for transformers which pre or post-process data once it's been generated
 
-## How do I install and use HEADFAKE?
-To install HEADFAKE please go to the [Installation](/installation.md) page and then start with the [Tutorials](/tutorials/tutorial1.md) or the [usage page](/usage.md).
+## How do I install and use Headfake?
+To install Headfake please go to the [Installation](/installation) page and then start with the [Tutorials](/tutorials/tutorial1) or the [usage page](/usage).
 
-## Is HEADFAKE being actively maintained?
-Yes, we are using HEADFAKE is our own projects and as result are keep it maintained and adding new features when we need them.
+## Is Headfake being actively maintained?
+Yes, we are using Headfake is our own projects and as result are keep it maintained and adding new features when we need them.
 
-## Is HEADFAKE suitable for my project?
+## Is Headfake suitable for my project?
 The library has been released under an MIT license so can be embedded into your own tools with minimal restrictions on use.
 
-## If I use HEADFAKE to generate data in my research project which source should I cite?
+## If I use Headfake to generate data in my research project which source should I cite?
 We are working on a journal paper, for now please cite the project URL (https://rcfgroup.org/headfake).
 

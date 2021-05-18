@@ -11,23 +11,22 @@ To keep it simpler at this stage we will not take into account other possible ti
 Open `tutorial2.yml`, add a new field as below and save as `tutorial3.yml`:
 
 ```yaml
-title:
+- name: title
+  class: headfake.field.IfElseField
+  condition:
+    field: gender
+    operator: operator.equals
+    value: M
+  true_value:
+    value: MR
+  false_value:
     class: headfake.field.IfElseField
     condition:
-    	class: headfake.field.Condition
-        field: gender
-        operator: operator.equals
-        value: M
-    true_value:
-        value: MR
-    false_value:
-        class: headfake.field.IfElseField
-        condition:
-            field: marital_status
-            operator: equals
-            value: M
-        true_value: MRS
-        false_value: MISS
+      field: marital_status
+      operator: equals
+      value: M
+    true_value: MRS
+    false_value: MISS
 ```
 
 Then try running it:
@@ -43,8 +42,8 @@ The IfElseField is quite flexible. If there is a string or number in the true_va
 Let's improve this field by adding some level of chance to it and take into account other possible titles. Change the 'false_value: MISS' line to:
 
 ```yaml
-false:
-    class: OptionValueField
+false_value:
+    class: headfake.field.OptionValueField
     probabilities:
         MISS: 0.7
         MS: 0.1

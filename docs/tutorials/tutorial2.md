@@ -11,14 +11,14 @@ In the 'gender' field change the default `male_probability` from 0.3 to 0.5 and 
 
 e.g.
 ```yaml
-gender:
-    class: headfake.field.GenderField
-    male_value: "M"
-    female_value: "F"
-    male_probability: 0.5
+- name: gender
+  class: headfake.field.GenderField
+  male_value: "M"
+  female_value: "F"
+  male_probability: 0.5
 ```
 
-Then re-run HEADFAKE:
+Then re-run Headfake:
 ```
 headfake /path/to/tutorial2.yml -o /path/to/tutorial2.txt -n100
 ```
@@ -31,12 +31,12 @@ You can also add additional fields by adding them into the 'fields' section of t
 You can try this by copying the following and pasting it into `tutorial2.yml` and saving:
 
 ```yaml
-first_name:
+- name: first_name
   class: headfake.field.FirstNameField
   gender_field: gender
 ```
 
-Then re-run HEADFAKE:
+Then re-run Headfake:
 ```
 headfake /path/to/tutorial2.yml
 ```
@@ -51,7 +51,7 @@ Open `tutorial2.yml` and add a new field to the fieldset config as below:
 
 e.g.
 ```yaml
-deceased:
+- name: deceased
   class: headfake.field.DeceasedField
   dob_field: dob
   deceased_date_field: date_of_death
@@ -72,7 +72,7 @@ deceased:
 	85-120: 6
 ```
 
-Then re-run HEADFAKE:
+Then re-run Headfake:
 ```
 headfake /path/to/tutorial2.yml
 ```
@@ -84,28 +84,32 @@ The output will show some individuals are now flagged as deceased, along with op
 
 Transformers are special classes which act before or after data is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.
 
-Change the last_name in `tutorial2.yml` to add both transformers and re-run the generation:
+Change the last_name in `tutorial2.yml` to add both transformers:
 
 ```yaml
-last_name:
-      class: headfake.field.LastNameField
-      gender_field: gender
-      transformers:
-        - class: headfake.transformer.IntermittentBlanks
-          blank_probability: 0.2
-          blank_value: NULL
-        - class: headfake.transformer.UpperCase
+- name: last_name
+  class: headfake.field.LastNameField
+  gender_field: gender
+  transformers:
+  - class: headfake.transformer.IntermittentBlanks
+    blank_probability: 0.2
+    blank_value: NULL
+  - class: headfake.transformer.UpperCase
+```
 
+And re-run the generation
 ```
 headfake /path/to/tutorial2.yml -o /path/to/tutorial2d.txt -n100
 ```
 
-As expected, ~20% of the values will now be NULL and those which are not will now be uppercase.
+As expected, ~20% of the values will now be blank and those which are not will now be uppercase. You can use any value
+in place of the NULL value (e.g. NA)
 
 
 ### Analysis
 In this tutorial we were able to adjust the field parameters in the YAML file to change the data generated, we also
-added one of the in-built dependent fields to generate gender appropriate first names and risk-based deceased status.
+added one of the dependent fields to generate gender appropriate first names and risk-based deceased status.
+
 We also showed how powerful transformers can be to pre- and post-process the generated field values.
 
 In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.

@@ -30,7 +30,7 @@ You can either write your own template or use one from the examples directory as
 headfake examples/patients.yaml --no-rows=100
 ```
 
-This should generate 100 rows of example data. Using an --output-file flag will send it to a tab-delimited file rather than to the screen.
+This should generate 100 rows of example data. Using an `--output-file` flag will send it to a tab-delimited file rather than to the screen.
 
 ```bash
 headfake examples/patients.yaml --no-rows=100 --output-file=examples/patient.txt
@@ -38,7 +38,7 @@ headfake examples/patients.yaml --no-rows=100 --output-file=examples/patient.txt
 
 ## Python API
 
-Headfake provides an API that you can use in your python code to generate data. The following code loads the `patients.yaml` template and is equivalent to the command line interface shown above.
+Headfake also provides an API that you can use in your python code to generate data. The following code loads the `patients.yaml` template and is equivalent to the command line interface shown above.
 
 ```python
 from headfake import HeadFake
