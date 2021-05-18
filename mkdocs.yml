@@ -15,8 +15,8 @@ theme:
       #logo: "/assets/headfake-logo.png"
 
 
-site_name: HEADFAKE
-site_description: HEAlth Data FAKer for all your fake data needs
+site_name: Headfake
+site_description: Health data faker - for all your fake data needs
 
 plugins:
   - mkapi:
