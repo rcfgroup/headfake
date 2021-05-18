@@ -16,7 +16,7 @@ build_docs:
 	mkdocs build
 
 deploy_docs:
-	mkdocs build
+	mkdocs gh-deploy
 
 
 build:
