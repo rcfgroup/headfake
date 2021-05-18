@@ -15,10 +15,9 @@ import attr
 import faker
 
 from headfake.error import ChangeValue
-from headfake.fieldset import Fieldset
 from headfake.transformer import Transformer
-from headfake.util import create_package_class, locate_file, handle_missing_keyword
-from headfake import HeadFake
+from headfake.util import create_package_class, locate_file, handle_missing_keyword, new_field_name
+
 import numpy as np
 
 @attr.s(kw_only=True)
@@ -33,23 +32,16 @@ class Field(ABC):
 
     """
     transformers: List[Transformer] = attr.ib(factory=list)
-    name: Optional[str] = attr.ib(default=uuid.uuid4())
+    name: Optional[str] = attr.ib(default=new_field_name())
+    generate_after = False # force the value to be generated after other field values have been generated
 
     def after_init_params(self):
         [t.init_params(self) for t in self.transformers]
 
-    @property
-    def names(self):
-        """
-        Returns:
-            List of field names which are populated/created by the field.
-        """
-        return [self.name]
-
     def init_params(self):
         pass
 
-    def init_from_fieldset(self, fieldset: Fieldset):
+    def init_from_fieldset(self, fieldset: "headfake.Fieldset"):
         """Initialises field in fieldset.
 
         This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
@@ -118,6 +110,7 @@ class FakerField(Field):
 
     @_fake.default
     def _default_faker(self):
+        from headfake import HeadFake
         fake = faker.Faker(HeadFake.locale)
         return fake
 
@@ -141,21 +134,18 @@ class OptionValueField(Field):
         option_picks = []
         probs = [np.float32(prob) for prob in self.probabilities.values()]
         tot = np.sum(probs)
-        print("probs:%s" % self.probabilities.values())
-        print("tot:%s" % tot)
+
         if tot != 1:
             raise ValueError("Probabilities provided do not add up to 1")
 
         min_prob = min(self.probabilities.values())
         max_dp = count_decimal_places(min_prob)
-        print("max_dp:%s" % max_dp)
 
         if max_dp>5:
             warnings.warn("Options include probabilities of 1e-" + str(max_dp) + ". This requires the creation of 1e" + str(max_dp) + " possible options")
 
         for val, prob in self.probabilities.items():
             num_picks = int((pow(10, max_dp)) * prob)
-            print("probs:%s = %s (%s)" % (val, prob,  num_picks))
             option_picks += [val] * num_picks
 
         return option_picks
@@ -271,6 +261,7 @@ class LookupMapFileField(Field):
     lookup_value_field = attr.ib()
     map_file_field = attr.ib()
     _map_file_field_obj = attr.ib(default=None)
+    generate_after = True
 
     def _next_value(self, row):
         map_key = row.get(self._map_file_field_obj.name)
@@ -297,9 +288,14 @@ class IfElseField(Field):
     condition = attr.ib()
     true_value = attr.ib()
     false_value = attr.ib()
+    _cond_obj = attr.ib()
+
+    @_cond_obj.default
+    def _default_cond_obj(self):
+        return self.condition if isinstance(self.condition, Condition) else Condition(**self.condition)
 
     def _next_value(self, row):
-        if self.condition.is_true(row):
+        if self._cond_obj.is_true(row):
             return self.true_value.next_value(row) if hasattr(
                 self.true_value, "next_value") else self.true_value
         else:

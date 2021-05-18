@@ -18,8 +18,7 @@ class Output(ABC):
 
 class FileOutput(Output):
     """
-    Output generated mock data for a single fieldset to the tab-delimited text file specified in
-    the options (output_file)
+    Output generated mock data for a single fieldset to the file specified in the options (output_file)
     """
 
     def __init__(self, options):
@@ -36,8 +35,8 @@ class FileOutput(Output):
 
 class CsvFileOutput(Output):
     """
-    Output generated mock data for a single fieldset to the tab-delimited text file specified in
-    the options (output_file)
+    Output generated mock data for a single fieldset to a CSV file specified in the
+    options (output_file)
     """
 
     def __init__(self, options):
@@ -53,8 +52,7 @@ class CsvFileOutput(Output):
 
 class JsonFileOutput(Output):
     """
-    Output generated mock data for a single fieldset to the tab-delimited text file specified in
-    the options (output_file)
+    Output generated data for a single fieldset to a tab-delimited text file specified in the options (output_file)
     """
 
     def __init__(self, options):
@@ -70,8 +68,8 @@ class JsonFileOutput(Output):
 
 class StdoutOutput(FileOutput):
     """
-    Output generated mock data for a single fieldset to the console/STDOUT
+    Output generated data for a single fieldset to the console/STDOUT as CSV data
     """
 
     def write(self, dataframe):
-        print(dataframe)
+        print(dataframe.to_csv(index=False))

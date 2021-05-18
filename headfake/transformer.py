@@ -46,7 +46,7 @@ class IntermittentBlanks(Transformer):
     blank_probability = attr.ib()
     blank_value = attr.ib(default="")
 
-    def before_next(self, field, row, value):
+    def before_next(self, field, row):
         if rnd.random() < self.blank_probability:
             raise ChangeValue(self.blank_value)
 

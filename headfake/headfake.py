@@ -18,7 +18,7 @@ class HeadFake:
     """
 
     locale = "en_GB"
-
+    field_count = 0
     def __init__(self, params, seed=None):
         """
         Creates an instance of the HeadFake object
@@ -124,8 +124,6 @@ class HeadFake:
 
         fieldset = class_tree.get("fieldset")
 
-        for field in fieldset.fields:
-            field.init_from_fieldset(fieldset)
 
         return fieldset
 

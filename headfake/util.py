@@ -5,11 +5,12 @@ import re
 import errno
 import os
 
-from collections import OrderedDict
 from importlib import import_module
 from inspect import getsourcefile
 
 from pathlib import Path
+
+field_count = 0
 
 def create_package_class(package_name):
     """
@@ -25,7 +26,7 @@ def create_package_class(package_name):
     module = import_module(".".join(package_bits))
     if not hasattr(module, class_name):
         raise TypeError(
-            "Could not create class '" + class_name + "' it does not exist in package '" + module.__name__ + "'")
+            "Unable to setup the class/method '" + class_name + "' as it does not exist in the Python package '" + module.__name__ + "'")
     return getattr(module, class_name)
 
 
@@ -40,45 +41,33 @@ def create_class_tree(name, params):
             Name of the current class/object in the tree
         params:
             A dictionary or list of parameters used to build the class
+        constant_cls:
+            A class to wrap constant scalars (e.g. ints, strings, dates etc.)
 
     Returns:
         A class tree containing recursive classes, lists and dictionaries.
 
     """
 
+    if isinstance(params, dict):
+        class_name = params.get("class")
+        if "class" in params:
+            del params["class"]
 
-    if isinstance(params, dict) and "class" in params:
-        class_name = params["class"]
-        del params["class"]
-        sub_params = create_class_tree(name, params)
+        sub_params = {k: create_class_tree(k, v) for k, v in params.items()}
 
-        cls = create_package_class(class_name)
-
-        sub_params["name"] = name
+        if not class_name:
+            return sub_params
 
         try:
-            return cls(**sub_params)
+            return create_package_class(class_name)(**sub_params)
         except TypeError as ex:
             handle_missing_keyword(ex)
 
-            raise TypeError(
-                "Problem creating '%s' %s. Original error:%s" %
-                (name, cls, ex)) from ex
+    if isinstance(params, list):
+        return [create_class_tree(p.get("name"), p) for p in params]
 
-    new_params = OrderedDict()
-    for key, value in params.items():
-        if isinstance(value, dict):
-            new_params[key] = create_class_tree(key, value)
-        elif isinstance(value, list):
-            block = []
-            for item in value:
-                block.append(create_class_tree(item.get("name", None), item))
-            new_params[key] = block
-        else:
-            new_params[key] = value
-
-    return new_params
-
+    return params
 
 def calculate_age(start_date: "datetime.date", end_date: "datetime.date"):
     """
@@ -137,3 +126,15 @@ def handle_missing_keyword(ex):
         raise TypeError(
             "The following required parameter(s) were missing: %s" %
             kwonly_error.group(1))
+
+    unexpected_kw_error = re.search("got an unexpected keyword argument ('.+')$", str(ex))
+    if unexpected_kw_error:
+        raise TypeError(
+            "The following unknown parameter was provided: %s" %
+            unexpected_kw_error.group(1))
+    raise ex
+
+def new_field_name():
+    global field_count
+    field_count+=1
+    return "field_" + str(field_count)

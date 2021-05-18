@@ -119,8 +119,10 @@ class DeceasedField(Field):
     risk_of_death: Dict[str, str] = attr.ib()
     date_format = attr.ib()
     _risk_by_age: Dict[int, float] = attr.ib()
+
     end_date = attr.ib(default=datetime.date.today())
     end_date_format = attr.ib(default=None)
+    generate_after = True
 
     @_risk_by_age.default
     def _default_risk_by_age(self):
@@ -137,6 +139,14 @@ class DeceasedField(Field):
     def init_from_fieldset(self, fieldset):
         self._dob_field = fieldset.field_map.get(self.dob_field)
 
+        if self.deceased_date_field:
+            fieldset.field_names.append(self.deceased_date_field)
+
+        if self.age_field:
+            fieldset.field_names.append(self.age_field)
+
+
+
     def _next_value(self, row):
         dob = row.get(self.dob_field)
         dob = datetime.datetime.strptime(dob, self._dob_field.date_format).date()
@@ -147,9 +157,9 @@ class DeceasedField(Field):
 
         while (curr_date < today):
             curr_age = calculate_age(dob, curr_date)
-            curr_risk = self._risk_by_age[curr_age]
+            curr_risk = self._risk_by_age.get(curr_age)
 
-            if rnd.random() <= curr_risk:
+            if curr_risk is not None and rnd.random() <= curr_risk:
                 int_bt_curr_and_prev = curr_date - prev_date
                 rnd_days_after_curr = rnd.randrange(0, int_bt_curr_and_prev.days)
                 dod = curr_date + datetime.timedelta(days=rnd_days_after_curr)
@@ -176,17 +186,6 @@ class DeceasedField(Field):
 
         return value
 
-    @property
-    def names(self):
-        default_names = [self.name]
-
-        if self.deceased_date_field:
-            default_names.append(self.deceased_date_field)
-
-        if self.age_field:
-            default_names.append(self.age_field)
-
-        return default_names
 
 
 @attr.s(kw_only=True)
