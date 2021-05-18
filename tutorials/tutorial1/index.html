@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>1. Generating fake data files - HEADFAKE</title>
+  <title>1. Generating fake data files - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -42,7 +42,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        <a href="../.." class="icon icon-home"> Headfake</a>
         
       </div>
 
@@ -65,7 +65,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#aims-of-tutorial">Aims of tutorial</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#install-headfake">Install HEADFAKE</a>
+    <li class="toctree-l2"><a class="reference internal" href="#install-headfake">Install Headfake</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#creating-a-template-file">Creating a template file</a>
     </li>
@@ -134,7 +134,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">HEADFAKE</a>
+        <a href="../..">Headfake</a>
       </nav>
 
       
@@ -165,26 +165,30 @@
               
                 <h1 id="tutorial-1-generate-a-fake-data-file">Tutorial 1. Generate a fake data file</h1>
 <h2 id="aims-of-tutorial">Aims of tutorial</h2>
-<p>This tutorial will take you through installing HEADFAKE, creating a HEADFAKE configuration file and using it to generate a data file.</p>
-<h2 id="install-headfake">Install HEADFAKE</h2>
-<p>You will need at least Python 3.6+ installed in order to use HEADFAKE.</p>
-<p>The easiest way to install it is through pip. In the terminal enter:</p>
+<p>This tutorial will take you through installing Headfake, creating a Headfake configuration file and using it to generate a data file.</p>
+<h2 id="install-headfake">Install Headfake</h2>
+<p>You will need at least Python 3.6+ installed in order to use Headfake. The easiest way to install it is through pip. In the terminal enter:</p>
 <div class="codehilite"><pre><span></span><code>pip install headfake
 </code></pre></div>
 
-<p>Check it is installed correctly by running</p>
+<p>Check it is installed correctly by running:</p>
 <div class="codehilite"><pre><span></span><code>headfake --help
 </code></pre></div>
 
 <p>You should get some information on the usage of the tool.</p>
 <h2 id="creating-a-template-file">Creating a template file</h2>
-<p>HEADFAKE is powered through a plain text template file in YAML format.
-The easiest way to demonstrate its functionality is to try out an example.</p>
-<p>Open a file <code>example.yml</code> in your home directory and copy and paste the information below into it:</p>
+<p>Headfake is powered through a plain text template file in YAML format. The easiest way to demonstrate its functionality
+is to try out an example.</p>
+<p>Open a file <code>tutorial.yml</code> in your home directory, copy and paste the information below into it and save it:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful to use EITHER spaces OR tabs to indent the YAML file. If you mix them up then Headfake is likely to throw
+errors. It also important to make the indentation consistent when doing this.</p>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
   <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
   <span class="nt">fields</span><span class="p">:</span>
-    <span class="nt">main_pat_id</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">main_pat_id</span>
       <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.IdField</span>
       <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">S</span>
       <span class="nt">generator</span><span class="p">:</span>
@@ -192,17 +196,17 @@ The easiest way to demonstrate its functionality is to try out an example.</p>
         <span class="nt">length</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">7</span>
         <span class="nt">min_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000000</span>
 
-    <span class="nt">gender</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
       <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
       <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
       <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
       <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3</span>
 
-    <span class="nt">last_name</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">last_name</span>
       <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.LastNameField</span>
       <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
 
-    <span class="nt">dob</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dob</span>
       <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.DateOfBirthField</span>
       <span class="nt">min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
       <span class="nt">max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">105</span>
@@ -225,8 +229,10 @@ The easiest way to demonstrate its functionality is to try out an example.</p>
 
 <p>This latter approach is often better when building templates in Headfake as it more immediate.</p>
 <h2 id="analysis">Analysis</h2>
-<p>This is a simple example of what HEADFAKE can do. The template you used contains autogenerated IDs, gender, a last name and a date of birth generated following a normal distribution.</p>
-<p>You can see from this how straightforward it would be to add additional fields to the template and to generate more/less rows of data.</p>
+<p>This is a simple example of what Headfake can do. It is also possible to use YAML to provide your fields as a dictionary, or to embed it directly as Python data structures and/or code.
+There is additional information on different ways for <a href="/discussion/initialising-headfake">initialising Headfake</a>.</p>
+<p>The template you used defines a set of fields containing autogenerated IDs, gender, a last name and a date of birth following a normal distribution.</p>
+<p>You can see from this tutorial how straightforward it would be to add additional fields to the template and to generate more/less rows of data.</p>
 <p>In the next tutorial we will take a closer look at the setup of the fields in the YAML file and modify them to create different data and formats.</p>
               
             </div>

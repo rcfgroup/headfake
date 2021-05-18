@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Initialising Headfake - HEADFAKE</title>
+  <title>Initialising Headfake - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -42,7 +42,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        <a href="../.." class="icon icon-home"> Headfake</a>
         
       </div>
 
@@ -124,7 +124,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">HEADFAKE</a>
+        <a href="../..">Headfake</a>
       </nav>
 
       
@@ -153,65 +153,73 @@
           <div role="main">
             <div class="section">
               
-                <p>HEADFAKE is built around the concept of field sets which contain one or more fields.  Each field has a type (class) which determines what type of data is generated. The definition of fieldsets and their fields can be done through a YAML file or in Python code.</p>
+                <h1 id="initialising-headfake">Initialising Headfake</h1>
+<p>Headfake is based on field sets which contain one or more fields.  Each field has a type (class) which determines what type of data is generated OR if a generated value is a constant it can be provided as a string, integer etc.</p>
+<p>The definition of fieldsets and their fields can be done through a YAML file or in Python code.</p>
 <h1 id="fieldsets-from-a-yaml-file">Fieldsets from a YAML file</h1>
-<p>A YAML file can be used to describe the class tree which is created internally, and is then used to generate the data. For each item in the YAML file, the 'class' property defines the Python class used and all other properties are passed into the class constructor as parameters.</p>
-<p>For example, for a dictionary-based template:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
-  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
-  <span class="nt">fields</span><span class="p">:</span>
-    <span class="nt">gender</span><span class="p">:</span>
-        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
-        <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
-        <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
-        <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
-</code></pre></div>
-
-<p>Or for a list-based template:</p>
+<p>Headfake currently supports the use of a YAML file to describe the layout of the fields. This is then used to generate the data. For each item in the YAML file, a 'class' property defines the Python class or type used and all other properties are passed into the class constructor as parameters. If there is not 'class' property, the values are passed in their raw form (e.g. as a string or number).</p>
+<p>Headfake supports defining fields as a list:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
   <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
   <span class="nt">fields</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
-        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
+        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GenderField</span>
         <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
         <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
         <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
 </code></pre></div>
 
-<p>The <code>from_yaml</code> function is used:</p>
+<p>Or as a dictionary:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
+  <span class="nt">fields</span><span class="p">:</span>
+    <span class="nt">gender</span><span class="p">:</span>
+        <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GenderField</span>
+        <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
+        <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
+        <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both approaches return valid HeadFake fieldsets, but YAML does not support ordered dictionaries. So if the order of
+the generated fields is important you should use the list-based approach. If not then either can be used.</p>
+</div>
+<p>Data can then either be generated using the <code>headfake</code> command (see <a href="usage">usage</a>) or in Python
+using the <code>from_yaml</code> function:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">headfake</span> <span class="kn">import</span> <span class="n">HeadFake</span>
 
 <span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;/path/to/template.yaml&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">hf</span><span class="o">.</span><span class="n">fieldset</span><span class="p">)</span>
-</code></pre></div>
-
-<p>The first template prints:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
-    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
-            <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
-            <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
-            <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
-        <span class="p">)</span>
-<span class="p">})</span>
-</code></pre></div>
-
-<p>While the second gets turned into:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
-    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span>
-            <span class="n">male_value</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
-            <span class="n">female_value</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
-            <span class="n">male_probability</span><span class="o">=</span><span class="mf">0.5</span>
-        <span class="p">)</span>
-<span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hf</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="o">..</span>
 </code></pre></div>
 
 <p>The advantage of the list-based approach is that the order of fields is always retained, whereas it may not with a dictionary-based template - as the YAML specification does not retain the order of values in the file.</p>
 <h1 id="fieldset-in-python-code">Fieldset in Python code</h1>
-<p>If preferred, the fieldset definition can be written in Python code directly. This should be fed to the 'from_python' method:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_python</span><span class="p">(</span><span class="n">headfake</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
+<p>If preferred, the fieldset definition can be written in Python code directly. This can either be done as a series of
+data structures:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">headfake</span> <span class="kn">import</span> <span class="n">field</span><span class="p">,</span> <span class="n">HeadFake</span><span class="p">,</span> <span class="n">fieldset</span>
+
+<span class="c1"># as a dictionary of fields:</span>
+
+<span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="p">({</span>
+    <span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;headfake.fieldset.Fieldset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fields&quot;</span><span class="p">:{</span>
+        <span class="s2">&quot;gender&quot;</span><span class="p">:{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;GenderField&quot;</span><span class="p">,</span><span class="s2">&quot;male_value&quot;</span><span class="p">:</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;female_value&quot;</span><span class="p">:</span><span class="s2">&quot;F&quot;</span><span class="p">,</span><span class="s2">&quot;male_probability&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1"># as a list of fields:</span>
+<span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="p">({</span>
+    <span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;headfake.fieldset.Fieldset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fields&quot;</span><span class="p">:[</span>
+        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span><span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;GenderField&quot;</span><span class="p">,</span><span class="s2">&quot;male_value&quot;</span><span class="p">:</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;female_value&quot;</span><span class="p">:</span><span class="s2">&quot;F&quot;</span><span class="p">,</span><span class="s2">&quot;male_probability&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># as Python classes:</span>
+
+<span class="n">hf</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_python</span><span class="p">(</span><span class="n">fieldset</span><span class="o">.</span><span class="n">Fieldset</span><span class="p">(</span>
     <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">headfake</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">GenderField</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span>
@@ -222,9 +230,11 @@
 <span class="p">]))</span>
 </code></pre></div>
 
-<p>This will initialise the fields appropriately.</p>
 <h2 id="generate-data">Generate data</h2>
-<p>Once the HeadFake object has been obtained, the key method is generate_data which processes each field to create a pandas DataFrame containing the specified number of rows of generated data.</p>
+<p>Once the HeadFake object has been obtained, you can use the <code>generate_data</code> method to return a pandas DataFrame containing the specified number of rows of generated data.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># generate 100 rows of data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">hf</span><span class="o">.</span><span class="n">generate_data</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
               
             </div>
           </div>

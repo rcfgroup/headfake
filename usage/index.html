@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Usage - HEADFAKE</title>
+  <title>Usage - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -42,7 +42,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> HEADFAKE</a>
+        <a href=".." class="icon icon-home"> Headfake</a>
         
       </div>
 
@@ -128,7 +128,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">HEADFAKE</a>
+        <a href="..">Headfake</a>
       </nav>
 
       
@@ -179,12 +179,12 @@ optional arguments:
 <div class="codehilite"><pre><span></span><code>headfake examples/patients.yaml --no-rows<span class="o">=</span><span class="m">100</span>
 </code></pre></div>
 
-<p>This should generate 100 rows of example data. Using an --output-file flag will send it to a tab-delimited file rather than to the screen.</p>
+<p>This should generate 100 rows of example data. Using an <code>--output-file</code> flag will send it to a tab-delimited file rather than to the screen.</p>
 <div class="codehilite"><pre><span></span><code>headfake examples/patients.yaml --no-rows<span class="o">=</span><span class="m">100</span> --output-file<span class="o">=</span>examples/patient.txt
 </code></pre></div>
 
 <h2 id="python-api">Python API</h2>
-<p>Headfake provides an API that you can use in your python code to generate data. The following code loads the <code>patients.yaml</code> template and is equivalent to the command line interface shown above.</p>
+<p>Headfake also provides an API that you can use in your python code to generate data. The following code loads the <code>patients.yaml</code> template and is equivalent to the command line interface shown above.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">headfake</span> <span class="kn">import</span> <span class="n">HeadFake</span>
 
 <span class="n">headfake</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;examples/patients.yaml&quot;</span><span class="p">)</span>

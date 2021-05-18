@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../../img/favicon.ico">
-  <title>derived - HEADFAKE</title>
+  <title>derived - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../../css/theme.css" />
@@ -42,7 +42,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href="../../.." class="icon icon-home"> HEADFAKE</a>
+        <a href="../../.." class="icon icon-home"> Headfake</a>
         
       </div>
 
@@ -134,7 +134,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../..">HEADFAKE</a>
+        <a href="../../..">Headfake</a>
       </nav>
 
       
@@ -219,7 +219,7 @@ date objects or Fields. If the former, then it is treated as the name of the fie
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldderiveddateofbirthfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">DateOfBirthField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min</code>, <code class="mkapi-object-signature">max</code>, <code class="mkapi-object-signature">date_format</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldderiveddateofbirthfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">DateOfBirthField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min</code>, <code class="mkapi-object-signature">max</code>, <code class="mkapi-object-signature">date_format</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -239,18 +239,6 @@ date objects or Fields. If the former, then it is treated as the name of the fie
 This is multiplied by 365.25 to get age in days and a delta age (in days) from now is determined.
 The date is then output according to the date_format property.</p>
 <p>A min and max property are also required to keep the distribution within a particular range.</p></div>
-    </div>
-  <div class="mkapi-section attributes">
-      <div class="mkapi-section-name attributes">
-          <span class="mkapi-section-name-body attributes">Attributes</span> 
-        </div>
-      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
-<li class="readonly-property"><code class="mkapi-item-name">names</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
-
-
-</ul></div>
     </div>
   <div class="mkapi-section methods">
       <div class="mkapi-section-name methods">
@@ -293,7 +281,7 @@ information from other fields in the fieldset for later use.</p></div>
         </div>
       <div class="mkapi-section-body parameters"><ul class="mkapi-items">
 <li><code class="mkapi-item-name">fieldset</code>
-<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-type">(headfake.Fieldset)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
 
 
@@ -361,7 +349,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldderivedgenderfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">GenderField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">male_probability=0.5</code>, <code class="mkapi-object-signature">male_value</code>, <code class="mkapi-object-signature">female_value</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldderivedgenderfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">GenderField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">male_probability=0.5</code>, <code class="mkapi-object-signature">male_value</code>, <code class="mkapi-object-signature">female_value</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -389,18 +377,6 @@ selection and male_probability (probability that gender is male, default=0.5).</
 <span class="n">M</span>
 <span class="n">F</span>
 </code></pre></div></div>
-    </div>
-  <div class="mkapi-section attributes">
-      <div class="mkapi-section-name attributes">
-          <span class="mkapi-section-name-body attributes">Attributes</span> 
-        </div>
-      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
-<li class="readonly-property"><code class="mkapi-item-name">names</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
-
-
-</ul></div>
     </div>
   <div class="mkapi-section methods">
       <div class="mkapi-section-name methods">
@@ -443,7 +419,7 @@ information from other fields in the fieldset for later use.</p></div>
         </div>
       <div class="mkapi-section-body parameters"><ul class="mkapi-items">
 <li><code class="mkapi-item-name">fieldset</code>
-<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-type">(headfake.Fieldset)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
 
 
@@ -511,7 +487,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldderivednhsnofield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">NhsNoField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">used_values=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldderivednhsnofield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">NhsNoField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">used_values=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -527,18 +503,6 @@ returned.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Mock NHS number field which creates valid NHS numbers with the correct checksum digit.
 See https://www.closer.ac.uk/wp-content/uploads/CLOSER-NHS-ID-Resource-Report-Apr2018.pdf for details.</p></div>
-    </div>
-  <div class="mkapi-section attributes">
-      <div class="mkapi-section-name attributes">
-          <span class="mkapi-section-name-body attributes">Attributes</span> 
-        </div>
-      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
-<li class="readonly-property"><code class="mkapi-item-name">names</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
-
-
-</ul></div>
     </div>
   <div class="mkapi-section methods">
       <div class="mkapi-section-name methods">
@@ -581,7 +545,7 @@ information from other fields in the fieldset for later use.</p></div>
         </div>
       <div class="mkapi-section-body parameters"><ul class="mkapi-items">
 <li><code class="mkapi-item-name">fieldset</code>
-<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-type">(headfake.Fieldset)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
 
 
@@ -649,7 +613,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldderiveddeceasedfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">DeceasedField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">deceased_true_value=1</code>, <code class="mkapi-object-signature">deceased_false_value=0</code>, <code class="mkapi-object-signature">dob_field</code>, <code class="mkapi-object-signature">deceased_date_field=None</code>, <code class="mkapi-object-signature">age_field=None</code>, <code class="mkapi-object-signature">risk_of_death</code>, <code class="mkapi-object-signature">date_format</code>, <code class="mkapi-object-signature">risk_by_age=NOTHING</code>, <code class="mkapi-object-signature">end_date=datetime.date(2021, 4, 29)</code>, <code class="mkapi-object-signature">end_date_format=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldderiveddeceasedfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">DeceasedField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">deceased_true_value=1</code>, <code class="mkapi-object-signature">deceased_false_value=0</code>, <code class="mkapi-object-signature">dob_field</code>, <code class="mkapi-object-signature">deceased_date_field=None</code>, <code class="mkapi-object-signature">age_field=None</code>, <code class="mkapi-object-signature">risk_of_death</code>, <code class="mkapi-object-signature">date_format</code>, <code class="mkapi-object-signature">risk_by_age=NOTHING</code>, <code class="mkapi-object-signature">end_date=datetime.date(2021, 5, 18)</code>, <code class="mkapi-object-signature">end_date_format=None</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -778,7 +742,7 @@ information from other fields in the fieldset for later use.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldderivedagefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">AgeField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=UUID(&#39;4cf52997-3d2d-4fb0-adc7-ed0be7d4f106&#39;)</code>, <code class="mkapi-object-signature">from_value</code>, <code class="mkapi-object-signature">to_value</code>, <code class="mkapi-object-signature">from_format=None</code>, <code class="mkapi-object-signature">to_format=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldderivedagefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.derived.</code><code class="mkapi-object-name">AgeField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">from_value</code>, <code class="mkapi-object-signature">to_value</code>, <code class="mkapi-object-signature">from_format=None</code>, <code class="mkapi-object-signature">to_format=None</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -794,18 +758,6 @@ information from other fields in the fieldset for later use.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Calculates age in years from two fields or values. The specified from_value and to_value can be either strings,
 date objects or Fields. If the former, then it is treated as the name of the field to obtain from the row.</p></div>
-    </div>
-  <div class="mkapi-section attributes">
-      <div class="mkapi-section-name attributes">
-          <span class="mkapi-section-name-body attributes">Attributes</span> 
-        </div>
-      <div class="mkapi-section-body attributes"><ul class="mkapi-items">
-<li class="readonly-property"><code class="mkapi-item-name">names</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">List of field names which are populated/created by the field.</span></li>
-
-
-</ul></div>
     </div>
   <div class="mkapi-section methods">
       <div class="mkapi-section-name methods">
@@ -848,7 +800,7 @@ information from other fields in the fieldset for later use.</p></div>
         </div>
       <div class="mkapi-section-body parameters"><ul class="mkapi-items">
 <li><code class="mkapi-item-name">fieldset</code>
-<span class="mkapi-item-type">(Fieldset)</span>
+<span class="mkapi-item-type">(headfake.Fieldset)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
 
 

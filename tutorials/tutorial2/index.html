@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>2. Templates and conditional logic - HEADFAKE</title>
+  <title>2. Templates and conditional logic - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -42,7 +42,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> HEADFAKE</a>
+        <a href="../.." class="icon icon-home"> Headfake</a>
         
       </div>
 
@@ -138,7 +138,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">HEADFAKE</a>
+        <a href="../..">Headfake</a>
       </nav>
 
       
@@ -175,14 +175,14 @@
 You will see that it consists of a hierarchy of Python classes, with the fieldset as the base element, which contains one or more fields. The properties of the fields are the arguments passed when the class is initialised, so by changing these values in the YAML file we change how the fields behave.</p>
 <p>In the 'gender' field change the default <code>male_probability</code> from 0.3 to 0.5 and save the file as <code>tutorial2.yml</code>:</p>
 <p>e.g.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">gender</span><span class="p">:</span>
-    <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
-    <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
-    <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
-    <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.GenderField</span>
+  <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
+  <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
+  <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
 </code></pre></div>
 
-<p>Then re-run HEADFAKE:</p>
+<p>Then re-run Headfake:</p>
 <div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2.txt -n100
 </code></pre></div>
 
@@ -190,12 +190,12 @@ You will see that it consists of a hierarchy of Python classes, with the fieldse
 <h2 id="add-a-first-name-field">Add a first name field</h2>
 <p>You can also add additional fields by adding them into the 'fields' section of the YAML file.
 You can try this by copying the following and pasting it into <code>tutorial2.yml</code> and saving:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">first_name</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">first_name</span>
   <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.FirstNameField</span>
   <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
 </code></pre></div>
 
-<p>Then re-run HEADFAKE:</p>
+<p>Then re-run Headfake:</p>
 <div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml
 </code></pre></div>
 
@@ -204,7 +204,7 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
 <p>Next you will add a field which can be very useful from a health perspective as it is a flag for deceased status.</p>
 <p>Open <code>tutorial2.yml</code> and add a new field to the fieldset config as below:</p>
 <p>e.g.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">deceased</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deceased</span>
   <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.DeceasedField</span>
   <span class="nt">dob_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dob</span>
   <span class="nt">deceased_date_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">date_of_death</span>
@@ -225,31 +225,34 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
     <span class="nt">85-120</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6</span>
 </code></pre></div>
 
-<p>Then re-run HEADFAKE:</p>
+<p>Then re-run Headfake:</p>
 <div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml
 </code></pre></div>
 
 <p>The output will show some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.</p>
 <h2 id="changing-generated-data-using-a-transformer">Changing generated data using a transformer</h2>
 <p>Transformers are special classes which act before or after data is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.</p>
-<p>Change the last_name in <code>tutorial2.yml</code> to add both transformers and re-run the generation:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">last_name</span><span class="p">:</span>
-      <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.LastNameField</span>
-      <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
-      <span class="nt">transformers</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.transformer.IntermittentBlanks</span>
-          <span class="nt">blank_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
-          <span class="nt">blank_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NULL</span>
-        <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.transformer.UpperCase</span>
+<p>Change the last_name in <code>tutorial2.yml</code> to add both transformers:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">last_name</span>
+  <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.LastNameField</span>
+  <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
+  <span class="nt">transformers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.transformer.IntermittentBlanks</span>
+    <span class="nt">blank_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+    <span class="nt">blank_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NULL</span>
+  <span class="p p-Indicator">-</span> <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.transformer.UpperCase</span>
 </code></pre></div>
 
-<p>headfake /path/to/tutorial2.yml -o /path/to/tutorial2d.txt -n100
-```</p>
-<p>As expected, ~20% of the values will now be NULL and those which are not will now be uppercase.</p>
+<p>And re-run the generation</p>
+<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml -o /path/to/tutorial2d.txt -n100
+</code></pre></div>
+
+<p>As expected, ~20% of the values will now be blank and those which are not will now be uppercase. You can use any value
+in place of the NULL value (e.g. NA)</p>
 <h3 id="analysis">Analysis</h3>
 <p>In this tutorial we were able to adjust the field parameters in the YAML file to change the data generated, we also
-added one of the in-built dependent fields to generate gender appropriate first names and risk-based deceased status.
-We also showed how powerful transformers can be to pre- and post-process the generated field values.</p>
+added one of the dependent fields to generate gender appropriate first names and risk-based deceased status.</p>
+<p>We also showed how powerful transformers can be to pre- and post-process the generated field values.</p>
 <p>In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.</p>
               
             </div>
