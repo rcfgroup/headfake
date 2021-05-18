@@ -89,3 +89,21 @@ def test_AgeField_calculates_correct_age_using_to_and_from_values_as_fields():
     assert age.next_value({}) == 61
     assert age.next_value({}) == 34
     assert age.next_value({}) == 43
+
+def test_DeceasedField_simulates_death_based_on_risks_and_returns_additional_fields():
+    from headfake.fieldset import Fieldset
+    from headfake import HeadFake
+
+    HeadFake.set_seed(543)
+    dob = field.DateOfBirthField(distribution = "scipy.stats.norm", min=0, max=105, mean=45, sd=13, date_format="%d/%m/%Y")
+    deceased = field.DeceasedField(
+        deceased_true_value=1,
+        deceased_false_value=0,
+        dob_field="dob",
+        deceased_date_field="dod",
+        age_field="age",
+        risk_of_death={"30-100":"2"},
+        date_format = "%Y-%m-%d",
+    )
+    fieldset = Fieldset(fields={"dob":dob, "deceased":deceased})
+    assert fieldset.generate_data(1).to_dict("records") == [{'age': 33, 'deceased': 1, 'dob': '01/02/1983', 'dod': '2017-12-05'}]

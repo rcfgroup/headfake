@@ -24,7 +24,7 @@ def test_generate_patients_data_from_template():
     with tempfile.NamedTemporaryFile(mode="w",delete=False) as tmp:
         tmp.write(" ")
         tmp.close()
-        args = Args(template = "examples/patients.yaml", no_rows = 50, output_file = str(tmp.name))
+        args = Args(template = "examples/patients.yaml", no_rows = 20, output_file = str(tmp.name))
 
         Command.run(args.as_list())
 
@@ -34,7 +34,7 @@ def test_generate_patients_data_from_template():
             file = csv.DictReader(fh)
             lines = list(file)
 
-        assert len(lines) == 50
+        assert len(lines) == 20
 
         os.unlink(tmp.name)
 
@@ -43,7 +43,7 @@ def test_generate_screening_data_from_template():
     with tempfile.NamedTemporaryFile(mode="w",delete=False) as tmp:
         tmp.write(" ")
         tmp.close()
-        args = Args(template = "examples/screening.yaml", no_rows = 100, output_file = str(tmp.name))
+        args = Args(template = "examples/screening.yaml", no_rows = 20, output_file = str(tmp.name))
 
         Command.run(args.as_list())
 
@@ -53,6 +53,6 @@ def test_generate_screening_data_from_template():
             file = csv.DictReader(fh)
             lines = list(file)
 
-        assert len(lines) == 100
+        assert len(lines) == 20
 
         os.unlink(tmp.name)

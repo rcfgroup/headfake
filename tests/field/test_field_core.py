@@ -139,6 +139,51 @@ def test_IfElseField_handles_non_if_else_logic():
     assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "MISS"
     assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "MISS"
 
+def test_IfElseField_handles_condition_as_dictionary():
+    fset = Fieldset(fields={"marital_status": "M"})
+    HeadFake.set_seed(5)
+    gender_cond = {
+        "field":"gender",
+        "operator":operator.eq,
+        "value":"M"
+    }
+
+
+    ms_test_cond = {
+        "field": "marital_status",
+        "operator":operator.eq,
+        "value": "M"
+    }
+
+
+    female_ov = field.OptionValueField(
+        probabilities = {
+            "MISS": 0.7,
+            "MS": 0.1,
+            "DR": 0.1,
+            "PROF": 0.1
+        })
+
+    ms_if_else = field.IfElseField(
+        condition=ms_test_cond,
+        true_value="MRS",
+        false_value=female_ov
+    )
+
+
+    gender_if_else = field.IfElseField(
+        condition = gender_cond,
+        true_value = "MR",
+        false_value = ms_if_else
+    )
+
+    gender_if_else.init_from_fieldset(fset)
+
+    assert gender_if_else.next_value({"gender":"M","marital_status":"M"}) == "MR"
+    assert gender_if_else.next_value({"gender": "M", "marital_status": "S"}) == "MR"
+    assert gender_if_else.next_value({"gender":"F","marital_status": "S"}) == "PROF"
+    assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "MISS"
+    assert gender_if_else.next_value({"gender": "F", "marital_status": "S"}) == "MISS"
 
 def test_RepeatField_generates_list_of_values():
     random.seed(124)
