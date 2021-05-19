@@ -1,7 +1,7 @@
 # Headfake
 
 ## What is Headfake?
-It is Health data faker: a Python-based package which allows the user to create fake or test data sets from a
+It is **Hea**lth **d**ata **fake**r: a Python-based package which allows the user to create fake or test data sets from a
 YAML template file.
 
 The package can be embedded directly into Python scripts, or it can be used through a command-line script.
@@ -35,7 +35,7 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 * Support for transformers which pre or post-process data once it's been generated
 
 ## How do I install and use Headfake?
-To install Headfake please go to the [Installation](/installation) page and then start with the [Tutorials](/tutorials/tutorial1) or the [usage page](/usage).
+To install Headfake please go to the [Installation](docs/installation) page and then start with the [Tutorials](docs/tutorials/tutorial1) or the [usage page](docs/usage).
 
 ## Is Headfake being actively maintained?
 Yes, we are using Headfake is our own projects and as result are keep it maintained and adding new features when we need them.
