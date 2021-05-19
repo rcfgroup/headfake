@@ -11,12 +11,13 @@ This can be done on the command line with the -s option. No matter how many time
 headfake /path/to/tutorial1.yml -n100 -s1234
 ```
 
-In Python this can be done once the HeadFake object has been created with `set_seed`:
+In Python this can be done through the static `set_seed` method of the HeadFake class:
 
 ```python
 from headfake import HeadFake
 
+HeadFake.set_seed(1234)
 headfake = HeadFake.from_yaml("examples/patients.yaml")
-headfake.set_seed(1234)
+
 data = headfake.generate(num_rows=100)
 ```

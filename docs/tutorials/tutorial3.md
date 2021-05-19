@@ -59,7 +59,7 @@ headfake /path/to/tutorial3.yml
 You should now see that the output of title is now randomly either MISS, MS, DR or PROF based on the provided probabilities.
 
 ### Analysis
-In this tutorial we showed how Headfake can be used to create fields dependent on the values of others. The ability to nest the if/else fields with constants or other field types can add a huge amount of variety to the data generation process.
+In this tutorial we showed how Headfake can be used to create fields dependent on the values of others. The ability to nest the [if/else fields](../../api/field/core#headfake.field.core.IfElseField) with constants or other field types can add a huge amount of variety to the data generation process.
 
-This is the final tutorial. For more information about the field types in Headfake you can look at the API section of the documentation. Additionally, you can also [create and use your own pretty easily](/how-to/create-custom-field) if you find none of them meet your needs.
+This is the final tutorial. For more information about the field types in Headfake you can look at the API section of the documentation. Additionally, you can also [create and use your own pretty easily](../../how-to/create-custom-field) if you find none of them meet your needs.
 

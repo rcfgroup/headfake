@@ -1,9 +1,9 @@
 # Installation
 
-This package requires Python 3.6 or above. In your virtual environment, install the package from github:
+This package requires Python 3.6 or above. It can be installed directly from pip:
 
 ```bash
-pip install git+ssh://git@github.com/rcfgroup/headfake.git
+pip install headfake
 ```
 
 # Usage

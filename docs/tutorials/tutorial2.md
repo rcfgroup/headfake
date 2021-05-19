@@ -4,7 +4,7 @@
 This tutorial will take a closer look at the YAML template including how changing the YAML file modifies the configuration, introduces some more advanced fields and look at how transformers can help post-process data.
 
 ## Adjust the proportion of male individuals
-Open `tutorial1.yml` that you created in [Tutorial 1](/tutorials/tutorial1.md) in a text editor.
+Open `tutorial1.yml` that you created in [Tutorial 1](tutorial1.md) in a text editor.
 You will see that it consists of a hierarchy of Python classes, with the fieldset as the base element, which contains one or more fields. The properties of the fields are the arguments passed when the class is initialised, so by changing these values in the YAML file we change how the fields behave.
 
 In the 'gender' field change the default `male_probability` from 0.3 to 0.5 and save the file as `tutorial2.yml`:
@@ -77,7 +77,7 @@ Then re-run Headfake:
 headfake /path/to/tutorial2.yml
 ```
 
-The output will show some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.
+The output will show some individuals are now flagged as deceased, along with additional fields containing the date of death, and the age at which they died (these are optional and can be omitted from the field). The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.
 
 
 ## Changing generated data using a transformer
@@ -108,8 +108,8 @@ in place of the NULL value (e.g. NA)
 
 ### Analysis
 In this tutorial we were able to adjust the field parameters in the YAML file to change the data generated, we also
-added one of the dependent fields to generate gender appropriate first names and risk-based deceased status.
+added an in-built dependent field to generate gender appropriate first names and risk-based deceased status.
 
-We also showed how powerful transformers can be to pre- and post-process the generated field values.
+We added to this by showing how (transformers)[../../api/transformer] can be to used to pre- and post-process the generated field values.
 
 In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.

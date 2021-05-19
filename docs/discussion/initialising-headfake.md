@@ -36,7 +36,7 @@ fieldset:
 	Both approaches return valid HeadFake fieldsets, but YAML does not support ordered dictionaries. So if the order of
 	the generated fields is important you should use the list-based approach. If not then either can be used.
 
-Data can then either be generated using the `headfake` command (see [usage](usage)) or in Python
+Data can then either be generated using the `headfake` command (see [usage](../../usage)) or in Python
 using the `from_yaml` function:
 
 ```python
