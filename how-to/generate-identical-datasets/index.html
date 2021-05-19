@@ -161,11 +161,12 @@
 <div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial1.yml -n100 -s1234
 </code></pre></div>
 
-<p>In Python this can be done once the HeadFake object has been created with <code>set_seed</code>:</p>
+<p>In Python this can be done through the static <code>set_seed</code> method of the HeadFake class:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">headfake</span> <span class="kn">import</span> <span class="n">HeadFake</span>
 
+<span class="n">HeadFake</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
 <span class="n">headfake</span> <span class="o">=</span> <span class="n">HeadFake</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;examples/patients.yaml&quot;</span><span class="p">)</span>
-<span class="n">headfake</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+
 <span class="n">data</span> <span class="o">=</span> <span class="n">headfake</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">num_rows</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </code></pre></div>
               
