@@ -35,7 +35,7 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 * Support for transformers which pre or post-process data once it's been generated
 
 ## How do I install and use Headfake?
-To install Headfake please go to the [Installation](https://rcfgroup.io/headfake/installation.md) page and then start with the [Tutorials](https://rcfgroup.io/headfake/tutorials/tutorial1.md) or the [usage page](https://rcfgroup.io/headfake/usage.md).
+To install Headfake please go to the [Installation](https://rcfgroup.github.io/headfake/installation.md) page and then start with the [Tutorials](https://rcfgroup.github.io/headfake/tutorials/tutorial1.md) or the [usage page](https://rcfgroup.github.io/headfake/usage.md).
 
 ## Is Headfake being actively maintained?
 Yes, we are using Headfake is our own projects and as result are keep it maintained and adding new features when we need them.
@@ -44,5 +44,5 @@ Yes, we are using Headfake is our own projects and as result are keep it maintai
 The library has been released under an MIT license so can be embedded into your own tools with minimal restrictions on use.
 
 ## If I use Headfake to generate data in my research project which source should I cite?
-We are working on a journal paper, for now please cite the project URL (https://rcfgroup.io/headfake).
+We are working on a journal paper, for now please cite the project URL (https://rcfgroup.github.io/headfake).
 
