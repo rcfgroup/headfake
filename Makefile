@@ -22,4 +22,4 @@ upload:
 	python setup.py sdist
 	python setup.py bdist_wheel
 	twine check dist/*
-	twine upload -r testpypi dist/*
+	twine upload -r pypi dist/*
