@@ -35,7 +35,7 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 * Support for transformers which pre or post-process data once it's been generated
 
 ## How do I install and use Headfake?
-To install Headfake please go to the [Installation](docs/installation) page and then start with the [Tutorials](docs/tutorials/tutorial1) or the [usage page](docs/usage).
+To install Headfake please go to the [Installation](docs/installation.md) page and then start with the [Tutorials](docs/tutorials/tutorial1.md) or the [usage page](docs/usage.md).
 
 ## Is Headfake being actively maintained?
 Yes, we are using Headfake is our own projects and as result are keep it maintained and adding new features when we need them.
