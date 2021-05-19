@@ -18,4 +18,8 @@ build:
 	python setup.py sdist
 
 upload:
-	python setup.py sdist upload -r pypi
+	rm -r dist
+	python setup.py sdist
+	python setup.py bdist_wheel
+	twine check dist/*
+	twine upload -r testpypi dist/*
