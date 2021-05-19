@@ -67,7 +67,6 @@ class Fieldset:
                 generate_funcs.append((field.name, field.next_value))
 
         generate_funcs.extend(after_funcs)
-        logging.info(f"generate_funcs:{generate_funcs}")
 
         for i in range(num_rows):
             row = {}
@@ -81,4 +80,4 @@ class Fieldset:
             dataset = dataset.append(row, ignore_index=True)
 
         return dataset
-from loguru import logger as logging
+
