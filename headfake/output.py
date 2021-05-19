@@ -52,7 +52,7 @@ class CsvFileOutput(Output):
 
 class JsonFileOutput(Output):
     """
-    Output generated data for a single fieldset to a tab-delimited text file specified in the options (output_file)
+    Output generated data for a single fieldset to a JSON text file specified in the options (output_file)
     """
 
     def __init__(self, options):
