@@ -171,7 +171,7 @@
 <h2 id="aims-of-tutorial">Aims of tutorial</h2>
 <p>This tutorial will take a closer look at the YAML template including how changing the YAML file modifies the configuration, introduces some more advanced fields and look at how transformers can help post-process data.</p>
 <h2 id="adjust-the-proportion-of-male-individuals">Adjust the proportion of male individuals</h2>
-<p>Open <code>tutorial1.yml</code> that you created in <a href="/tutorials/tutorial1.md">Tutorial 1</a> in a text editor.
+<p>Open <code>tutorial1.yml</code> that you created in <a href="../tutorial1/">Tutorial 1</a> in a text editor.
 You will see that it consists of a hierarchy of Python classes, with the fieldset as the base element, which contains one or more fields. The properties of the fields are the arguments passed when the class is initialised, so by changing these values in the YAML file we change how the fields behave.</p>
 <p>In the 'gender' field change the default <code>male_probability</code> from 0.3 to 0.5 and save the file as <code>tutorial2.yml</code>:</p>
 <p>e.g.</p>
@@ -229,7 +229,7 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
 <div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial2.yml
 </code></pre></div>
 
-<p>The output will show some individuals are now flagged as deceased, along with optional additional fields containing the date of death, and the age at which they died. The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.</p>
+<p>The output will show some individuals are now flagged as deceased, along with additional fields containing the date of death, and the age at which they died (these are optional and can be omitted from the field). The likelihood of death is calculated according to the risk of death supplied for the particular age ranges. Internally, patient aging is simulated and the likelihood of death determined accordingly.</p>
 <h2 id="changing-generated-data-using-a-transformer">Changing generated data using a transformer</h2>
 <p>Transformers are special classes which act before or after data is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.</p>
 <p>Change the last_name in <code>tutorial2.yml</code> to add both transformers:</p>
@@ -251,8 +251,8 @@ You can try this by copying the following and pasting it into <code>tutorial2.ym
 in place of the NULL value (e.g. NA)</p>
 <h3 id="analysis">Analysis</h3>
 <p>In this tutorial we were able to adjust the field parameters in the YAML file to change the data generated, we also
-added one of the dependent fields to generate gender appropriate first names and risk-based deceased status.</p>
-<p>We also showed how powerful transformers can be to pre- and post-process the generated field values.</p>
+added an in-built dependent field to generate gender appropriate first names and risk-based deceased status.</p>
+<p>We added to this by showing how (transformers)[../../api/transformer] can be to used to pre- and post-process the generated field values.</p>
 <p>In the final tutorial we will take a look at how conditional fields can be used to create a chain of fields dependent on each other.</p>
               
             </div>
