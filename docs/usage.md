@@ -1,5 +1,11 @@
 # Usage
 
+This package requires Python 3.6 or above. It can be installed directly from pip:
+
+```bash
+pip install headfake
+```
+
 ## Command Line
 
 You can run `headfake` from the command line without writing any code.
