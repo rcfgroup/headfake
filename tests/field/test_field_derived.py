@@ -106,4 +106,4 @@ def test_DeceasedField_simulates_death_based_on_risks_and_returns_additional_fie
         date_format = "%Y-%m-%d",
     )
     fieldset = Fieldset(fields={"dob":dob, "deceased":deceased})
-    assert fieldset.generate_data(1).to_dict("records") == [{'age': 33, 'deceased': 1, 'dob': '01/02/1983', 'dod': '2017-12-05'}]
+    assert fieldset.generate_data(1).to_dict("records") == [{'age': 33, 'deceased': 1, 'dob': '03/02/1983', 'dod': '2017-12-07'}]

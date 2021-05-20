@@ -24,7 +24,6 @@ plugins:
 
 nav:
   - Home: "index.md"
-  - Installation: "installation.md"
   - Usage: "usage.md"
   - Tutorials:
         "1. Generating fake data files": "tutorials/tutorial1.md"
