@@ -1,13 +1,28 @@
 # Headfake
 
 ## What is Headfake?
-It is **Hea**lth **d**ata **fake**r: a Python-based package which allows the user to create fake or test data sets from a
+**Hea**lth **d**ata **fake**r is a Python-based package which allows the user to create fake or test data sets from a
 YAML template file.
 
 The package can be embedded directly into Python scripts, or it can be used through a command-line script.
 
 It builds upon some of the ideas in [pydbgen](https://github.com/tirthajyoti/pydbgen) and improves on it with support for
 a number of additional features including statistically distributed random values; dependent fields and custom fields.
+
+## How do I install and use Headfake?
+To get started quickly, you can use pip to install it:
+```bash
+pip install headfake
+```
+
+Then test it out using one of the example YAML templates:
+```bash
+headfake examples/patients.yaml --no-rows=100
+```
+
+You should get 100 rows of generated data.
+
+For further information on using Headfake head over to the [Tutorials](tutorials/tutorial1) or the [Usage](usage) page.
 
 ## Why would I use Headfake?
 Headfake makes it simple and straightforward to generate fake or test data. It has a number of features which make this easier:
@@ -33,9 +48,6 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 * Ability to create and use custom fields to generate your own data types and values
 
 * Support for transformers which pre or post-process data once it's been generated
-
-## How do I install and use Headfake?
-To install Headfake please go to the [Installation](installation) page and then start with the [Tutorials](tutorials/tutorial1) or the [usage page](usage).
 
 ## Is Headfake being actively maintained?
 Yes, we are using Headfake is our own projects and as result are keep it maintained and adding new features when we need them.
