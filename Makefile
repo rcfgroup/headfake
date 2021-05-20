@@ -15,11 +15,15 @@ deploy_docs:
 
 
 build:
-	python setup.py sdist
-
-upload:
 	rm -r dist
 	python setup.py sdist
 	python setup.py bdist_wheel
+
+upload:
 	twine check dist/*
 	twine upload -r pypi dist/*
+
+upload_test:
+	twine check dist/*
+	twine upload -r testpypi dist/*
+
