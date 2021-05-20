@@ -1,3 +1,5 @@
+![](https://github.com/rcfgroup/headfake/workflows/main/badge.svg)
+
 # Headfake
 
 ## What is Headfake?
