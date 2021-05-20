@@ -1,7 +1,9 @@
+![](https://github.com/rcfgroup/headfake/workflows/main/badge.svg)
+
 # Headfake
 
 ## What is Headfake?
-It is **Hea**lth **d**ata **fake**r: a Python-based package which allows the user to create fake or test data sets from a
+**Hea**lth **d**ata **fake**r is a Python-based package which allows the user to create fake or test data sets from a
 YAML template file.
 
 The package can be embedded directly into Python scripts, or it can be used through a command-line script.
@@ -22,7 +24,7 @@ headfake examples/patients.yaml --no-rows=100
 
 You should get 100 rows of generated data.
 
-For further information on using Headfake head over to the [Tutorials](docs/tutorials/tutorial1) or the [usage page](docs/usage).
+For further information on using Headfake head over to [Tutorials](https://rcfgroup.github.io/headfake/tutorials/tutorial1) or the [Usage](https://rcfgroup.github.io/headfake/usage) page.
 
 ## Why would I use Headfake?
 Headfake makes it simple and straightforward to generate fake or test data. It has a number of features which make this easier:
@@ -57,5 +59,5 @@ Yes, we are using Headfake is our own projects and as result are keep it maintai
 The library has been released under an MIT license so can be embedded into your own tools with minimal restrictions on use.
 
 ## If I use Headfake to generate data in my research project which source should I cite?
-We are working on a journal paper, for now please cite the project URL (https://rcfgroup.org/headfake).
+We are working on a journal paper, for now please cite the project URL (https://rcfgroup.github.io/headfake).
 
