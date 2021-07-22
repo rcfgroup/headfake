@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
   <link href="../../css/mkapi-common.css" rel="stylesheet" />
@@ -29,9 +29,8 @@
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -59,9 +58,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Adding conditional fields</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Discussion</span></p>
@@ -78,6 +77,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -115,6 +118,22 @@
     <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerpadding">Padding</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#headfaketransformersplitpiece">SplitPiece</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerreformatdatetime">ReformatDateTime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerconvertstrtodate">ConvertStrToDate</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerformatdatetime">FormatDateTime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerconvertstrtodatetime">ConvertStrToDateTime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerconverttonumber">ConvertToNumber</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerformatnumber">FormatNumber</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformerconverttodaysdelta">ConvertToDaysDelta</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#headfaketransformergetproperty">GetProperty</a>
     </li>
     </ul>
                     </li>
@@ -160,6 +179,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -204,8 +224,43 @@ Multiple transformers can be specified for each field.</span></li>
 
 <li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.SplitPiece">SplitPiece</a></code>
 
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Logic for transforming field row values. For example, changing string case, randomising insertion of errors.
-Multiple transformers can be specified for each field.</span></li>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Splits a string and returns a specific element of the array.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.ReformatDateTime">ReformatDateTime</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Reformats a string date into a different format. For example it could take an ISO formatted (e.g. YYYY-MM-DD) date
+string and convert it into UK locale (e.g. DD/MM/YYYY) in a single transformation.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.ConvertStrToDate">ConvertStrToDate</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Converts a string value with a specified date 'format' into a date object</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.FormatDateTime">FormatDateTime</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Formats a date/datetime object as a string with the specified date/datetime 'format'.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.ConvertStrToDateTime">ConvertStrToDateTime</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Converts a string value with a specified datetime 'format' into a datetime object</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.ConvertToNumber">ConvertToNumber</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Converts a value into an number. If the value is not a number, returns None.
+Can specify whether it is returned as an integer (as_integer) or not</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.FormatNumber">FormatNumber</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Formats number using the specified number of decimal places (dp) and returns as a string.
+If the value is not a number, returns None.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.ConvertToDaysDelta">ConvertToDaysDelta</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Converts a value into a timedelta object. If the value is not a number, returns None.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.transformer.GetProperty">GetProperty</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Get a property from the object created during value generation.
+For example to get the number of days from a timedelta object you could use the <strong>prop_name</strong> 'days'.</span></li>
 
 
 </ul></div>
@@ -219,7 +274,7 @@ Multiple transformers can be specified for each field.</span></li>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformertransformer" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">Transformer</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformertransformer" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">Transformer</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -228,44 +283,6 @@ Multiple transformers can be specified for each field.</span></li>
       <div class="mkapi-section-body"><p>Logic for transforming field row values. For example, changing string case, randomising insertion of errors.
 Multiple transformers can be specified for each field.</p></div>
     </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.Transformer.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
-    </div>
-  </div>
-
-  <div class="mkapi-members">
-  
-    <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.Transformer.before_next">
-<div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
-  </div>
-  
-</div>
-<div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
-    </div>
-  </div>
-
-</div>
-    </div>
-  
   </div>
 
 </div>
@@ -276,7 +293,7 @@ Multiple transformers can be specified for each field.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformeruppercase" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">UpperCase</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformeruppercase" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">UpperCase</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -292,44 +309,6 @@ Multiple transformers can be specified for each field.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Converts value to upper case.</p></div>
     </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.Transformer.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
-    </div>
-  </div>
-
-  <div class="mkapi-members">
-  
-    <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.Transformer.before_next">
-<div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
-  </div>
-  
-</div>
-<div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
-    </div>
-  </div>
-
-</div>
-    </div>
-  
   </div>
 
 </div>
@@ -340,7 +319,7 @@ Multiple transformers can be specified for each field.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformerintermittentblanks" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">IntermittentBlanks</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code>, <code class="mkapi-object-signature">blank_probability</code>, <code class="mkapi-object-signature">blank_value=&#39;&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformerintermittentblanks" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">IntermittentBlanks</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">blank_probability</code>, <code class="mkapi-object-signature">blank_value=&#39;&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -356,44 +335,6 @@ Multiple transformers can be specified for each field.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Adds intermittent blank_values (default="") randomly at a rate specified by the blank_probability property.</p></div>
     </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.IntermittentBlanks.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
-    </div>
-  </div>
-
-  <div class="mkapi-members">
-  
-    <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.IntermittentBlanks.before_next">
-<div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
-  </div>
-  
-</div>
-<div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
-    </div>
-  </div>
-
-</div>
-    </div>
-  
   </div>
 
 </div>
@@ -404,7 +345,7 @@ Multiple transformers can be specified for each field.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformerregexsubstitute" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">RegexSubstitute</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code>, <code class="mkapi-object-signature">pattern</code>, <code class="mkapi-object-signature">replace</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformerregexsubstitute" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">RegexSubstitute</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">pattern</code>, <code class="mkapi-object-signature">replace</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -420,44 +361,6 @@ Multiple transformers can be specified for each field.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Perform a regular expression substitution</p></div>
     </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.Transformer.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
-    </div>
-  </div>
-
-  <div class="mkapi-members">
-  
-    <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.Transformer.before_next">
-<div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
-  </div>
-  
-</div>
-<div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
-    </div>
-  </div>
-
-</div>
-    </div>
-  
   </div>
 
 </div>
@@ -468,7 +371,7 @@ Multiple transformers can be specified for each field.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformertruncate" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">Truncate</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code>, <code class="mkapi-object-signature">length</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformertruncate" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">Truncate</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">length</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -484,44 +387,6 @@ Multiple transformers can be specified for each field.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Truncate a value</p></div>
     </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.Transformer.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
-    </div>
-  </div>
-
-  <div class="mkapi-members">
-  
-    <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.Transformer.before_next">
-<div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
-  </div>
-  
-</div>
-<div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
-    </div>
-  </div>
-
-</div>
-    </div>
-  
   </div>
 
 </div>
@@ -532,7 +397,7 @@ Multiple transformers can be specified for each field.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformerpadding" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">Padding</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">fill</code>, <code class="mkapi-object-signature">align=&#39;left&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformerpadding" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">Padding</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">fill</code>, <code class="mkapi-object-signature">align=&#39;left&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -548,44 +413,6 @@ Multiple transformers can be specified for each field.</p></div>
   <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Pad a value to be a given length with the specified fill character</p></div>
     </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.Transformer.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
-    </div>
-  </div>
-
-  <div class="mkapi-members">
-  
-    <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.Transformer.before_next">
-<div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
-  </div>
-  
-</div>
-<div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
-    </div>
-  </div>
-
-</div>
-    </div>
-  
   </div>
 
 </div>
@@ -596,7 +423,7 @@ Multiple transformers can be specified for each field.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfaketransformersplitpiece" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">SplitPiece</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">name=UUID(&#39;f65743d4-bee9-40f8-9979-5fd27ce8be6c&#39;)</code>, <code class="mkapi-object-signature">separator</code>, <code class="mkapi-object-signature">index</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfaketransformersplitpiece" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">SplitPiece</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">separator</code>, <code class="mkapi-object-signature">index</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -610,47 +437,222 @@ Multiple transformers can be specified for each field.</p></div>
 </div>
     </div>
   <div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Logic for transforming field row values. For example, changing string case, randomising insertion of errors.
-Multiple transformers can be specified for each field.</p></div>
-    </div>
-  <div class="mkapi-section methods">
-      <div class="mkapi-section-name methods">
-          <span class="mkapi-section-name-body methods">Methods</span> 
-        </div>
-      <div class="mkapi-section-body methods"><ul class="mkapi-items">
-<li class="method"><code class="mkapi-item-name"><a href="#headfake.transformer.Transformer.before_next">before_next</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Transformation before the value is obtained.</span></li>
-
-
-</ul></div>
+      <div class="mkapi-section-body"><p>Splits a string and returns a specific element of the array.</p>
+<p>So given a value of "A;B;C;D", "B" would be returned if a separator of ";" and index of 1 is used.</p></div>
     </div>
   </div>
 
-  <div class="mkapi-members">
+</div>
+    </div>
   
     <div class="mkapi-member">
-      <div class="mkapi-node" id="headfake.transformer.Transformer.before_next">
+      <div class="mkapi-node" id="headfake.transformer.ReformatDateTime">
 <div class='mkapi-object-container'>
-  <div class="mkapi-object method code">
-    <div class="mkapi-object-kind method">method</div>
-    <div class="mkapi-object-body method"><code class="mkapi-object-name">before_next</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerreformatdatetime" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">ReformatDateTime</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">source_format</code>, <code class="mkapi-object-signature">target_format</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
 <div class="mkapi-docstring">
-<div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Transformation before the value is obtained.</p>
-<p>Throw a headfake.error.ChangeValue exception with a new value if you want the value to be changed up the stack.
-:param field:
-:param row:
-:return:</p></div>
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Reformats a string date into a different format. For example it could take an ISO formatted (e.g. YYYY-MM-DD) date
+string and convert it into UK locale (e.g. DD/MM/YYYY) in a single transformation.</p></div>
     </div>
   </div>
 
 </div>
     </div>
   
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.ConvertStrToDate">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerconvertstrtodate" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">ConvertStrToDate</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">format</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Converts a string value with a specified date 'format' into a date object</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.FormatDateTime">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerformatdatetime" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">FormatDateTime</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">format</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Formats a date/datetime object as a string with the specified date/datetime 'format'.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.ConvertStrToDateTime">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerconvertstrtodatetime" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">ConvertStrToDateTime</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">format</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Converts a string value with a specified datetime 'format' into a datetime object</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.ConvertToNumber">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerconverttonumber" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">ConvertToNumber</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">as_integer=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Converts a value into an number. If the value is not a number, returns None.
+Can specify whether it is returned as an integer (as_integer) or not</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.FormatNumber">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerformatnumber" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">FormatNumber</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">dp=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Formats number using the specified number of decimal places (dp) and returns as a string.
+If the value is not a number, returns None.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.ConvertToDaysDelta">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformerconverttodaysdelta" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">ConvertToDaysDelta</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">error_value=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Converts a value into a timedelta object. If the value is not a number, returns None.</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.transformer.GetProperty">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfaketransformergetproperty" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.transformer.</code><code class="mkapi-object-name">GetProperty</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">prop_name</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.transformer.Transformer</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Get a property from the object created during value generation.
+For example to get the number of days from a timedelta object you could use the <strong>prop_name</strong> 'days'.</p>
+<p>If the attribute does not exist, return the value specified in 'default' (None by default).</p></div>
+    </div>
   </div>
 
 </div>
@@ -692,17 +694,18 @@ Multiple transformers can be specified for each field.</p></div>
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../fieldset/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../output/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../fieldset/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../output/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../js/mkapi.js" defer></script>
     <script defer>

@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../../css/theme.css" />
   <link rel="stylesheet" href="../../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
   <link href="../../../css/mkapi-common.css" rel="stylesheet" />
@@ -29,9 +29,8 @@
   
   <script src="../../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -59,9 +58,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial3/">3. Adding conditional fields</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Discussion</span></p>
@@ -78,6 +77,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -144,11 +147,11 @@
     
       
         
-          <li>field &raquo;</li>
+          <li>API &raquo;</li>
         
       
         
-          <li>API &raquo;</li>
+          <li>field &raquo;</li>
         
       
     
@@ -162,6 +165,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -216,7 +220,7 @@ which returns a zero-filled ID number to the specified length.</span></li>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldididgenerator" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">IdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;ca9fbb79-54a1-410a-aecb-2a10b8bd36ed&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldididgenerator" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">IdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;eaf61005-98b9-4b26-8ed2-0deda02a9a1a&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -252,7 +256,7 @@ which returns a zero-filled ID number to the specified length.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldidincrementidgenerator" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">IncrementIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;ca9fbb79-54a1-410a-aecb-2a10b8bd36ed&#39;)</code>, <code class="mkapi-object-signature">current_no=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldidincrementidgenerator" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">IncrementIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;eaf61005-98b9-4b26-8ed2-0deda02a9a1a&#39;)</code>, <code class="mkapi-object-signature">current_no=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -278,7 +282,7 @@ which returns a zero-filled ID number to the specified length.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldidrandomidgenerator" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">RandomIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">max_value=NOTHING</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;ca9fbb79-54a1-410a-aecb-2a10b8bd36ed&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldidrandomidgenerator" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">RandomIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">max_value=NOTHING</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;eaf61005-98b9-4b26-8ed2-0deda02a9a1a&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -304,7 +308,7 @@ which returns a zero-filled ID number to the specified length.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldidrandomnoreuseidgenerator" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">RandomNoReuseIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">max_value=NOTHING</code>, <code class="mkapi-object-signature">used_values=NOTHING</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;ca9fbb79-54a1-410a-aecb-2a10b8bd36ed&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldidrandomnoreuseidgenerator" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">RandomNoReuseIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">max_value=NOTHING</code>, <code class="mkapi-object-signature">used_values=NOTHING</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;eaf61005-98b9-4b26-8ed2-0deda02a9a1a&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -332,7 +336,7 @@ which returns a zero-filled ID number to the specified length.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldidrandomreuseidgenerator" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">RandomReuseIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">max_value=NOTHING</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;ca9fbb79-54a1-410a-aecb-2a10b8bd36ed&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldidrandomreuseidgenerator" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">RandomReuseIdGenerator</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">max_value=NOTHING</code>, <code class="mkapi-object-signature">length</code>, <code class="mkapi-object-signature">min_value=1</code>, <code class="mkapi-object-signature">name=UUID(&#39;eaf61005-98b9-4b26-8ed2-0deda02a9a1a&#39;)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -360,7 +364,7 @@ which returns a zero-filled ID number to the specified length.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldididfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">IdField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">prefix=&#39;&#39;</code>, <code class="mkapi-object-signature">suffix=&#39;&#39;</code>, <code class="mkapi-object-signature">generator=IncrementIdGenerator(length=3, min_value=1, name=UUID(&#39;ca9fbb79-54a1-410a-aecb-2a10b8bd36ed&#39;), current_no=1)</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldididfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.id.</code><code class="mkapi-object-name">IdField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">prefix=&#39;&#39;</code>, <code class="mkapi-object-signature">suffix=&#39;&#39;</code>, <code class="mkapi-object-signature">generator=IncrementIdGenerator(length=3, min_value=1, name=UUID(&#39;eaf61005-98b9-4b26-8ed2-0deda02a9a1a&#39;), current_no=1)</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -381,6 +385,10 @@ which returns a zero-filled ID number to the specified length.</p></div>
           <span class="mkapi-section-name-body parameters">Parameters</span> 
         </div>
       <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+
+
+
+
 
 
 <li><code class="mkapi-item-name">prefix</code>
@@ -469,10 +477,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -538,17 +544,18 @@ returned.</p></div>
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../core/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../faker/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../core/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../faker/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme_extra.js" defer></script>
     <script src="../../../js/theme.js" defer></script>
       <script src="../../../js/mkapi.js" defer></script>
     <script defer>

@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>1. Generating fake data files - Headfake</title>
+  <title>Exclude fields from the output - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -22,8 +22,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "1. Generating fake data files";
-    var mkdocs_page_input_path = "tutorials/tutorial1.md";
+    var mkdocs_page_name = "Exclude fields from the output";
+    var mkdocs_page_input_path = "how-to/exclude-fields-from-the-output.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -55,24 +55,12 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Tutorials</span></p>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">1. Generating fake data files</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#aims-of-tutorial">Aims of tutorial</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#install-headfake">Install Headfake</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#creating-a-template-file">Creating a template file</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#generating-fake-data">Generating fake data</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#analysis">Analysis</a>
-    </li>
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../tutorial2/">2. Changing Headfake template files</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../tutorial3/">3. Adding conditional fields</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Adding conditional fields</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Discussion</span></p>
@@ -81,18 +69,20 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">How to..</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-fields/">Create custom fields</a>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../create-custom-fields/">Create custom fields</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/create-custom-transformers/">Create custom transformers</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../create-custom-transformers/">Create custom transformers</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../add-a-lookup-field/">Add a lookup field</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generate-identical-datasets/">Generate identical datasets</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Exclude fields from the output</a>
+    <ul class="current">
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/combine-field-values/">Combine field values</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -145,14 +135,14 @@
     
       
         
-          <li>Tutorials &raquo;</li>
+          <li>How to.. &raquo;</li>
         
       
     
-    <li>1. Generating fake data files</li>
+    <li>Exclude fields from the output</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/tutorials/tutorial1.md"> Edit on headfake</a>
+        <a href="https://github.com/rcfgroup/headfake/edit/master/docs/how-to/exclude-fields-from-the-output.md"> Edit on headfake</a>
       
     </li>
   </ul>
@@ -163,28 +153,9 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="tutorial-1-generate-a-fake-data-file">Tutorial 1. Generate a fake data file</h1>
-<h2 id="aims-of-tutorial">Aims of tutorial</h2>
-<p>This tutorial will take you through installing Headfake, creating a Headfake configuration file and using it to generate a data file.</p>
-<h2 id="install-headfake">Install Headfake</h2>
-<p>You will need at least Python 3.6+ installed in order to use Headfake. The easiest way to install it is through pip. In the terminal enter:</p>
-<div class="codehilite"><pre><span></span><code>pip install headfake
-</code></pre></div>
-
-<p>Check it is installed correctly by running:</p>
-<div class="codehilite"><pre><span></span><code>headfake --help
-</code></pre></div>
-
-<p>You should get some information on the usage of the tool.</p>
-<h2 id="creating-a-template-file">Creating a template file</h2>
-<p>Headfake is powered through a plain text template file in YAML format. The easiest way to demonstrate its functionality
-is to try out an example.</p>
-<p>Open a file <code>tutorial.yml</code> in your home directory, copy and paste the information below into it and save it:</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Be careful to use EITHER spaces OR tabs to indent the YAML file. If you mix them up then Headfake is likely to throw
-errors. It also important to make the indentation consistent when doing this.</p>
-</div>
+                <h1 id="exclude-fields-from-the-output">Exclude fields from the output</h1>
+<p>The simplest way to do this is to add <code>hidden = true</code> to the field template.
+For example if we don't want to include the gender field in the template below we would use:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">fieldset</span><span class="p">:</span>
   <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.Fieldset</span>
   <span class="nt">fields</span><span class="p">:</span>
@@ -201,39 +172,14 @@ errors. It also important to make the indentation consistent when doing this.</p
       <span class="nt">male_value</span><span class="p">:</span> <span class="s">&quot;M&quot;</span>
       <span class="nt">female_value</span><span class="p">:</span> <span class="s">&quot;F&quot;</span>
       <span class="nt">male_probability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3</span>
+      <span class="nt">hidden</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">last_name</span>
-      <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.LastNameField</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">first_name</span>
+      <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.FirstNameField</span>
       <span class="nt">gender_field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
-
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dob</span>
-      <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.DateOfBirthField</span>
-      <span class="nt">min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-      <span class="nt">max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">105</span>
-      <span class="nt">mean</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">45</span>
-      <span class="nt">sd</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">13</span>
-      <span class="nt">distribution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">scipy.stats.norm</span>
-      <span class="nt">date_format</span><span class="p">:</span> <span class="s">&quot;%Y-%m-%d&quot;</span>
 </code></pre></div>
 
-<h2 id="generating-fake-data">Generating fake data</h2>
-<p>Now on the command-line run:</p>
-<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial1.yml -o /path/to/tutorial1.txt -n100
-</code></pre></div>
-
-<p>Here you are specifying the template to use, and then an output file (/path/to/tutorial1.txt) and number of rows to generate (100)</p>
-<p>If you now open the output file you will see 1000 rows of generated data.</p>
-<p>You can also run without the -o option and the data will be output to the screen:</p>
-<div class="codehilite"><pre><span></span><code>headfake /path/to/tutorial1.yml  -n100
-</code></pre></div>
-
-<p>This latter approach is often better when building templates in Headfake as it more immediate.</p>
-<h2 id="analysis">Analysis</h2>
-<p>This is a simple example of what Headfake can do. It is also possible to use YAML to provide your fields as a dictionary, or to embed it directly as Python data structures and/or code.
-There is additional information on different ways for <a href="../../discussion/initialising-headfake">initialising Headfake</a>.</p>
-<p>The template you used defines a set of fields containing autogenerated IDs, gender, a last name and a date of birth following a normal distribution.</p>
-<p>You can see from this tutorial how straightforward it would be to add additional fields to the template and to generate more/less rows of data.</p>
-<p>In the next tutorial we will take a closer look at the setup of the fields in the YAML file and modify them to create different data and formats.</p>
+<p>The gender field is still created and used to determine the logic for the first name, but it is removed before the data is output.</p>
               
             </div>
           </div>
@@ -241,10 +187,10 @@ There is additional information on different ways for <a href="../../discussion/
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tutorial2/" class="btn btn-neutral float-right" title="2. Changing Headfake template files">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../combine-field-values/" class="btn btn-neutral float-right" title="Combine field values">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../usage/" class="btn btn-neutral" title="Usage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../generate-identical-datasets/" class="btn btn-neutral" title="Generate identical datasets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -270,10 +216,10 @@ There is additional information on different ways for <a href="../../discussion/
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../usage/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../generate-identical-datasets/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../tutorial2/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../combine-field-values/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

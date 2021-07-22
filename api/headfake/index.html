@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
   <link href="../../css/mkapi-common.css" rel="stylesheet" />
@@ -29,9 +29,8 @@
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -59,9 +58,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Adding conditional fields</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Discussion</span></p>
@@ -78,6 +77,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -150,6 +153,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -206,6 +210,10 @@ Includes support for populating the HeadFake class from a YAML file.</p></div>
           <span class="mkapi-section-name-body methods">Methods</span> 
         </div>
       <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_json">from_json</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class with parameters loaded from a json file</span></li>
+
 <li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_python">from_python</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">class_tree</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class from a pre-defined class tree</span></li>
@@ -254,6 +262,46 @@ Includes support for populating the HeadFake class from a YAML file.</p></div>
 <li><code class="mkapi-item-name">filename</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">name of yaml template</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">additional arguments passed to HeadFake constructor</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a HeadFake instance</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.from_json">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">from_json</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance of the HeadFake class with parameters loaded from a json file</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">filename</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">name of json template</span></li>
 
 <li><code class="mkapi-item-name">**kwargs</code>
 
@@ -469,6 +517,10 @@ Includes support for populating the HeadFake class from a YAML file.</p></div>
           <span class="mkapi-section-name-body methods">Methods</span> 
         </div>
       <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_json">from_json</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class with parameters loaded from a json file</span></li>
+
 <li class="staticmethod"><code class="mkapi-item-name"><a href="#headfake.headfake.HeadFake.from_python">from_python</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">class_tree</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create an instance of the HeadFake class from a pre-defined class tree</span></li>
@@ -517,6 +569,46 @@ Includes support for populating the HeadFake class from a YAML file.</p></div>
 <li><code class="mkapi-item-name">filename</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">name of yaml template</span></li>
+
+<li><code class="mkapi-item-name">**kwargs</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">additional arguments passed to HeadFake constructor</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>a HeadFake instance</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.headfake.HeadFake.from_json">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object staticmethod code">
+    <div class="mkapi-object-kind staticmethod">staticmethod</div>
+    <div class="mkapi-object-body staticmethod"><code class="mkapi-object-name">from_json</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">filename</code>, <code class="mkapi-object-signature">**kwargs</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Create an instance of the HeadFake class with parameters loaded from a json file</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">filename</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">name of json template</span></li>
 
 <li><code class="mkapi-item-name">**kwargs</code>
 
@@ -718,7 +810,7 @@ Includes support for populating the HeadFake class from a YAML file.</p></div>
         <a href="../field/core/" class="btn btn-neutral float-right" title="core">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../how-to/generate-identical-datasets/" class="btn btn-neutral" title="Generate identical datasets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../how-to/combine-field-values/" class="btn btn-neutral" title="Combine field values"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -741,17 +833,18 @@ Includes support for populating the HeadFake class from a YAML file.</p></div>
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../../how-to/generate-identical-datasets/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../field/core/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../how-to/combine-field-values/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../field/core/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../js/mkapi.js" defer></script>
     <script defer>

@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
   <link href="../../css/mkapi-common.css" rel="stylesheet" />
@@ -29,9 +29,8 @@
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -59,9 +58,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorial3/">3. Adding conditional fields</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Discussion</span></p>
@@ -84,6 +83,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../add-a-lookup-field/">Add a lookup field</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -150,11 +153,13 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
                 <h1 id="create-custom-transformers">Create custom transformers</h1>
-<p>A transformer a special class which acts before or after the data is generated from a field.</p>
+<p>A transformer a special class which acts after the data is generated from a field. The points at which these are run is depends on whether they are passed into the field in the 'transformers' list or in the 'final_transformers' list.
+The former runs as soon as a value is generated in the field, the latter runs once all data has been generated in the row, so are more suited to formatting data ready for output.</p>
 <p>Custom transformers can be created by extending the Transformer class in headfake.transformer. If you want to allow parameters to be passed to your transformer Headfake they should be setup using the approaches documented in the <a href="https://www.attrs.org">attrs</a> package, which provides a simpler way of initialising and handling class properties.</p>
 <h2 id="an-example-transformer">An example transformer</h2>
 <p>Below is a simple transformer which splits a string by a 'separator' to create a list and returns the piece from this list specified by 'index'. Each of these parameters can be specified by the user.</p>
@@ -166,7 +171,7 @@
     <span class="n">separator</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span> <span class="c1">#string to separator on</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span> <span class="c1">#index of separated string to return</span>
 
-    <span class="k">def</span> <span class="nf">after_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">pieces</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
@@ -225,17 +230,18 @@
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../create-custom-fields/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../add-a-lookup-field/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../create-custom-fields/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../add-a-lookup-field/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../js/mkapi.js" defer></script>
     <script defer>

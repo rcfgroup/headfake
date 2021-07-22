@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../../css/theme.css" />
   <link rel="stylesheet" href="../../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
   <link href="../../../css/mkapi-common.css" rel="stylesheet" />
@@ -29,9 +29,8 @@
   
   <script src="../../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -59,9 +58,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial2/">2. Templates and conditional logic</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial3/">3. Lookups and transformers</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/tutorial3/">3. Adding conditional fields</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Discussion</span></p>
@@ -78,6 +77,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../how-to/combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -115,6 +118,10 @@
     <li class="toctree-l3"><a class="reference internal" href="#headfakefieldcorebooleanfield">BooleanField</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#headfakefieldcoredatefield">DateField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldcoreoperationfield">OperationField</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#headfakefieldcorelookupfield">LookupField</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#headfakefieldcoreextract_number">extract_number</a>
     </li>
@@ -164,11 +171,11 @@
     
       
         
-          <li>field &raquo;</li>
+          <li>API &raquo;</li>
         
       
         
-          <li>API &raquo;</li>
+          <li>field &raquo;</li>
         
       
     
@@ -182,6 +189,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -202,11 +210,11 @@
           <span class="mkapi-section-name-body classes">Classes</span> 
         </div>
       <div class="mkapi-section-body classes"><ul class="mkapi-items">
-<li class="abstract-class"><code class="mkapi-item-name"><a href="#headfake.field.core.Field">Field</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers</code>, <code class="mkapi-object-signature">name</code><code class="mkapi-object-parenthesis">)</code>
+<li class="abstract-class"><code class="mkapi-item-name"><a href="#headfake.field.core.Field">Field</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers</code>, <code class="mkapi-object-signature">final_transformers</code>, <code class="mkapi-object-signature">name</code>, <code class="mkapi-object-signature">hidden</code>, <code class="mkapi-object-signature">error_value</code>, <code class="mkapi-object-signature">transform</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Acts as abstract Field class.</span></li>
 
-<li class="abstract-class"><code class="mkapi-item-name"><a href="#headfake.field.core.FakerField">FakerField</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers</code>, <code class="mkapi-object-signature">name</code>, <code class="mkapi-object-signature">fake</code><code class="mkapi-object-parenthesis">)</code>
+<li class="abstract-class"><code class="mkapi-item-name"><a href="#headfake.field.core.FakerField">FakerField</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers</code>, <code class="mkapi-object-signature">final_transformers</code>, <code class="mkapi-object-signature">name</code>, <code class="mkapi-object-signature">hidden</code>, <code class="mkapi-object-signature">error_value</code>, <code class="mkapi-object-signature">transform</code>, <code class="mkapi-object-signature">fake</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Abstract base field for Faker-based value creation.</span></li>
 
@@ -214,13 +222,14 @@
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Field to generate option values, based on a provided dictionary of probabilities.</span></li>
 
-<li class="abstract-class"><code class="mkapi-item-name"><a href="#headfake.field.core.DerivedField">DerivedField</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers</code>, <code class="mkapi-object-signature">name</code><code class="mkapi-object-parenthesis">)</code>
+<li class="abstract-class"><code class="mkapi-item-name"><a href="#headfake.field.core.DerivedField">DerivedField</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers</code>, <code class="mkapi-object-signature">final_transformers</code>, <code class="mkapi-object-signature">name</code>, <code class="mkapi-object-signature">hidden</code>, <code class="mkapi-object-signature">error_value</code>, <code class="mkapi-object-signature">transform</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Base field which uses an existing field type (_internal_field) to generate values.</span></li>
 
 <li class="class"><code class="mkapi-item-name"><a href="#headfake.field.core.ConstantField">ConstantField</a></code>
 
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Field which generates constant values.</span></li>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Field which generates constant values. Automatically replaces scalar values (e.g. string, number) when fieldsets
+are created.</span></li>
 
 <li class="class"><code class="mkapi-item-name"><a href="#headfake.field.core.ConcatField">ConcatField</a></code>
 
@@ -260,6 +269,16 @@ that field.</span></li>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Field which generates a date based on a random number of days from a scipy statistical distribution similarly to
 NumberField.</span></li>
 
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.core.OperationField">OperationField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Field which generates a value using an operation to process two values (e.g. add, subtract).
+Like the 'Condition' used in IfElseField, it is easiest to use builtin Python "operator" functions such as
+<code>operator.add</code>, <code>operator.sub</code> but a custom function can be used if needed.</span></li>
+
+<li class="class"><code class="mkapi-item-name"><a href="#headfake.field.core.LookupField">LookupField</a></code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Field which returns the value of another specified field.</span></li>
+
 
 </ul></div>
     </div>
@@ -288,7 +307,7 @@ NumberField.</span></li>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldcorefield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">Field</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorefield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">Field</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -306,9 +325,13 @@ NumberField.</span></li>
 <span class="mkapi-item-type">(list)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Optional list of transformer objects which act upon on field values at various points.</span></li>
 
+
 <li><code class="mkapi-item-name">name</code>
 <span class="mkapi-item-type">(str)</span>
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Optional name of field (defaults to UUID4 string)</span></li>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Optional name of field (defaults to incremental number)</span></li>
+
+
+
 
 
 </ul></div>
@@ -384,10 +407,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -422,7 +443,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldcorefakerfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">FakerField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">fake=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorefakerfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">FakerField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">fake=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -509,10 +530,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -547,7 +566,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreoptionvaluefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">OptionValueField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">probabilities</code>, <code class="mkapi-object-signature">option_picks=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreoptionvaluefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">OptionValueField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">probabilities</code>, <code class="mkapi-object-signature">option_picks=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -658,10 +677,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -696,7 +713,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object abstract-class code top">
     <div class="mkapi-object-kind abstract-class top">abstract class</div>
-    <h4 id="headfakefieldcorederivedfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DerivedField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorederivedfield" class="mkapi-object-body abstract-class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DerivedField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -784,10 +801,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -822,7 +837,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreconstantfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConstantField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreconstantfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConstantField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -836,8 +851,8 @@ returned.</p></div>
 </div>
     </div>
   <div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Field which generates constant values.</p>
-<p>Deprecated: can simply use scalar value (e.g. string, number)</p></div>
+      <div class="mkapi-section-body"><p>Field which generates constant values. Automatically replaces scalar values (e.g. string, number) when fieldsets
+are created.</p></div>
     </div>
   <div class="mkapi-section methods">
       <div class="mkapi-section-name methods">
@@ -910,10 +925,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -948,7 +961,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreconcatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConcatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">fields=NOTHING</code>, <code class="mkapi-object-signature">glue=&#39;&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreconcatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">ConcatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">fields=NOTHING</code>, <code class="mkapi-object-signature">glue=&#39;&#39;</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -998,10 +1011,8 @@ returned.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1074,7 +1085,7 @@ information from other fields in the fieldset for later use.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoremapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">MapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">mapping_file</code>, <code class="mkapi-object-signature">key_field</code>, <code class="mkapi-object-signature">key_field_store=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoremapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">MapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">mapping_file</code>, <code class="mkapi-object-signature">key_field</code>, <code class="mkapi-object-signature">key_field_store=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1164,10 +1175,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1202,7 +1211,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorelookupmapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">LookupMapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">lookup_value_field</code>, <code class="mkapi-object-signature">map_file_field</code>, <code class="mkapi-object-signature">map_file_field_obj=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorelookupmapfilefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">LookupMapFileField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">lookup_value_field</code>, <code class="mkapi-object-signature">map_file_field</code>, <code class="mkapi-object-signature">map_file_field_obj=None</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1252,10 +1261,8 @@ that field.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1328,7 +1335,7 @@ information from other fields in the fieldset for later use.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoreifelsefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">IfElseField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">condition</code>, <code class="mkapi-object-signature">true_value</code>, <code class="mkapi-object-signature">false_value</code>, <code class="mkapi-object-signature">cond_obj=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoreifelsefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">IfElseField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">condition</code>, <code class="mkapi-object-signature">true_value</code>, <code class="mkapi-object-signature">false_value</code>, <code class="mkapi-object-signature">cond_obj=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1417,10 +1424,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1476,7 +1481,7 @@ two values and returns a boolean value).</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorerepeatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">RepeatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">min_repeats</code>, <code class="mkapi-object-signature">max_repeats</code>, <code class="mkapi-object-signature">glue=None</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorerepeatfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">RepeatField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">field</code>, <code class="mkapi-object-signature">min_repeats</code>, <code class="mkapi-object-signature">max_repeats</code>, <code class="mkapi-object-signature">glue=None</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1565,10 +1570,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1603,7 +1606,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorenumberfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">NumberField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorenumberfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">NumberField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1696,10 +1699,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1734,7 +1735,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcorebooleanfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">BooleanField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">true_value=1</code>, <code class="mkapi-object-signature">false_value=0</code>, <code class="mkapi-object-signature">true_probability=0.5</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcorebooleanfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">BooleanField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">true_value=1</code>, <code class="mkapi-object-signature">false_value=0</code>, <code class="mkapi-object-signature">true_probability=0.5</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1823,10 +1824,8 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -1861,7 +1860,7 @@ returned.</p></div>
 <div class='mkapi-object-container'>
   <div class="mkapi-object class code top">
     <div class="mkapi-object-kind class top">class</div>
-    <h4 id="headfakefieldcoredatefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DateField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">min_format=None</code>, <code class="mkapi-object-signature">max_format=None</code>, <code class="mkapi-object-signature">mean_format=None</code>, <code class="mkapi-object-signature">format=None</code>, <code class="mkapi-object-signature">use_years=False</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+    <h4 id="headfakefieldcoredatefield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">DateField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">distribution</code>, <code class="mkapi-object-signature">mean</code>, <code class="mkapi-object-signature">sd</code>, <code class="mkapi-object-signature">min=None</code>, <code class="mkapi-object-signature">max=None</code>, <code class="mkapi-object-signature">dp=None</code>, <code class="mkapi-object-signature">min_format=None</code>, <code class="mkapi-object-signature">max_format=None</code>, <code class="mkapi-object-signature">mean_format=None</code>, <code class="mkapi-object-signature">format=None</code>, <code class="mkapi-object-signature">use_years=False</code>, <code class="mkapi-object-signature">dist_cls=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
   </div>
   
 </div>
@@ -1886,7 +1885,8 @@ days to the mean date.</p>
 <p>For custom distributions, any class can be used provided it follows the same constructor arguments (loc and scale)
 and has an rvs() function.</p>
 <p>Includes mean, min and max which can be provided as date objects or strings.
-If the latter, the mean_format, min_format and max_format define the date formats.</p></div>
+If the latter, the mean_format, min_format and max_format define the date formats.</p>
+<p>If a 'format' parameter is provided, the date is output as a string, if not it is output as a date object.</p></div>
     </div>
   <div class="mkapi-section methods">
       <div class="mkapi-section-name methods">
@@ -1959,10 +1959,257 @@ information from other fields in the fieldset for later use.</p></div>
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
 <p>Acts as a decorator around the private '_next_value' method.
-If 'transformers' have been provided in the constructor they can act on the value before or after it has been
-generated.</p>
-<p>Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-returned.</p></div>
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.OperationField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldcoreoperationfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">OperationField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">operator</code>, <code class="mkapi-object-signature">first_value</code>, <code class="mkapi-object-signature">second_value</code>, <code class="mkapi-object-signature">operator_fn=NOTHING</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Field which generates a value using an operation to process two values (e.g. add, subtract).
+Like the 'Condition' used in IfElseField, it is easiest to use builtin Python "operator" functions such as
+<code>operator.add</code>, <code>operator.sub</code> but a custom function can be used if needed.</p>
+<p>The first and second values can be field definitions or scalar values (e.g. strings, numbers, dates).</p></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(headfake.Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">row</code>
+<span class="mkapi-item-type">(dict(str: any))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">The current data row as a dictionary</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> <span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+        </div>
+      <div class="mkapi-section-body returns"><p>Dictionary containing multiple fields OR a single field value</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.LookupField">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object class code top">
+    <div class="mkapi-object-kind class top">class</div>
+    <h4 id="headfakefieldcorelookupfield" class="mkapi-object-body class top"><code class="mkapi-object-prefix">headfake.field.core.</code><code class="mkapi-object-name">LookupField</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">transformers=NOTHING</code>, <code class="mkapi-object-signature">final_transformers=NOTHING</code>, <code class="mkapi-object-signature">name=&#39;field_1&#39;</code>, <code class="mkapi-object-signature">hidden=False</code>, <code class="mkapi-object-signature">error_value=None</code>, <code class="mkapi-object-signature">transform=NOTHING</code>, <code class="mkapi-object-signature">field</code><code class="mkapi-object-parenthesis">)</code></h4>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section bases">
+      <div class="mkapi-section-name bases">
+          <span class="mkapi-section-name-body bases">Bases</span> 
+        </div>
+      <div class="mkapi-section-body bases">
+<span class="mkapi-base">headfake.field.core.Field</span>
+</div>
+    </div>
+  <div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Field which returns the value of another specified field.</p></div>
+    </div>
+  <div class="mkapi-section methods">
+      <div class="mkapi-section-name methods">
+          <span class="mkapi-section-name-body methods">Methods</span> 
+        </div>
+      <div class="mkapi-section-body methods"><ul class="mkapi-items">
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.init_from_fieldset">init_from_fieldset</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialises field in fieldset.</span></li>
+
+<li class="method"><code class="mkapi-item-name"><a href="#headfake.field.core.Field.next_value">next_value</a></code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(Union(any, dict(str: any)))</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Gets next generated value for field.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+  <div class="mkapi-members">
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.init_from_fieldset">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">init_from_fieldset</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">fieldset</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Initialises field in fieldset.</p>
+<p>This is run once all fields have been setup. It is generally used by fields in the fieldset to obtain
+information from other fields in the fieldset for later use.</p></div>
+    </div>
+  <div class="mkapi-section parameters">
+      <div class="mkapi-section-name parameters">
+          <span class="mkapi-section-name-body parameters">Parameters</span> 
+        </div>
+      <div class="mkapi-section-body parameters"><ul class="mkapi-items">
+<li><code class="mkapi-item-name">fieldset</code>
+<span class="mkapi-item-type">(headfake.Fieldset)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Fieldset to initialise from</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section returns">
+      <div class="mkapi-section-name returns">
+          <span class="mkapi-section-name-body returns">Returns</span> 
+        </div>
+      <div class="mkapi-section-body returns"><p>None</p></div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  
+    <div class="mkapi-member">
+      <div class="mkapi-node" id="headfake.field.core.Field.next_value">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object method code">
+    <div class="mkapi-object-kind method">method</div>
+    <div class="mkapi-object-body method"><code class="mkapi-object-name">next_value</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">row</code><code class="mkapi-object-parenthesis">)</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Gets next generated value for field.</p>
+<p>Acts as a decorator around the private '_next_value' method.
+If 'transformers' have been provided in the constructor they will act on the value after it has been
+generated.</p></div>
     </div>
   <div class="mkapi-section parameters">
       <div class="mkapi-section-name parameters">
@@ -2004,10 +2251,9 @@ returned.</p></div>
 <div class="mkapi-docstring">
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Extracts number to use for min/max or other input parameter.</p>
-<p>If value is a string, it will be assumed it is the name of a field in the row (and the value of that field will
-be returned).</p>
+<p>If value is numeric (int or float) then it will be simply returned.</p>
 <p>If it is a Field class, then the next_value function will be used to generate the value.</p>
-<p>Otherwise, the original value will be returned.</p>
+<p>Otherwise an attempt will be made to convert it to a number.</p>
 <p>:param value:
 :param row:
 :return:</p></div>
@@ -2029,10 +2275,9 @@ be returned).</p>
 <div class="mkapi-docstring">
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Extracts date to use for min/max or other input parameter.</p>
-<p>If value is a string, it will be assumed it is the name of a field in the row (and the value of that field will
-be converted into a date object.</p>
+<p>If value is a datetime then it will be simply returned.</p>
 <p>If it is a Field class, then the next_value function will be used to generate the value.</p>
-<p>Otherwise, the original value will be returned.</p>
+<p>Otherwise an attempt will be made to extract the date from it.</p>
 <p>:param value:
 :param row:
 :return:</p></div>
@@ -2078,17 +2323,18 @@ be converted into a date object.</p>
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../../headfake/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../id/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../headfake/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../id/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme_extra.js" defer></script>
     <script src="../../../js/theme.js" defer></script>
       <script src="../../../js/mkapi.js" defer></script>
     <script defer>

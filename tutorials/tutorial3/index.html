@@ -9,12 +9,12 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>3. Lookups and transformers - Headfake</title>
+  <title>3. Adding conditional fields - Headfake</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
   <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet" />
   <link href="../../css/mkapi-common.css" rel="stylesheet" />
@@ -22,16 +22,15 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "3. Lookups and transformers";
+    var mkdocs_page_name = "3. Adding conditional fields";
     var mkdocs_page_input_path = "tutorials/tutorial3.md";
     var mkdocs_page_url = null;
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -59,9 +58,9 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../tutorial1/">1. Generating fake data files</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../tutorial2/">2. Templates and conditional logic</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../tutorial2/">2. Changing Headfake template files</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">3. Lookups and transformers</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">3. Adding conditional fields</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#aims-of-tutorial">Aims of tutorial</a>
     </li>
@@ -90,6 +89,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/add-a-lookup-field/">Add a lookup field</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../how-to/generate-identical-datasets/">Generate identical datasets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/exclude-fields-from-the-output/">Exclude fields from the output</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../how-to/combine-field-values/">Combine field values</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API</span></p>
@@ -146,7 +149,7 @@
         
       
     
-    <li>3. Lookups and transformers</li>
+    <li>3. Adding conditional fields</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/rcfgroup/headfake/edit/master/docs/tutorials/tutorial3.md"> Edit on headfake</a>
@@ -156,12 +159,13 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
-                <h1 id="tutorial-3-adding-conditional-fields">Tutorial 3. Adding conditional fields</h1>
+                <h1 id="tutorial-3-adding-conditional-and-dependent-fields">Tutorial 3. Adding conditional and dependent fields</h1>
 <h2 id="aims-of-tutorial">Aims of tutorial</h2>
-<p>This tutorial will introduce a way of adding conditional logic for field value generation.</p>
+<p>This tutorial will introduce a way of adding conditional logic for field value generation and adding dependencies between fields.</p>
 <h2 id="add-title-field-based-on-gender-and-marital-status">Add title field based on gender and marital status</h2>
 <p>Conditional logic is handled using the IfElseField. To demonstrate how these fields work we will create some simple logic to generate the title of an individual, using the gender field and marital status field.</p>
 <p>To keep it simpler at this stage we will not take into account other possible titles such as Ms. or Dr.</p>
@@ -170,7 +174,7 @@
   <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">headfake.field.IfElseField</span>
   <span class="nt">condition</span><span class="p">:</span>
     <span class="nt">field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gender</span>
-    <span class="nt">operator</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">operator.equals</span>
+    <span class="nt">operator</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">operator.eq</span>
     <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">M</span>
   <span class="nt">true_value</span><span class="p">:</span>
     <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MR</span>
@@ -217,7 +221,7 @@
         <a href="../../discussion/initialising-headfake/" class="btn btn-neutral float-right" title="Initialising Headfake">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../tutorial2/" class="btn btn-neutral" title="2. Templates and conditional logic"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../tutorial2/" class="btn btn-neutral" title="2. Changing Headfake template files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -240,17 +244,18 @@
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href="../tutorial2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../../discussion/initialising-headfake/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../tutorial2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../discussion/initialising-headfake/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../js/mkapi.js" defer></script>
     <script defer>
