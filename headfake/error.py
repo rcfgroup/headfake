@@ -3,7 +3,7 @@ This package contains the error classes raised by headfake.
 """
 
 
-class TransformationError(Exception):
+class TransformerError(Exception):
     """
     Raised by a Transformer or Field when there is an issue with the transformation.
     """
