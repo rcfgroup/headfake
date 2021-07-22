@@ -1,7 +1,7 @@
 import pytest
 
 from headfake.util import create_class_tree
-from headfake.field import TextField, IfElseField
+from headfake.field import TextField, IfElseField, ConstantField
 from headfake.fieldset import Fieldset
 
 def test_class_tree_from_field_dict_with_constant_is_created_correctly():
@@ -23,7 +23,10 @@ def test_nested_class_tree_with_constant_is_created_correctly():
     assert isinstance(tree.get("fieldset"),Fieldset)
     fields = tree.get("fieldset").fields
 
-    assert fields[0] == {"name":"discharge_date", "value":"2020-03-15"}
+    ddate = fields[0]
+    assert ddate.name == "discharge_date"
+    assert ddate.value == "2020-03-15"
+    assert isinstance(ddate, ConstantField)
 
     assert isinstance(fields[1],TextField)
     assert fields[1].name == "comment"
