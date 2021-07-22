@@ -1,13 +1,14 @@
 # Headfake
 
 ## What is Headfake?
-**Hea**lth **d**ata **fake**r is a Python-based package which allows the user to create fake or test data sets from a
-YAML template file.
+**Hea**lth **d**ata **fake**r is a Python-based package which allows the user to use a declarative approach to create fake or test data sets.
+using either Python code, or a YAML or JSON template file.
 
-The package can be embedded directly into Python scripts, or it can be used through a command-line script.
+The package can be embedded directly into Python scripts, or it can be used through the command-line.
 
-It builds upon some of the ideas in [pydbgen](https://github.com/tirthajyoti/pydbgen) and improves on it with support for
-a number of additional features including statistically distributed random values; dependent fields and custom fields.
+It takes ideas from other declarative packages (e.g. pydbgen), but also adds support for a number of additional features
+including: statistically distributed random values; dependent fields and custom fields as well as approaches for
+transforming generated fields before/after the generation process.
 
 ## How do I install and use Headfake?
 To get started quickly, you can use pip to install it:
@@ -29,7 +30,7 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 
 * Support for shareable template-based config or direct Python implementation to setup and perform the data generation.
 
-* Embeddable data generation into projects (either using a YAML config or constructing the classes manually).
+* Embeddable data generation into projects (either using a YAML/JSON config or constructing the classes manually).
 
 * Generation of names and contact details through use of the Python package [Faker](https://faker.readthedocs.io/en/master/index.html).
 
@@ -41,13 +42,15 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 
 * Dependent fields (e.g. one field's values are dependent on the values from one or more)
 
+* Combined operation fields (e.g. combine generated values using specific operations such as add or subtract)
+
 * Field data can be looked up from another file using a key field, allowing re-use of patient details in a different field set.
 
 * A selection of fields to handle generation of different types of data.
 
 * Ability to create and use custom fields to generate your own data types and values
 
-* Support for transformers which pre or post-process data once it's been generated
+* Support for transformers which process data once it's been generated or just before it is output.
 
 ## Is Headfake being actively maintained?
 Yes, we are using Headfake is our own projects and as result are keep it maintained and adding new features when we need them.
