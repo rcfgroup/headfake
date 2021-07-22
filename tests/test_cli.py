@@ -20,7 +20,7 @@ class Args:
             self.template
         ]
 
-def test_generate_patients_data_from_template():
+def test_generate_patients_data_from_yaml_template():
     with tempfile.NamedTemporaryFile(mode="w",delete=False) as tmp:
         tmp.write(" ")
         tmp.close()
@@ -39,11 +39,30 @@ def test_generate_patients_data_from_template():
         os.unlink(tmp.name)
 
 
-def test_generate_screening_data_from_template():
+def test_generate_screening_data_from_yaml_template():
     with tempfile.NamedTemporaryFile(mode="w",delete=False) as tmp:
         tmp.write(" ")
         tmp.close()
         args = Args(template = "examples/screening.yaml", no_rows = 20, output_file = str(tmp.name))
+
+        Command.run(args.as_list())
+
+        assert os.path.exists(tmp.name) is True
+
+        with open(tmp.name,"r") as fh:
+            file = csv.DictReader(fh)
+            lines = list(file)
+
+        assert len(lines) == 20
+
+        os.unlink(tmp.name)
+
+
+def test_generate_admission_data_from_json_template():
+    with tempfile.NamedTemporaryFile(mode="w",delete=False) as tmp:
+        tmp.write(" ")
+        tmp.close()
+        args = Args(template = "examples/admission.json", no_rows = 20, output_file = str(tmp.name))
 
         Command.run(args.as_list())
 

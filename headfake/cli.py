@@ -6,6 +6,7 @@ import argparse
 
 from headfake import output, HeadFake
 
+import os
 
 class Command:
     """
@@ -76,7 +77,11 @@ class Command:
             None
         """
 
-        headfake = HeadFake.from_yaml(self.args.template, seed=self.args.seed)
+        filename, file_ext = os.path.splitext(self.args.template)
+
+        hf_load_fn = HeadFake.from_json if file_ext == "json" else HeadFake.from_yaml
+
+        headfake = hf_load_fn(self.args.template, seed=self.args.seed)
 
         if self.args.output_file:
             outfile = output.CsvFileOutput(self.args)
