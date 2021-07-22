@@ -1,0 +1,110 @@
+{
+    "fieldset": {
+        "class": "headfake.Fieldset",
+        "fields": [
+            {
+                "name": "anonymous_id",
+                "class": "headfake.field.MapFileField",
+                "key_field": "main_pat_id",
+                "mapping_file": "examples/test_data/patients.txt"
+            },
+            {
+                "name": "admission_date",
+                "class": "headfake.field.DateField",
+                "min": "2020-01-01",
+                "max": "2020-12-31",
+                "distribution": "scipy.stats.norm",
+                "mean": "2020-06-01",
+                "sd": 30,
+                "min_format": "%Y-%m-%d",
+                "max_format": "%Y-%m-%d",
+                "mean_format": "%Y-%m-%d",
+                "final_transformers": [
+                  {
+                        "class": "headfake.transformer.FormatDateTime",
+                        "format": "%Y-%m-%d"
+                  }
+                ]
+            },
+            {
+                "name": "los",
+                "class": "headfake.field.NumberField",
+                "min": 18,
+                "max": 80,
+                "distribution": "scipy.stats.norm",
+                "mean": 50,
+                "sd": 15,
+                "dp": 0,
+                "final_transformers": [
+                    {
+                        "class": "headfake.transformer.FormatNumber",
+                        "dp": 0
+                    }
+                ]
+            },
+            {
+                "name": "age",
+                "class": "headfake.field.NumberField",
+                "min": 18,
+                "max": 80,
+                "distribution": "scipy.stats.norm",
+                "mean": 50,
+                "sd": 15,
+                "dp": 0
+            },
+            {
+                "name": "discharge_date",
+                "class": "headfake.field.OperationField",
+                "operator": "operator.add",
+                "first_value": {
+                    "class": "headfake.field.LookupField",
+                    "field": "admission_date"
+                },
+                "second_value": {
+                    "class": "headfake.field.LookupField",
+                    "field": "los",
+                    "transformers": [
+                        {
+                            "class": "headfake.transformer.ConvertToDaysDelta"
+                        }
+                    ]
+                },
+                "transformers": [
+                    {
+                        "class": "headfake.transformer.FormatDateTime",
+                        "format": "%Y-%m-%d"
+                    }
+                ]
+            },
+            {
+                "name": "discharge_type",
+                "class": "headfake.field.OptionValueField",
+                "probabilities": {
+                    "1": 0.1,
+                    "2": 0.9
+                }
+            },
+            {
+                "name": "ward",
+                "class": "headfake.field.OptionValueField",
+                "probabilities": {
+                    "18": 0.2,
+                    "19": 0.1,
+                    "20": 0.1,
+                    "21": 0.05,
+                    "22": 0.05,
+                    "FCDU": 0.5
+                }
+            },
+            {
+                "name": "hospital",
+                "class": "headfake.field.OptionValueField",
+                "probabilities": {
+                    "GH": 0.4,
+                    "LGH": 0.1,
+                    "LRI": 0.5
+                }
+            }
+        ]
+    }
+}

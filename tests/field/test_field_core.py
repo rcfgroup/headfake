@@ -3,6 +3,8 @@ import pytest
 from unittest import mock
 import datetime
 
+from headfake.field import LookupField
+
 row = {}
 
 import random
@@ -329,8 +331,8 @@ def test_NumberField_returns_value_within_range_of_two_existing_fields(monkeypat
             distribution="scipy.stats.norm",
             sd=3,
             mean=0,
-            min="floor",
-            max="ceil",
+            min=LookupField(field="floor"),
+            max=LookupField(field="ceil"),
             dp=1
         )
     ])
@@ -340,7 +342,7 @@ def test_NumberField_returns_value_within_range_of_two_existing_fields(monkeypat
     for idx, item in df.iterrows():
         assert item['num']>item['floor'] and item['num']<item['ceil']
 
-def test_NumberField_returns_value_within_range_of_two_embedded_fields(monkeypatch):
+def test_NumberField_returns_value_within_range_of_two_embedded_fields():
 
     fset = Fieldset(fields=[
         field.NumberField(
@@ -349,7 +351,6 @@ def test_NumberField_returns_value_within_range_of_two_embedded_fields(monkeypat
             sd=3,
             mean=0,
             min=field.NumberField(
-                name="floor",
                 distribution="scipy.stats.norm",
                 sd=1,
                 mean=-5,
@@ -357,7 +358,6 @@ def test_NumberField_returns_value_within_range_of_two_embedded_fields(monkeypat
                 dp=0
             ),
             max=field.NumberField(
-                name="ceil",
                 distribution="scipy.stats.norm",
                 sd=1,
                 mean=5,
@@ -478,3 +478,20 @@ def test_OptionValueField_handles_very_small_probability_with_warning_when_choos
     assert len(list(filter(lambda x: x == "D", ovf._option_picks))) == 179999
     assert ["B","A","A","A","A"] == [ovf.next_value(row) for i in range(1,6) ]
     warn.assert_called_with("Options include probabilities of 1e-6. This requires the creation of 1e6 possible options")
+
+def test_OperationField_uses_function_to_combine_values_and_returns_none_for_invalid_combinations():
+
+    assert field.OperationField(operator="operator.add", first_value=35, second_value=6).next_value({}) == 41
+    assert field.OperationField(operator="operator.sub", first_value=47, second_value=1).next_value({}) == 46
+
+    assert field.OperationField(operator="operator.add", first_value=None, second_value=6, error_value="NA").next_value({}) == "NA"
+    assert field.OperationField(operator="operator.sub", first_value="35", second_value=6, error_value="NA").next_value({}) == "NA"
+
+
+
+def test_LookupField_gets_value_generated_from_different_field():
+    lookup = field.LookupField(field="age_at_onset")
+
+    assert lookup.next_value({"age_at_onset":35,"years_since_onset":6}) == 35
+    assert lookup.next_value({"age_at_onset": None, "years_since_onset": 6}) is None
+    assert lookup.next_value({"age_at_onset": "35", "years_since_onset": 6}) is "35"

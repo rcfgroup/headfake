@@ -4,6 +4,7 @@ This file implements the HeadFake public API
 
 import random
 import yaml
+import json
 import numpy as np
 
 from faker import Faker
@@ -46,6 +47,24 @@ class HeadFake:
         path = locate_file(filename)
         with open(path) as file:
             params = yaml.safe_load(file)
+        return HeadFake(params, **kwargs)
+
+    @staticmethod
+    def from_json(filename, **kwargs):
+        """
+        Create an instance of the HeadFake class with parameters loaded from a json file
+
+        Args:
+            filename: name of json template
+            **kwargs: additional arguments passed to HeadFake constructor
+
+        Returns:
+            a HeadFake instance
+
+        """
+        path = locate_file(filename)
+        with open(path) as file:
+            params = json.loads(file)
         return HeadFake(params, **kwargs)
 
     @staticmethod
@@ -94,6 +113,7 @@ class HeadFake:
         random.seed(seed)
         np.random.seed(seed)
         Faker.seed(seed)
+
 
     @classmethod
     def set_locale(cls, locale):

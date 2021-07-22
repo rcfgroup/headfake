@@ -62,7 +62,7 @@ def create_class_tree(name, params):
         try:
             return create_package_class(class_name)(**sub_params)
         except TypeError as ex:
-            handle_missing_keyword(ex)
+            handle_missing_keyword(ex, class_name, sub_params)
 
     if isinstance(params, list):
         return [create_class_tree(p.get("name"), p) for p in params]
@@ -114,25 +114,28 @@ def locate_file(file):
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))
 
 
-def handle_missing_keyword(ex):
+def handle_missing_keyword(ex, class_name, params):
     """
     Used to provides more informative error when a keyword is missing from parameters.
     :param ex: Original exception
+    :param class_name: Full name of the class that headfake attempted to create
+    :param: params: Parameters passed to the class constructor
     :return:
     """
     kwonly_error = re.search("required keyword-only argument[s]{0,1}: ('.+')$", str(ex))
 
     if kwonly_error:
         raise TypeError(
-            "The following required parameter(s) were missing: %s" %
-            kwonly_error.group(1))
+            f"The following required parameter(s) were missing from class {class_name}: {kwonly_error.group(1)}"
+            )
 
     unexpected_kw_error = re.search("got an unexpected keyword argument ('.+')$", str(ex))
     if unexpected_kw_error:
         raise TypeError(
-            "The following unknown parameter was provided: %s" %
-            unexpected_kw_error.group(1))
+            f"The following unknown parameter was provided to class {class_name}: {unexpected_kw_error.group(1)}"
+            )
     raise ex
+
 
 def new_field_name():
     global field_count

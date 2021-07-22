@@ -1,4 +1,4 @@
-# Tutorial 2. Changing Headfake configuration files
+# Tutorial 2. Changing Headfake template files
 
 ## Aims of tutorial
 This tutorial will take a closer look at the YAML template including how changing the YAML file modifies the configuration, introduces some more advanced fields and look at how transformers can help post-process data.
@@ -82,7 +82,7 @@ The output will show some individuals are now flagged as deceased, along with ad
 
 ## Changing generated data using a transformer
 
-Transformers are special classes which act before or after data is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.
+Transformers are special classes which transform the data after it is generated. Here we are going to use two different ones to do two things: i) make last name uppercase and ii) create blank last name entries in our data.
 
 Change the last_name in `tutorial2.yml` to add both transformers:
 

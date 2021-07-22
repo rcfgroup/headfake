@@ -1,6 +1,7 @@
 # Create custom transformers
 
-A transformer a special class which acts before or after the data is generated from a field.
+A transformer a special class which acts after the data is generated from a field. The points at which these are run is depends on whether they are passed into the field in the 'transformers' list or in the 'final_transformers' list.
+The former runs as soon as a value is generated in the field, the latter runs once all data has been generated in the row, so are more suited to formatting data ready for output.
 
 Custom transformers can be created by extending the Transformer class in headfake.transformer. If you want to allow parameters to be passed to your transformer Headfake they should be setup using the approaches documented in the [attrs](https://www.attrs.org) package, which provides a simpler way of initialising and handling class properties.
 
@@ -19,7 +20,7 @@ class SplitPiece(Transformer):
     separator = attr.ib() #string to separator on
 	index = attr.ib() #index of separated string to return
 
-    def after_next(self, field, row, value):
+    def transform(self, field, row, value):
     	pieces = value.split(self.separator)
 
 		if len(pieces)<self.index:

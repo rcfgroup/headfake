@@ -27,8 +27,8 @@ nav:
   - Usage: "usage.md"
   - Tutorials:
         "1. Generating fake data files": "tutorials/tutorial1.md"
-        "2. Templates and conditional logic": "tutorials/tutorial2.md"
-        "3. Lookups and transformers": "tutorials/tutorial3.md"
+        "2. Changing Headfake template files": "tutorials/tutorial2.md"
+        "3. Adding conditional fields": "tutorials/tutorial3.md"
 
   - Discussion:
       "Initialising Headfake": "discussion/initialising-headfake.md"
@@ -37,6 +37,8 @@ nav:
       "Create custom transformers": "how-to/create-custom-transformers.md"
       "Add a lookup field": "how-to/add-a-lookup-field.md"
       "Generate identical datasets": "how-to/generate-identical-datasets.md"
+      "Exclude fields from the output": "how-to/exclude-fields-from-the-output.md"
+      "Combine field values": "how-to/combine-field-values.md"
 
   - API:
     - headfake: api/headfake.md

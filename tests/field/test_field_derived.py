@@ -2,6 +2,7 @@ from headfake import field
 from unittest import mock
 import datetime
 
+from headfake.field import LookupField
 from tests.field.test_field_common import MALE_VALUE, FEMALE_VALUE
 
 row = {}
@@ -66,11 +67,11 @@ def test_NhsNoField_handles_duplicate_nhs_number_by_reselecting(monkeypatch):
     assert nhs_no.next_value(row) == "123 456 7830"
 
 def test_AgeField_calculates_correct_age_using_to_and_from_fields_containing_dates():
-    age = field.AgeField(from_value="from_date",to_value="to_date")
+    age = field.AgeField(from_value=LookupField(field="from_date"),to_value=LookupField(field="to_date"))
     assert age.next_value({"from_date":datetime.date(1953,3,5),"to_date":datetime.date(2010,5,4)}) == 57
 
 def test_AgeField_calculates_correct_age_using_to_and_from_fields_containing_strings():
-    age = field.AgeField(from_value="from_date",to_value="to_date", from_format="%d/%m/%Y",to_format="%d/%m/%Y")
+    age = field.AgeField(from_value=LookupField(field="from_date"),to_value=LookupField(field="to_date"), from_format="%d/%m/%Y",to_format="%d/%m/%Y")
     assert age.next_value({"from_date":"05/03/1953","to_date":"04/05/2010"}) == 57
 
 def test_AgeField_calculates_correct_age_using_to_and_from_values_as_fields():
@@ -94,7 +95,6 @@ def test_DeceasedField_simulates_death_based_on_risks_and_returns_additional_fie
     from headfake.fieldset import Fieldset
     from headfake import HeadFake
 
-    HeadFake.set_seed(543)
     dob = field.DateOfBirthField(distribution = "scipy.stats.norm", min=0, max=105, mean=45, sd=13, date_format="%d/%m/%Y")
     deceased = field.DeceasedField(
         deceased_true_value=1,
@@ -106,4 +106,7 @@ def test_DeceasedField_simulates_death_based_on_risks_and_returns_additional_fie
         date_format = "%Y-%m-%d",
     )
     fieldset = Fieldset(fields={"dob":dob, "deceased":deceased})
-    assert fieldset.generate_data(1).to_dict("records") == [{'age': 33, 'deceased': 1, 'dob': '03/02/1983', 'dod': '2017-12-07'}]
+
+    HeadFake.set_seed(543)
+    deceased.init_from_fieldset(fieldset)
+    deceased.next_value({"dob":"03/04/1983"}) == {'age': 33, 'deceased': 1, 'dod': '2018-02-04'}

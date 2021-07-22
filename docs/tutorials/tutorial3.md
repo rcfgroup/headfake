@@ -1,7 +1,7 @@
-# Tutorial 3. Adding conditional fields
+# Tutorial 3. Adding conditional and dependent fields
 
 ## Aims of tutorial
-This tutorial will introduce a way of adding conditional logic for field value generation.
+This tutorial will introduce a way of adding conditional logic for field value generation and adding dependencies between fields.
 
 ## Add title field based on gender and marital status
 Conditional logic is handled using the IfElseField. To demonstrate how these fields work we will create some simple logic to generate the title of an individual, using the gender field and marital status field.
@@ -15,7 +15,7 @@ Open `tutorial2.yml`, add a new field as below and save as `tutorial3.yml`:
   class: headfake.field.IfElseField
   condition:
     field: gender
-    operator: operator.equals
+    operator: operator.eq
     value: M
   true_value:
     value: MR

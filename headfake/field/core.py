@@ -1,11 +1,9 @@
 """
 Fake/mock field generation logic
 """
-__export__ = ["Field"]
 
 import csv
 import random as rnd
-import uuid
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime as dt, timedelta as td
@@ -14,11 +12,12 @@ import datetime
 import attr
 import faker
 
-from headfake.error import ChangeValue
+from headfake.error import TransformerError
 from headfake.transformer import Transformer
 from headfake.util import create_package_class, locate_file, handle_missing_keyword, new_field_name
 
 import numpy as np
+from functools import partial
 
 @attr.s(kw_only=True)
 class Field(ABC):
@@ -28,12 +27,24 @@ class Field(ABC):
 
     Args:
         transformers (list): Optional list of transformer objects which act upon on field values at various points.
-        name (str): Optional name of field (defaults to UUID4 string)
+        name (str): Optional name of field (defaults to incremental number)
 
     """
     transformers: List[Transformer] = attr.ib(factory=list)
+    final_transformers: List[Transformer] = attr.ib(factory=list)
     name: Optional[str] = attr.ib(default=new_field_name())
-    generate_after = False # force the value to be generated after other field values have been generated
+    generate_after:bool = False # static property to force the value to be generated after other field values have been generated
+    hidden:bool = attr.ib(default=False) # field which is hidden from the final output
+    error_value:Any = attr.ib(default=None)
+
+    _transform = attr.ib()
+
+    @_transform.default
+    def _default_transform(self):
+        if self.transformers:
+            return partial(transform_value, field=self, transformers=self.transformers)
+        else:
+            return lambda row, value: value
 
     def after_init_params(self):
         [t.init_params(self) for t in self.transformers]
@@ -59,11 +70,8 @@ class Field(ABC):
         """Gets next generated value for field.
 
         Acts as a decorator around the private '_next_value' method.
-        If 'transformers' have been provided in the constructor they can act on the value before or after it has been
+        If 'transformers' have been provided in the constructor they will act on the value after it has been
         generated.
-
-        Any headfake.error.ChangeValue exception thrown by a transformer will be caught and the supplied value will be
-        returned.
 
         Args:
             row: The current data row as a dictionary
@@ -72,18 +80,16 @@ class Field(ABC):
             Dictionary containing multiple fields OR a single field value
 
         """
-        try:
-            [t.before_next(self, row) for t in self.transformers]
-        except ChangeValue as ex:
-            return ex.value
-
-        val = self._next_value(row)
 
         try:
-            for t in self.transformers:
-                val = t.after_next(self, row, val)
-        except ChangeValue as ex:
-            return ex.value
+            val = self._next_value(row)
+
+            val = self._transform(row=row, value=val)
+        except Exception as ex:
+            if self.error_value:
+                return self.error_value
+
+            raise ex
 
         return val
 
@@ -100,6 +106,15 @@ class Field(ABC):
             Dictionary containing multiple fields OR a single field value
         """
         pass
+
+def transform_value(field, row, value, transformers):
+        for t in transformers:
+            try:
+                value = t.transform(field, row, value)
+            except Exception as ex:
+                raise TransformerError(field, t, row, ex)
+
+        return value
 
 
 @attr.s(kw_only=True)
@@ -190,10 +205,10 @@ class DerivedField(Field):
 
 @attr.s(kw_only=True)
 class ConstantField(Field):
-    """Field which generates constant values.
-
-    Deprecated: can simply use scalar value (e.g. string, number)
+    """Field which generates constant values. Automatically replaces scalar values (e.g. string, number) when fieldsets
+    are created.
     """
+
     value = attr.ib()
 
     def _next_value(self, row):
@@ -383,7 +398,7 @@ class NumberField(Field):
         max = extract_number(self.max, row)
 
         if (min and number < min) or (max and number > max):
-            return self.next_value(row)
+            return self._next_value(row)
 
         if self.dp is not None:
             return round(number, self.dp)
@@ -424,6 +439,9 @@ class DateField(NumberField):
 
     Includes mean, min and max which can be provided as date objects or strings.
     If the latter, the mean_format, min_format and max_format define the date formats.
+
+    If a 'format' parameter is provided, the date is output as a string, if not it is output as a date object.
+
     """
     min_format: str = attr.ib(default=None)
     max_format: str = attr.ib(default=None)
@@ -457,63 +475,100 @@ class DateField(NumberField):
 
         return date
 
+@attr.s(kw_only=True)
+class OperationField(Field):
+    """
+    Field which generates a value using an operation to process two values (e.g. add, subtract).
+    Like the 'Condition' used in IfElseField, it is easiest to use builtin Python "operator" functions such as
+    `operator.add`, `operator.sub` but a custom function can be used if needed.
+
+    The first and second values can be field definitions or scalar values (e.g. strings, numbers, dates).
+
+    """
+    operator = attr.ib()
+    first_value = attr.ib()
+    second_value = attr.ib()
+    _operator_fn = attr.ib()
+
+    @_operator_fn.default
+    def _default_operator_fn(self):
+        return create_package_class(self.operator)
+
+    def _determine_value(self, row, property):
+        return property.next_value(row) if hasattr(
+            property, "next_value") else property
+
+    def _next_value(self, row):
+        first_value = self._determine_value(row, self.first_value)
+        second_value = self._determine_value(row, self.second_value)
+
+        return self._operator_fn(first_value, second_value)
+
+@attr.s(kw_only=True)
+class LookupField(Field):
+    """
+    Field which returns the value of another specified field.
+    """
+
+    field = attr.ib()
+
+    def _next_value(self, row):
+        return row.get(self.field)
+
+
 
 def extract_number(value, row):
     """
     Extracts number to use for min/max or other input parameter.
 
-    If value is a string, it will be assumed it is the name of a field in the row (and the value of that field will
-    be returned).
+    If value is numeric (int or float) then it will be simply returned.
 
     If it is a Field class, then the next_value function will be used to generate the value.
 
-    Otherwise, the original value will be returned.
+    Otherwise an attempt will be made to convert it to a number.
 
     :param value:
     :param row:
     :return:
     """
-    if isinstance(value, str):
-        if not value in row:
-            raise ValueError(
-                "Field with name '%s' is not present in the row or has not been generated yet" %
-                value)
-        return row.get(value)
+
+    if value is None:
+        return None
 
     if isinstance(value, Field):
-        return value.next_value(row)
+        value = value.next_value(row)
 
-    return value
+    if isinstance(value, float) or isinstance(value, int):
+        return value
+
+    return float(value)
 
 
 def extract_date(value, row, date_format):
     """
     Extracts date to use for min/max or other input parameter.
 
-    If value is a string, it will be assumed it is the name of a field in the row (and the value of that field will
-    be converted into a date object.
+    If value is a datetime then it will be simply returned.
 
     If it is a Field class, then the next_value function will be used to generate the value.
 
-    Otherwise, the original value will be returned.
+    Otherwise an attempt will be made to extract the date from it.
+
 
     :param value:
     :param row:
     :return:
     """
-    if isinstance(value, str):
-        if not value in row:
-            raise ValueError(
-                "Field with name '%s' is not present in the row or has not been generated yet" %
-                value)
 
-        data = row.get(value)
-        if isinstance(data, datetime.date):
-            return data
-
-        return dt.strptime(data, date_format)
+    if value is None:
+        return None
 
     if isinstance(value, Field):
-        return value.next_value(row)
+        value = value.next_value(row)
 
-    return value
+    if isinstance(value, datetime.date):
+        return value
+
+    return dt.strptime(value, date_format)
+
+
