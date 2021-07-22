@@ -60,5 +60,8 @@ Yes, we are using Headfake is our own projects and as result are keep it maintai
 The library has been released under an MIT license so can be embedded into your own tools with minimal restrictions on use.
 
 ## If I use Headfake to generate data in my research project which source should I cite?
-We are working on a journal paper, for now please cite the project URL (https://rcfgroup.github.io/headfake).
+We are working on a journal paper, for now please cite the Zenodo record ![https://doi.org/10.5281/zenodo.4890383](https://zenodo.org/badge/DOI/10.5281/zenodo.4890383.svg).
+
+## Where can I get more information?
+The documentation for the package can be found on the [documentation site](https://rcfgroup.github.io/headfake)
 
