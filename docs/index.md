@@ -30,9 +30,9 @@ Headfake makes it simple and straightforward to generate fake or test data. It h
 
 * Support for shareable template-based config or direct Python implementation to setup and perform the data generation.
 
-* Embeddable data generation into projects (either using a YAML/JSON config or constructing the classes manually).
+* Embeddable data generation into projects (either using a YAML/JSON config or using Python data structures/classes).
 
-* Generation of names and contact details through use of the Python package [Faker](https://faker.readthedocs.io/en/master/index.html).
+* Generation of names and contact details through use of the Python package Faker
 
 * Randomised names can be output based on a gender field.
 
