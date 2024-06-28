@@ -103,15 +103,19 @@ def locate_file(file):
     path = Path(file)
 
     if not path.is_file():
+        path = Path(Path(os.getcwd()) / path)
+
+    if not path.is_file():
         # if file does not exist then check to see if it's in the package resources
 
         py_module = import_module("headfake")
         path = Path(os.path.dirname(getsourcefile(py_module))) / path
 
-    if path.is_file():
-        return path.absolute()
 
-    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file))
+    if path.is_file():
+            return path.absolute()
+
+    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), str(file) + " (absolute:" + str(path.absolute()) + ")")
 
 
 def handle_missing_keyword(ex, class_name, params):

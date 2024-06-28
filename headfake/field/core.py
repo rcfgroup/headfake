@@ -36,6 +36,7 @@ class Field(ABC):
     generate_after:bool = False # static property to force the value to be generated after other field values have been generated
     hidden:bool = attr.ib(default=False) # field which is hidden from the final output
     error_value:Any = attr.ib(default=None)
+    params = attr.ib(factory=dict)
 
     _transform = attr.ib()
 
@@ -52,6 +53,10 @@ class Field(ABC):
     def init_params(self):
         pass
 
+    def init_transformers(self, fieldset):
+        for transformer in self.transformers + self.final_transformers:
+            transformer.init_from_fieldset(fieldset)
+
     def init_from_fieldset(self, fieldset: "headfake.Fieldset"):
         """Initialises field in fieldset.
 
@@ -66,7 +71,7 @@ class Field(ABC):
         """
         pass
 
-    def next_value(self, row: Dict[str, Any]) -> Union[Any, Dict[str, Any]]:
+    def next_value(self, row: Dict[str, Any], **kwargs) -> Union[Any, Dict[str, Any]]:
         """Gets next generated value for field.
 
         Acts as a decorator around the private '_next_value' method.
@@ -276,7 +281,6 @@ class LookupMapFileField(Field):
     lookup_value_field = attr.ib()
     map_file_field = attr.ib()
     _map_file_field_obj = attr.ib(default=None)
-    generate_after = True
 
     def _next_value(self, row):
         map_key = row.get(self._map_file_field_obj.name)
@@ -316,7 +320,6 @@ class IfElseField(Field):
         else:
             return self.false_value.next_value(row) if hasattr(
                 self.false_value, "next_value") else self.false_value
-
 
 @attr.s(kw_only=True)
 class Condition:
@@ -390,7 +393,7 @@ class NumberField(Field):
 
     @_dist_cls.default
     def _default_dist_cls(self):
-        return create_package_class(self.distribution)(loc=self.mean, scale=self.sd)
+        return create_package_class(self.distribution)(loc=self.mean, scale=self.sd, **self.params)
 
     def _next_value(self, row):
         number = self._dist_cls.rvs()

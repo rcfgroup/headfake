@@ -13,6 +13,10 @@ class Transformer:
     Logic for transforming field row values. For example, changing string case, randomising insertion of errors.
     Multiple transformers can be specified for each field.
     """
+
+    def init_from_fieldset(self, fieldset: "headfake.Fieldset"):
+        pass
+
     def transform(self, field, row, value):
         pass
 
@@ -150,7 +154,7 @@ class ConvertStrToDateTime(Transformer):
 
     def transform(self, field, row, value):
         source_dt = dt.strptime(value, self.format)
-        source_dt = source_dt.replace(tzinfo=tz.utc)
+        #source_dt = source_dt.replace(tzinfo=tz.utc)
         return source_dt
 
 @attr.s(kw_only=True)
@@ -181,15 +185,17 @@ class FormatNumber(Transformer):
 
 
 @attr.s(kw_only=True)
-class ConvertToDaysDelta(Transformer):
+class ConvertToTimeDelta(Transformer):
     """
-    Converts a value into a timedelta object. If the value is not a number, returns None.
+    Converts a value into a timedelta object. If the value is not a number, returns None. The delta_param allows you to
+    specify the type of delta value to use (defaults to days).
     """
     error_value = attr.ib(default=None)
+    delta_param = attr.ib(default="days")
     _error_class = TypeError
 
     def transform(self, field, row, value):
-        return td(days=value)
+        return td(**{self.delta_param:value})
 
 
 @attr.s(kw_only=True)
@@ -201,8 +207,20 @@ class GetProperty(Transformer):
     If the attribute does not exist, return the value specified in 'default' (None by default).
     """
     prop_name = attr.ib()
+    prop_params = attr.ib(factory=dict)
+    is_function = attr.ib(default=False)
+    default = attr.ib(default=None)
+
     _error_class = AttributeError
 
     def transform(self, field, row, value):
-        return getattr(value, self.prop_name)
+        if not hasattr(value, self.prop_name):
+            return self.default
+
+        attr = getattr(value, self.prop_name)
+
+        if self.is_function:
+            return attr(**self.prop_params)
+
+        return attr
 

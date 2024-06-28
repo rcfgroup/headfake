@@ -10,7 +10,17 @@ import numpy as np
 from faker import Faker
 
 from headfake.util import create_class_tree, locate_file
+import pandas as pd
+import os
 
+def yaml_include(loader, node):
+    # Get the path out of the yaml file
+    file_name = os.path.join(os.path.dirname(loader.name), node.value)
+
+    with open(file_name) as inputfile:
+        return yaml.load(inputfile, yaml.Loader)
+
+yaml.add_constructor("!include", yaml_include)
 
 class HeadFake:
     """
@@ -46,7 +56,7 @@ class HeadFake:
         """
         path = locate_file(filename)
         with open(path) as file:
-            params = yaml.safe_load(file)
+            params = yaml.load(file, yaml.Loader)
         return HeadFake(params, **kwargs)
 
     @staticmethod
@@ -147,7 +157,7 @@ class HeadFake:
 
         return fieldset
 
-    def generate(self, num_rows=1):
+    def generate(self, num_rows=1, **kwargs) -> pd.DataFrame:
         """
         Generate fake data based on the parameters specified in the constructor
 
@@ -158,7 +168,7 @@ class HeadFake:
             a pandas dataframe
         """
 
-        return self.fieldset.generate_data(num_rows)
+        return self.fieldset.generate_data(num_rows, **kwargs)
 
 class PyHeadFake(HeadFake):
     def _create_fieldset(self, params):
