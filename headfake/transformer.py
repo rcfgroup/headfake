@@ -33,9 +33,11 @@ class IntermittentBlanks(Transformer):
     blank_probability = attr.ib()
     blank_value = attr.ib(default="")
 
-    def transform(self, field, row):
+    def transform(self, field, row, value):
         if rnd.random() < self.blank_probability:
             return self.blank_value
+
+        return value
 
 @attr.s(kw_only=True)
 class RegexSubstitute(Transformer):

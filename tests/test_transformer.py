@@ -5,6 +5,7 @@ from headfake.fieldset import Fieldset
 from datetime import datetime, date, timezone as tz, timedelta as td
 import numpy as np
 import pytest
+import random
 
 def test_field_with_transformers_set_to_none():
     txt = TextField(transformers=None)
@@ -112,3 +113,13 @@ def test_FormatDateTime_returns_string_from_date_and_datetime_and_handles_errors
     ])
     assert dfield.next_value({"timestamp":datetime(day=4,month=3,year=2021, hour=12, minute=42, tzinfo=tz.utc)}) == "2021-03-04"
     assert dfield.next_value({"timestamp": date(day=31,month=12,year=1956)}) == "1956-12-31"
+
+def test_IntermittentBlanks_returns_empty_strings_and_values():
+    random.seed(123)
+    tfield = LookupField(field="my_value", transformers=[
+        T.IntermittentBlanks(blank_probability=0.3,blank_value="")
+    ])
+    assert tfield.next_value({"my_value":5}) == ''
+    assert tfield.next_value({"my_value": 5}) == ''
+    assert tfield.next_value({"my_value": 5}) == 5
+    assert tfield.next_value({"my_value": 5}) == ''
