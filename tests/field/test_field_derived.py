@@ -75,7 +75,8 @@ def test_AgeField_calculates_correct_age_using_to_and_from_fields_containing_str
     assert age.next_value({"from_date":"05/03/1953","to_date":"04/05/2010"}) == 57
 
 def test_AgeField_calculates_correct_age_using_to_and_from_values_as_fields():
-    np.random.seed(123)
+    from headfake import HeadFake
+    HeadFake.set_seed(123)
     age = field.AgeField(
         from_value=field.DateField(
             min=datetime.date(1953,3,5),
@@ -87,9 +88,9 @@ def test_AgeField_calculates_correct_age_using_to_and_from_values_as_fields():
         ),
         to_value=datetime.date.today()
     )
-    assert age.next_value({}) == 61
-    assert age.next_value({}) == 34
-    assert age.next_value({}) == 43
+    assert age.next_value({}) == 64
+    assert age.next_value({}) == 37
+    assert age.next_value({}) == 46
 
 def test_DeceasedField_simulates_death_based_on_risks_and_returns_additional_fields():
     from headfake.fieldset import Fieldset
